@@ -1,0 +1,2 @@
+const openWeatherApiKey='a4150cde51520c18ba5e26376fc1ad2b';
+const openCageDataApiKey='de75890a36fa4d8b9a6afbec9b8e7e43';
