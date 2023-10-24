@@ -10,11 +10,10 @@ class WeatherReponsitory {
   Future getWeatherData() async {
     var response;
     try {
-      response =
-          await dio.get(ApiEndPointConstants.weatherInLocation.toString());
+      response = await dio.get(ApiEndPointConstants.weatherInLocation);
       if (response.statusCode == 200) {
         print(response);
-        return WeatherModel.fromJson(jsonDecode(response.toString()));
+        return await WeatherModel.fromJson(jsonDecode(response.toString()));
       }
     } on Exception {
       rethrow;

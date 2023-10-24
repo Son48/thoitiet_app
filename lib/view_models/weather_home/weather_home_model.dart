@@ -6,6 +6,8 @@ import 'package:thoitiet_app/view_models/base_view_model.dart';
 
 //CALL FOR OBJECT AND DEFINE SOME FUCTION TO HANDLE DATAA
 class WeatherHomeViewModel extends BaseViewModel {
+  bool isLoading = false;
+
   final WeatherReponsitory _weatherReponsitory = WeatherReponsitory();
 
   //DEFINE LIST OBJECT
@@ -19,6 +21,12 @@ class WeatherHomeViewModel extends BaseViewModel {
 
   //handle init dataa
   void initData({bool retry = false}) async {
+    isLoading = true;
+    if (retry) {
+      updateUI();
+    }
+    isLoading = false;
+    updateUI();
     try {
       await getDataWeather();
     } on Exception catch (error) {}
@@ -28,14 +36,17 @@ class WeatherHomeViewModel extends BaseViewModel {
   Future<void> getDataWeather() async {
     try {
       weathers.clear();
+      WeatherModel w;
       final res = await _weatherReponsitory.getWeatherData();
-      if (res != null) {
+      if (await res != null) {
         weathers.add(res);
+        w = res;
+        print(w.tempMin);
+        updateUI();
       }
     } on Exception {
       rethrow;
     }
-    updateUI();
   }
 }
 //_notifierList

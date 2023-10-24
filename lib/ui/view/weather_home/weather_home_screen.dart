@@ -70,7 +70,7 @@ class WeatherHomeView extends BaseViewState<WeatherHome, WeatherHomeViewModel> {
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10)),
                       child: SizedBox(
-                        height: 190,
+                        height: 200,
                         child: ListView.builder(
                           itemCount: viewModel.weathers.length,
                           itemBuilder: (context, index) =>
@@ -80,7 +80,6 @@ class WeatherHomeView extends BaseViewState<WeatherHome, WeatherHomeViewModel> {
                       ),
                     ),
                   )
-
                   //
                   ,
                   const Padding(
@@ -319,79 +318,87 @@ class WeatherHomeView extends BaseViewState<WeatherHome, WeatherHomeViewModel> {
   }
 
 //top card
-  Container CardWeather(WeatherModel data) {
-    return Container(
-      margin: EdgeInsets.only(right: 10),
-      child: AspectRatio(
-        //w/h
-        aspectRatio: 3 / 4,
-        // Hero: lib animation when change screen at this point
-        child: Hero(
-          tag: 'hhuhuhu',
-          //GestureDetector: define one tap in this component
-          child: GestureDetector(
-            onTap: () {
-              // Navigator.push(context, MaterialPageRoute(builder: (context) => CategoryPage(image: image, title: title, tag: tag,)));
-            },
-            child: Material(
-              color: Colors.blue,
-              borderRadius: BorderRadius.circular(10),
-              child: Container(
-                //background image in component
-                decoration:
-                    BoxDecoration(borderRadius: BorderRadius.circular(10)),
-                child: Container(
-                  padding: EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      gradient:
-                          LinearGradient(begin: Alignment.bottomRight, colors: [
-                        Colors.black.withOpacity(.2),
-                        Colors.black.withOpacity(.0),
-                      ])),
-                  child: Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(data.nameLocation.toString(),
-                                style: TextStyle(color: Colors.white)),
-                            Text('90%',
-                                style: TextStyle(color: Colors.white70)),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 80,
-                          width: 80,
-                          child: Image.network(
-                              'https://openweathermap.org/img/wn/02d.png',
-                              fit: BoxFit.fitWidth),
-                        ),
-                        const Text(
-                          'Nhiều mây',
-                          style: TextStyle(color: Colors.white),
-                        ),
-                        const Padding(
-                            padding: const EdgeInsets.only(top: 8.0),
-                            child: Text(
-                              '31 - 38',
-                              style: TextStyle(
-                                color: Colors.white70,
+  Widget CardWeather(WeatherModel data) {
+    return viewModel.isLoading
+        ? const Center(
+            child: CircularProgressIndicator(),
+          )
+        : Container(
+            margin: const EdgeInsets.only(right: 10),
+            child: AspectRatio(
+              //w/h
+              aspectRatio: 3 / 4,
+              // Hero: lib animation when change screen at this point
+              child: Hero(
+                tag: 'hhuhuhu',
+                //GestureDetector: define one tap in this component
+                child: GestureDetector(
+                  onTap: () {
+                    // Navigator.push(context, MaterialPageRoute(builder: (context) => CategoryPage(image: image, title: title, tag: tag,)));
+                  },
+                  child: Material(
+                    color: Colors.blue,
+                    borderRadius: BorderRadius.circular(10),
+                    child: Container(
+                      //background image in component
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10)),
+                      child: Container(
+                        padding: const EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            gradient: LinearGradient(
+                                begin: Alignment.bottomRight,
+                                colors: [
+                                  Colors.black.withOpacity(.2),
+                                  Colors.black.withOpacity(.0),
+                                ])),
+                        child: Padding(
+                          padding: const EdgeInsets.all(10),
+                          child: Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(data.nameLocation.toString(),
+                                      style:
+                                          const TextStyle(color: Colors.white)),
+                                  Text('${data.clounds}%',
+                                      style: const TextStyle(
+                                          color: Colors.white70)),
+                                ],
                               ),
-                            ))
-                      ],
+                              SizedBox(
+                                height: 80,
+                                width: 80,
+                                child: Image.network(
+                                    "https://openweathermap.org/img/wn/${data.urlStatusIcon}.png",
+                                    fit: BoxFit.fitWidth),
+                              ),
+                              Text(
+                                data.descriptionWeather.toString(),
+                                style: const TextStyle(color: Colors.white),
+                              ),
+                              Padding(
+                                  padding: const EdgeInsets.only(top: 8.0),
+                                  child: Text(
+                                    '${data.tempMin}° - ${data.tempMax}°',
+                                    style: const TextStyle(
+                                      color: Colors.white70,
+                                    ),
+                                  ))
+                            ],
+                          ),
+                        ),
+                      ),
                     ),
                   ),
                 ),
               ),
             ),
-          ),
-        ),
-      ),
-    );
+          );
   }
   //end
 }
