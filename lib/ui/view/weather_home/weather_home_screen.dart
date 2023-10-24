@@ -2,12 +2,25 @@ import 'dart:ffi';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thoitiet_app/constans/constains.dart';
+import 'package:thoitiet_app/core/data/models/weather.dart';
+import 'package:thoitiet_app/ui/view/base_view.dart';
+import 'package:thoitiet_app/view_models/weather_home/weather_home_model.dart';
 
-class WeatherHome extends ConsumerWidget {
+class WeatherHome extends BaseView {
   const WeatherHome({super.key});
+  @override
+  WeatherHomeView createState() => WeatherHomeView();
+}
+
+class WeatherHomeView extends BaseViewState<WeatherHome, WeatherHomeViewModel> {
+  @override
+  void createViewModel() {
+    super.createViewModel();
+    viewModel = WeatherHomeViewModel()..onInitViewModel(context);
+  }
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget buildView(BuildContext context) {
     // TODO: implement build
     return SafeArea(
       child: (Scaffold(
@@ -22,7 +35,6 @@ class WeatherHome extends ConsumerWidget {
         ])),
         child: SingleChildScrollView(
             scrollDirection: Axis.vertical,
-
             // shrinkWrap: false,
             child: Padding(
               padding: const EdgeInsets.only(left: 10, top: 20),
@@ -59,14 +71,11 @@ class WeatherHome extends ConsumerWidget {
                           borderRadius: BorderRadius.circular(10)),
                       child: SizedBox(
                         height: 190,
-                        child: ListView(
+                        child: ListView.builder(
+                          itemCount: viewModel.weathers.length,
+                          itemBuilder: (context, index) =>
+                              CardWeather(viewModel.weathers[index]),
                           scrollDirection: Axis.horizontal,
-                          children: [
-                            CardWeather(),
-                            CardWeather(),
-                            CardWeather(),
-                            CardWeather()
-                          ],
                         ),
                       ),
                     ),
@@ -155,6 +164,7 @@ class WeatherHome extends ConsumerWidget {
     );
   }
 
+//news cart
   Container NewsCardItem() {
     return Container(
         height: 130,
@@ -309,7 +319,7 @@ class WeatherHome extends ConsumerWidget {
   }
 
 //top card
-  Container CardWeather() {
+  Container CardWeather(WeatherModel data) {
     return Container(
       margin: EdgeInsets.only(right: 10),
       child: AspectRatio(
@@ -343,11 +353,11 @@ class WeatherHome extends ConsumerWidget {
                     padding: const EdgeInsets.all(10),
                     child: Column(
                       children: [
-                        const Row(
+                        Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('Hà Nội',
+                            Text(data.nameLocation.toString(),
                                 style: TextStyle(color: Colors.white)),
                             Text('90%',
                                 style: TextStyle(color: Colors.white70)),
