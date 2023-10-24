@@ -145,35 +145,7 @@ class WeatherHome extends ConsumerWidget {
                     itemCount: 5,
                     padding: const EdgeInsets.all(8),
                     itemBuilder: (BuildContext context, int index) {
-                      return Container(
-                          height: 130,
-                          margin: EdgeInsets.only(top: 10),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Container(
-                                decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(20)),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(2.0),
-                                  child: SizedBox(
-                                    height: 130,
-                                    width: 130,
-                                    child: DecoratedBox(
-                                      decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(10)),
-                                      child: Image.network(
-                                        'https://scontent.fdad1-2.fna.fbcdn.net/v/t39.30808-6/271799611_1615747102111892_794316964788729571_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=5f2048&_nc_ohc=etWQ_6lPT1sAX-yQzYZ&_nc_ht=scontent.fdad1-2.fna&oh=00_AfBQB_s8Uo4UGpXLAh1yEzCRrEk-X0hJnQoPxK-32oME3w&oe=653C0D5D',
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              )
-                            ],
-                          ));
+                      return NewsCardItem();
                     },
                   )
                 ],
@@ -181,6 +153,70 @@ class WeatherHome extends ConsumerWidget {
             )),
       ))),
     );
+  }
+
+  Container NewsCardItem() {
+    return Container(
+        height: 130,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            //image new
+            Container(
+              decoration: BoxDecoration(
+                  color: Colors.white, borderRadius: BorderRadius.circular(20)),
+              child: Padding(
+                padding: const EdgeInsets.all(2.0),
+                child: SizedBox(
+                  height: 110,
+                  width: 110,
+                  child: DecoratedBox(
+                    decoration:
+                        BoxDecoration(borderRadius: BorderRadius.circular(10)),
+                    child: ClipRRect(
+                      borderRadius:
+                          BorderRadius.circular(20), // Đặt bán kính bo tròn
+                      child: Image.network(
+                        'https://scontent.fsgn2-5.fna.fbcdn.net/v/t39.30808-6/394541329_889174202568674_4212189972633908426_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=5f2048&_nc_ohc=WykHN-qrtdMAX--Tb1s&_nc_ht=scontent.fsgn2-5.fna&oh=00_AfB-Ee-ND_ot7riCPEXqJNDYPdER1mWlPyrbq7ew5Ig3dA&oe=653B9D6F',
+                        fit: BoxFit.fill,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            //detail card news
+            Container(
+              padding: EdgeInsets.only(left: 10, right: 10),
+              child: const SizedBox(
+                width: 230,
+                height: 100,
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Text(
+                        "Tổng Hợp",
+                        style: TextStyle(color: Colors.white70),
+                      ),
+                      SizedBox(
+                        width: 230,
+                        child: Text(
+                          "Dự báo thời tiết- đêm 7 và ngày 24, trời, âm âm, u u và nhớ em.",
+                          style: TextStyle(
+                              color: Colors.white, fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      Text('Xem thêm',
+                          style: TextStyle(
+                            color: Colors.white,
+                          ))
+                    ]),
+              ),
+            )
+          ],
+        ));
   }
 
 //big card
@@ -307,7 +343,7 @@ class WeatherHome extends ConsumerWidget {
                     padding: const EdgeInsets.all(10),
                     child: Column(
                       children: [
-                        Row(
+                        const Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -324,11 +360,11 @@ class WeatherHome extends ConsumerWidget {
                               'https://openweathermap.org/img/wn/02d.png',
                               fit: BoxFit.fitWidth),
                         ),
-                        Text(
+                        const Text(
                           'Nhiều mây',
                           style: TextStyle(color: Colors.white),
                         ),
-                        Padding(
+                        const Padding(
                             padding: const EdgeInsets.only(top: 8.0),
                             child: Text(
                               '31 - 38',
