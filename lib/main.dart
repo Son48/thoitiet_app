@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thoitiet_app/ui/view/weather_home/weather_home_screen.dart';
+import 'package:thoitiet_app/ui/view/weather_report/weather_report_view.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -29,7 +30,7 @@ class MyApp extends ConsumerWidget {
         useMaterial3: true,
       ),
       routes: {
-        "/": (context) => WeatherHome(),
+        "/": (context) => WeatherReportView(),
       },
     );
   }
