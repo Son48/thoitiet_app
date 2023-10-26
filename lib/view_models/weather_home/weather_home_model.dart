@@ -1,53 +1,61 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thoitiet_app/core/constants/constants.dart';
 import 'package:thoitiet_app/core/data/models/weather.dart';
 import 'package:thoitiet_app/core/data/reponsitories/weather_reponsitory.dart';
-import 'package:thoitiet_app/ui/view/base_view.dart';
 import 'package:thoitiet_app/view_models/base_view_model.dart';
 
+final weatherProvider = ChangeNotifierProvider<WeatherHomeViewModel>(
+    (ref) => WeatherHomeViewModel(ref));
+
+final WeatherReponsitory _weatherReponsitory = WeatherReponsitory();
+
 //CALL FOR OBJECT AND DEFINE SOME FUCTION TO HANDLE DATAA
-class WeatherHomeViewModel extends BaseViewModel {
-  bool isLoading = false;
+class WeatherHomeViewModel extends ChangeNotifier {
+  WeatherHomeViewModel(this._reader);
+  final Ref _reader;
 
-  final WeatherReponsitory _weatherReponsitory = WeatherReponsitory();
-
-  //DEFINE LIST OBJECT
   List<WeatherModel> weathers = [];
-  @override
-  void onInitViewModel(BuildContext context) {
-    super.onInitViewModel(context);
-    initData();
-    print("[$runtimeType][LANDING_VIEW_MODEL] => RUNNING");
-  }
-
-  //handle init dataa
-  void initData({bool retry = false}) async {
-    isLoading = true;
-    if (retry) {
-      updateUI();
-    }
-    isLoading = false;
-    updateUI();
-    try {
-      await getDataWeather();
-    } on Exception catch (error) {}
+  List<WeatherModel> weathersFavorites = [];
+  bool isLoading = false;
+  bool _isDefaultData = false;
+  bool get isDefaultData => _isDefaultData;
+  void setIsDefaultData(bool isDefault) {
+    _isDefaultData = isDefault;
+    notifyListeners();
   }
 
   //FUNCTION GET DATA FROM API
   Future<void> getDataWeather() async {
     try {
       weathers.clear();
-      WeatherModel w;
-      final res = await _weatherReponsitory.getWeatherData();
-      if (await res != null) {
-        weathers.add(res);
-        w = res;
-        print(w.tempMin);
-        updateUI();
+      for (var location in Constants.listLocation) {
+        final res = await _weatherReponsitory.getWeatherData(
+            location.lat.toString(), location.lon.toString());
+        if (res != null) {
+          weathers.add(res);
+        }
       }
+      notifyListeners();
+    } on Exception {
+      rethrow;
+    }
+  }
+
+  //FUNCTION GET DATA FROM API
+  Future<void> getDataFavoritesWeather() async {
+    try {
+      weathersFavorites.clear();
+      for (var location in Constants.listFavorites) {
+        final res = await _weatherReponsitory.getWeatherData(
+            location.lat.toString(), location.lon.toString());
+        if (res != null) {
+          weathersFavorites.add(res);
+        }
+      }
+      notifyListeners();
     } on Exception {
       rethrow;
     }
   }
 }
-//_notifierList
-
