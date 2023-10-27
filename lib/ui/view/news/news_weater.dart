@@ -171,7 +171,7 @@ class NewsWeather extends StatelessWidget {
         child: Hero(
           tag: Random().nextInt(999).toString(),
           child: GestureDetector(
-            onTap: () => {Navigator.pushNamed(context, '/news')},
+            onTap: () => {Navigator.pushNamed(context, 'detail-news')},
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
