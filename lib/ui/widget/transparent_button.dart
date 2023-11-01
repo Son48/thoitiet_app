@@ -7,7 +7,7 @@ class TransparentButton extends StatelessWidget {
   final VoidCallback onPressed;
 
   const TransparentButton({
-    Key?key,
+    Key? key,
     required this.icon,
     required this.text1,
     required this.text2,
@@ -17,13 +17,13 @@ class TransparentButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        decoration: BoxDecoration(
+      decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20.0), // Độ bo tròn
-    border: Border.all(
-    color: Colors.white, // Màu đường viền
-    width: 0.5, // Độ dày đường viền
-    ),
+        border: Border.all(
+          color: Colors.white, // Màu đường viền
+          width: 0.5, // Độ dày đường viền
         ),
+      ),
       child: TextButton(
         onPressed: onPressed,
         style: TextButton.styleFrom(
@@ -32,17 +32,26 @@ class TransparentButton extends StatelessWidget {
         ),
         child: Row(
           children: [
-            SizedBox(width: 10,),
-            Icon(icon,color: Colors.deepOrangeAccent,),
-            SizedBox(width: 10,),
-            Text(text1,style: TextStyle(color: Colors.grey,fontSize: 10),),
-            Spacer(),
-
+            const SizedBox(
+              width: 10,
+            ),
+            Icon(
+              icon,
+              color: Colors.deepOrangeAccent,
+            ),
+            const SizedBox(
+              width: 10,
+            ),
+            Text(
+              text1,
+              style: const TextStyle(color: Colors.grey, fontSize: 10),
+            ),
+            const Spacer(),
             Padding(
               padding: const EdgeInsets.all(10.0),
               child: Text(
                 text2,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 10,
                   color: Colors.grey,
                 ),

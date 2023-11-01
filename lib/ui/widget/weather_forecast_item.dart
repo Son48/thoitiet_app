@@ -1,19 +1,16 @@
 import 'package:flutter/material.dart';
-
 class WeatherForecastItem extends StatelessWidget {
   final String time;
   final String imageUrl;
-  final String status;
-  final String temperature;
-  final String possibility;
-   // Thay thế Image bằng String
+  final String temperature1;
+  final String temperature2;
+
   const WeatherForecastItem({
     Key? key,
     required this.time,
-    required this.temperature,
+    required this.temperature1,
     required this.imageUrl,
-    required this.status,
-    required this.possibility, // Thay thế Image bằng String
+    required this.temperature2,
   });
 
   @override
@@ -22,39 +19,42 @@ class WeatherForecastItem extends StatelessWidget {
       elevation: 0,
       color: Colors.transparent,
       child: Container(
-        width: 100,
-        padding: const EdgeInsets.all(8.0),
+        width: 500,
+        padding: const EdgeInsets.only(right: 20,left: 20,top: 10),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
         ),
-        child: Column(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,// Sử dụng Row để sắp xếp theo chiều ngang
           children: [
             Text(
-              temperature,
+              time,
               style: const TextStyle(fontSize: 13, color: Colors.white),
             ),
+            const SizedBox(width: 5), // Khoảng cách giữa Text và Image
             Image.network(
-              imageUrl, // Sử dụng imageUrl để tải hình ảnh từ một URL
+              imageUrl,
               fit: BoxFit.fitWidth,
+              width: 40, // Chiều rộng của hình ảnh
+              height: 40, // Chiều cao của hình ảnh
             ),
-            Text(
-                status,
-              style: const TextStyle(fontSize: 13,color: Colors.white,),
-            ),
-            Text(
-              time,
-              style: const TextStyle(
-                fontSize: 10,
-                color: Colors.white,
-              ),
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-            ),
-            SizedBox(height: 30,),
-            Text(
-              possibility,
-              style: const TextStyle(color: Colors.white,fontSize: 10),
-            )
+            const SizedBox(width: 20), // Khoảng cách giữa Image và Text nhiệt độ
+                Text(
+                  temperature1,
+                  style: const TextStyle(
+                    fontSize: 13,
+                    color: Colors.white,
+                  ),
+                ),
+                Text(
+                  temperature2,
+                  style: const TextStyle(
+                    fontSize: 10,
+                    color: Color(0xFFE3E2E2)
+                  ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
           ],
         ),
       ),

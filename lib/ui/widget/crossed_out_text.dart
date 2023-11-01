@@ -22,7 +22,7 @@ class CrossedOutText extends StatelessWidget {
               color: Colors.white
             ),
           ),
-          SizedBox(height: 10,),
+          const SizedBox(height: 10,),
           Text(
             text,
             style: const TextStyle(

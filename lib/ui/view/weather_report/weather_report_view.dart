@@ -3,11 +3,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thoitiet_app/constans/constains.dart';
 import 'package:thoitiet_app/ui/widget/cross_text.dart';
 import 'package:thoitiet_app/ui/widget/transparent_button.dart';
-import 'package:thoitiet_app/ui/widget/weather_forecast_item.dart';
+import 'package:thoitiet_app/ui/widget/weather_report_item.dart';
 
 import '../../widget/crossed_out_text.dart';
 import '../../widget/hourly_forecard_item.dart';
-import '../../widget/show_detail_dialog.dart';
+import '../../widget/detail_bottom_sheet.dart';
+
 class WeatherReportView extends ConsumerWidget {
   const WeatherReportView({super.key});
 
@@ -17,17 +18,14 @@ class WeatherReportView extends ConsumerWidget {
     return SafeArea(
       child: Scaffold(
         body: Container(
-          height: MediaQuery
-              .of(context)
-              .size
-              .height,
+          height: MediaQuery.of(context).size.height,
           decoration: const BoxDecoration(
               gradient: LinearGradient(begin: Alignment.bottomRight, colors: [
-                colorBackground,
-                Color.fromRGBO(9, 98, 169, 1),
-                Color.fromRGBO(9, 100, 169, 1),
-                Color.fromRGBO(9, 98, 140, 1)
-              ])),
+            colorBackground,
+            Color.fromRGBO(9, 98, 169, 1),
+            Color.fromRGBO(9, 100, 169, 1),
+            Color.fromRGBO(9, 98, 140, 1)
+          ])),
           child: SingleChildScrollView(
             scrollDirection: Axis.vertical,
             child: Column(
@@ -59,18 +57,21 @@ class WeatherReportView extends ConsumerWidget {
                       ),
                       onPressed: () {},
                     ),
-
                   ],
                 ),
-                const SizedBox(height: 20,),
+                const SizedBox(
+                  height: 20,
+                ),
                 Container(
-                  width: MediaQuery.of(context).size.width - 20, // Thay đổi kích thước container tại đây
-                  height: MediaQuery.of(context).size.height*0.25, // Thay đổi kích thước container tại đây
+                  width: MediaQuery.of(context).size.width -
+                      20, // Thay đổi kích thước container tại đây
+                  height: MediaQuery.of(context).size.height *
+                      0.25, // Thay đổi kích thước container tại đây
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20.0), // Độ bo tròn
                     border: Border.all(
                       color: Colors.white, // Màu đường viền
-                      width: 2.0, // Độ dày đường viền
+                      width: 1.0, // Độ dày đường viền
                     ),
                   ),
                   child: Stack(
@@ -84,26 +85,48 @@ class WeatherReportView extends ConsumerWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                Text("Mưa vừa",style: TextStyle(color: Colors.white,fontSize: 22,fontWeight: FontWeight.bold),),
-                                Text("13:30 • 12/08",style: TextStyle(color: Colors.white,),),
-                                SizedBox(height: 10,),
-                                Text("31°",style: TextStyle(color: Colors.white,fontSize: 30,),),
+                                Text(
+                                  "Mưa vừa",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 22,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                Text(
+                                  "13:30 • 12/08",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Text(
+                                  "31°",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 30,
+                                  ),
+                                ),
                               ],
                             ),
                           ),
                           Align(
                             alignment: Alignment.topRight,
                             heightFactor: 30,
-                            child: Image.network("https://openweathermap.org/img/wn/09d@4x.png", fit: BoxFit.fitWidth),
+                            child: Image.network(
+                                "https://openweathermap.org/img/wn/09d@4x.png",
+                                fit: BoxFit.fitWidth),
                           ),
                         ],
                       ),
                       Positioned(
-                        bottom: 100.0 / 2.5, // Đặt vị trí đường kẻ ngang ở 1/3 chiều cao
+                        bottom: 100.0 / 2.5,
+                        // Đặt vị trí đường kẻ ngang ở 1/3 chiều cao
                         left: 10.0,
                         right: 10.0,
                         child: Container(
-                          height: 2.0, // Độ dày của đường kẻ
+                          height: 1.0, // Độ dày của đường kẻ
                           color: Colors.white, // Màu của đường kẻ
                         ),
                       ),
@@ -111,17 +134,37 @@ class WeatherReportView extends ConsumerWidget {
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           Container(
-                            padding: const EdgeInsets.only(left: 8.0, right: 8.0, top: 8.0),
+                            padding: const EdgeInsets.only(
+                                left: 8.0, right: 8.0, top: 8.0),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                CrossedText(text: "Chi tiết", onTap: (){
-
-                                }),
-
+                                CrossedText(
+                                    text: "Chi tiết",
+                                    onTap: () {
+                                      showModalBottomSheet(
+                                        context: context,
+                                        isScrollControlled: true,
+                                        builder: (context) {
+                                          return DetailBottomSheet(
+                                            text1: '30%',
+                                            icon: Icons.ac_unit,
+                                            text2: '5:00',
+                                            title: 'Cảm giác như',
+                                            onClose: () {
+                                              Navigator.of(context).pop();
+                                            },
+                                            remind: '',
+                                          ); // Hiển thị màn hình chi tiết ở đây
+                                        },
+                                      );
+                                    }),
                                 IconButton(
                                   onPressed: () {},
-                                  icon: const Icon(Icons.favorite_border,color: Colors.white,),
+                                  icon: const Icon(
+                                    Icons.favorite_border,
+                                    color: Colors.white,
+                                  ),
                                 ),
                               ],
                             ),
@@ -131,22 +174,26 @@ class WeatherReportView extends ConsumerWidget {
                     ],
                   ),
                 ),
-                const SizedBox(height: 20,),
+                const SizedBox(
+                  height: 20,
+                ),
                 //container 2
                 Material(
-                    color: Colors.blue,
+                  color: Colors.blue,
                   borderRadius: BorderRadius.circular(20.0),
                   child: Container(
-                    width: MediaQuery.of(context).size.width - 20, // Thay đổi kích thước container tại đây
-                    height: MediaQuery.of(context).size.height*0.33, // Thay đổi kích thước container tại đây
+                    width: MediaQuery.of(context).size.width -
+                        20, // Thay đổi kích thước container tại đây
+                    height: MediaQuery.of(context).size.height *
+                        0.33, // Thay đổi kích thước container tại đây
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20.0), // Độ bo tròn
-                        gradient:
-                        LinearGradient(begin: Alignment.bottomRight, colors: [
-                          Colors.black.withOpacity(.2),
-                          Colors.black.withOpacity(.0),
-                        ])
-                    ),
+                        borderRadius: BorderRadius.circular(20.0), // Độ bo tròn
+                        gradient: LinearGradient(
+                            begin: Alignment.bottomRight,
+                            colors: [
+                              Colors.black.withOpacity(.2),
+                              Colors.black.withOpacity(.0),
+                            ])),
                     child: Stack(
                       children: [
                         const Row(
@@ -158,18 +205,25 @@ class WeatherReportView extends ConsumerWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
-                                  Text("Thời Tiết 24h tới",style: TextStyle(color: Colors.white,fontSize: 18,fontWeight: FontWeight.bold),),
+                                  Text(
+                                    "Thời Tiết 24h tới",
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold),
+                                  ),
                                 ],
                               ),
                             ),
                           ],
                         ),
                         Positioned(
-                          top: 100.0 / 1.8, // Đặt vị trí đường kẻ ngang ở 1/3 chiều cao
+                          top: 100.0 / 1.8,
+                          // Đặt vị trí đường kẻ ngang ở 1/3 chiều cao
                           left: 0,
-                          right:0,
+                          right: 0,
                           child: Container(
-                            height: 2.0, // Độ dày của đường kẻ
+                            height: 1.0, // Độ dày của đường kẻ
                             color: Colors.white, // Màu của đường kẻ
                           ),
                         ),
@@ -180,7 +234,12 @@ class WeatherReportView extends ConsumerWidget {
                             child: ListView.builder(
                               itemCount: 4,
                               itemBuilder: (context, index) =>
-                                    const HourlyForecastItem(time: "12:00", temperature: "25°C", imageUrl: "https://openweathermap.org/img/wn/09d@4x.png",),
+                                  const HourlyForecastItem(
+                                time: "12:00",
+                                temperature: "25°C",
+                                imageUrl:
+                                    "https://openweathermap.org/img/wn/09d@4x.png",
+                              ),
                               scrollDirection: Axis.horizontal,
                             ),
                           ),
@@ -189,23 +248,27 @@ class WeatherReportView extends ConsumerWidget {
                     ),
                   ),
                 ),
-                const SizedBox(height: 20,),
+                const SizedBox(
+                  height: 20,
+                ),
 
                 //chat luong ko khi
                 Material(
                   color: Colors.blue,
                   borderRadius: BorderRadius.circular(20),
                   child: Container(
-                    width: MediaQuery.of(context).size.width - 20, // Thay đổi kích thước container tại đây
-                    height: MediaQuery.of(context).size.height*0.23, // Thay đổi kích thước container tại đây
+                    width: MediaQuery.of(context).size.width -
+                        20, // Thay đổi kích thước container tại đây
+                    height: MediaQuery.of(context).size.height *
+                        0.23, // Thay đổi kích thước container tại đây
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20.0), // Độ bo tròn
-                        gradient:
-                        LinearGradient(begin: Alignment.bottomRight, colors: [
-                          Colors.black.withOpacity(.2),
-                          Colors.black.withOpacity(.0),
-                        ])
-                    ),
+                        borderRadius: BorderRadius.circular(20.0), // Độ bo tròn
+                        gradient: LinearGradient(
+                            begin: Alignment.bottomRight,
+                            colors: [
+                              Colors.black.withOpacity(.2),
+                              Colors.black.withOpacity(.0),
+                            ])),
                     child: Stack(
                       children: [
                         const Row(
@@ -219,24 +282,45 @@ class WeatherReportView extends ConsumerWidget {
                                 children: [
                                   Row(
                                     children: [
-                                      Icon(Icons.air,color: Colors.white,size: 30,),
-                                      SizedBox(width: 10,),
-                                      Text("Chất lượng không khí",style: TextStyle(color: Colors.white,fontSize: 16,),),
+                                      Icon(
+                                        Icons.air,
+                                        color: Colors.white,
+                                        size: 30,
+                                      ),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      Text(
+                                        "Chất lượng không khí",
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 16,
+                                        ),
+                                      ),
                                     ],
                                   ),
-                                  SizedBox(height: 10,),
-                                  Text("Trung Bình",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 25),),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  Text(
+                                    "Trung Bình",
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 25),
+                                  ),
                                 ],
                               ),
                             ),
                           ],
                         ),
                         Positioned(
-                          bottom: 100.0 / 2, // Đặt vị trí đường kẻ ngang ở 1/3 chiều cao
+                          bottom: 100.0 / 2,
+                          // Đặt vị trí đường kẻ ngang ở 1/3 chiều cao
                           left: 10.0,
                           right: 10.0,
                           child: Container(
-                            height: 2.0, // Độ dày của đường kẻ
+                            height: 1.0, // Độ dày của đường kẻ
                             color: Colors.white, // Màu của đường kẻ
                           ),
                         ),
@@ -247,15 +331,27 @@ class WeatherReportView extends ConsumerWidget {
                               padding: const EdgeInsets.all(10),
                               child: Row(
                                 children: [
-                                  CrossedText(text: "Chi tiết", onTap: (){
-                                    showModalBottomSheet(
-                                      context: context,
-                                      isScrollControlled: true,
-                                      builder: (context) {
-                                        return DetailBottomSheet(); // Hiển thị màn hình chi tiết ở đây
-                                      },
-                                    );
-                                  }),
+                                  CrossedText(
+                                      text: "Chi tiết",
+                                      onTap: () {
+                                        showModalBottomSheet(
+                                          context: context,
+                                          isScrollControlled: true,
+                                          builder: (context) {
+                                            return DetailBottomSheet(
+                                              text1: '30%',
+                                              icon: Icons.ac_unit,
+                                              text2: '5:00',
+                                              title: 'Cảm giác như',
+                                              onClose: () {
+                                                Navigator.of(context).pop();
+                                              },
+                                              remind:
+                                                  'Không tốt cho người nhạy cảm. Nhóm người nhạy cảm có thể chịu ảnh hưởng sức khỏe. Số đông không có nguy cơ bị tác động',
+                                            ); // Hiển thị màn hình chi tiết ở đây
+                                          },
+                                        );
+                                      }),
                                 ],
                               ),
                             ),
@@ -265,38 +361,32 @@ class WeatherReportView extends ConsumerWidget {
                     ),
                   ),
                 ),
-                SizedBox(height: 20,),
+                SizedBox(
+                  height: 20,
+                ),
                 Material(
                   color: Colors.blue,
                   child: Container(
-                    width: MediaQuery.of(context).size.width , // Thay đổi kích thước container tại đây
-                    height: MediaQuery.of(context).size.height*0.45, // Thay đổi kích thước container tại đây
+                    width: MediaQuery.of(context).size
+                        .width, // Thay đổi kích thước container tại đây
+                    height: MediaQuery.of(context).size.height *
+                        0.45, // Thay đổi kích thước container tại đây
                     decoration: BoxDecoration(
-                        gradient:
-                        LinearGradient(begin: Alignment.bottomRight, colors: [
+                        gradient: LinearGradient(
+                            begin: Alignment.bottomRight,
+                            colors: [
                           Colors.black.withOpacity(.2),
                           Colors.black.withOpacity(.0),
-                        ])
-                    ),
+                        ])),
                     child: Stack(
                       children: [
                         const Padding(
-                          padding: EdgeInsets.all(10.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                             Text("Ngày mai",style: TextStyle(color: Colors.white,fontSize: 12),),
-                              Text("3 ngày",style: TextStyle(color: Colors.white,fontSize: 12)),
-                              Text("5 ngày",style: TextStyle(color: Colors.white,fontSize: 12)),
-                              Text("7 ngày",style: TextStyle(color: Colors.white,fontSize: 12)),
-                              Text("10 ngày",style: TextStyle(color: Colors.white,fontSize: 12)),
-                            ],
-                          ),
-                        ),
+                            padding: EdgeInsets.all(10.0), child: Row()),
                         Positioned(
-                          top: 100.0 / 1.8, // Đặt vị trí đường kẻ ngang ở 1/3 chiều cao
+                          top: 100.0 / 1.8,
+                          // Đặt vị trí đường kẻ ngang ở 1/3 chiều cao
                           left: 0,
-                          right:0,
+                          right: 0,
                           child: Container(
                             height: 0.2, // Độ dày của đường kẻ
                             color: Colors.white, // Màu của đường kẻ
@@ -309,7 +399,14 @@ class WeatherReportView extends ConsumerWidget {
                             child: ListView.builder(
                               itemCount: 4,
                               itemBuilder: (context, index) =>
-                              const WeatherForecastItem(time: "12:00", temperature: "25°C", imageUrl: "https://openweathermap.org/img/wn/09d@4x.png",status: "Mưa",possibility: "80%",),
+                                  const WeatherReportItem(
+                                time: "12:00",
+                                temperature: "25°C",
+                                imageUrl:
+                                    "https://openweathermap.org/img/wn/09d@4x.png",
+                                status: "Mưa",
+                                possibility: "80%",
+                              ),
                               scrollDirection: Axis.horizontal,
                             ),
                           ),
@@ -332,12 +429,20 @@ class WeatherReportView extends ConsumerWidget {
                     ),
                   ),
                 ),
-                SizedBox(height: 20,),
+                const SizedBox(
+                  height: 20,
+                ),
                 Padding(
                   padding: const EdgeInsets.all(10.0),
-                  child: TransparentButton(icon: Icons.sunny_snowing, text1: "https://thoitiet.vn", text2: "Thời tiết Việt Nam", onPressed: (){}),
+                  child: TransparentButton(
+                      icon: Icons.sunny_snowing,
+                      text1: "https://thoitiet.vn",
+                      text2: "Thời tiết Việt Nam",
+                      onPressed: () {}),
                 ),
-                SizedBox(height: 30,),
+                const SizedBox(
+                  height: 30,
+                ),
               ],
             ),
           ),
