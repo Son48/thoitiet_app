@@ -13,6 +13,7 @@ import 'package:thoitiet_app/ui/widget/bottom_bar.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:thoitiet_app/view_models/weather_home/weather_home_model.dart';
+import 'package:thoitiet_app/ui/view/weather_report/weather_report_view.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -43,11 +44,12 @@ class MyApp extends StatelessWidget {
           "home": (context) => WeatherHome(),
           "detail-news": (context) => NewsWeather(),
           "news": (context) => NewsHome(),
+          "detail-weather": (context) => WeatherReportView(),
         },
         home: Scaffold(
           bottomNavigationBar: BottomBar(routes: routes),
         ),
       ),
-   );
+    );
   }
 }

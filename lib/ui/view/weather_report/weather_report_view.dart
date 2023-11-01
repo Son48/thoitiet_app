@@ -47,7 +47,9 @@ class WeatherReportView extends ConsumerWidget {
                         size: 32,
                         color: Colors.white,
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
                     ),
                     IconButton(
                       icon: const Icon(
@@ -367,7 +369,8 @@ class WeatherReportView extends ConsumerWidget {
                 Material(
                   color: Colors.blue,
                   child: Container(
-                    width: MediaQuery.of(context).size
+                    width: MediaQuery.of(context)
+                        .size
                         .width, // Thay đổi kích thước container tại đây
                     height: MediaQuery.of(context).size.height *
                         0.45, // Thay đổi kích thước container tại đây

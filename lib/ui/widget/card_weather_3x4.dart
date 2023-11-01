@@ -28,7 +28,9 @@ class CardWeather extends ConsumerWidget {
           tag: data.nameLocation.toString() + Random().nextInt(10).toString(),
           //GestureDetector: define one tap in this component
           child: GestureDetector(
-            onTap: () {},
+            onTap: () {
+              Navigator.pushNamed(context, 'detail-weather');
+            },
             child: Material(
               color: Color.fromARGB(255, 38, 155, 251),
               borderRadius: BorderRadius.circular(10),
