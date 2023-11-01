@@ -49,6 +49,6 @@ class MyApp extends StatelessWidget {
           bottomNavigationBar: BottomBar(routes: routes),
         ),
       ),
-    );
+   );
   }
 }
