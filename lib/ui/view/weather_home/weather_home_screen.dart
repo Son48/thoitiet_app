@@ -1,28 +1,34 @@
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thoitiet_app/constans/constains.dart';
 import 'package:thoitiet_app/core/data/models/weather.dart';
 import 'package:thoitiet_app/ui/view/base_view.dart';
+import 'package:thoitiet_app/ui/view/news/home_news_weather.dart';
+import 'package:thoitiet_app/ui/widget/bottom_bar.dart';
+import 'package:thoitiet_app/ui/widget/card_weather_3x4.dart';
 import 'package:thoitiet_app/view_models/weather_home/weather_home_model.dart';
 import 'dart:math';
 
 bool isLoadingWeather = true;
-bool isLoadingWeatherFavorites = true;
+bool isLoadingWeatherRecommend = true;
+final counterProvider = StateProvider<int>((ref) => 0);
 
 class WeatherHome extends ConsumerWidget {
   const WeatherHome({super.key});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final weatherModel = ref.watch(weatherProvider);
+
+    List<WeatherModel> listFavorites = weatherModel.weatherFavories;
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (weatherModel.isDefaultData) {
         isLoadingWeather = false;
-        isLoadingWeatherFavorites = false;
-
+        isLoadingWeatherRecommend = false;
         return;
       }
       weatherModel.getDataWeather();
-      weatherModel.getDataFavoritesWeather();
+      weatherModel.getDataRecomendWeather();
       weatherModel.setIsDefaultData(true);
     });
     return SafeArea(
@@ -81,7 +87,10 @@ class WeatherHome extends ConsumerWidget {
                                     ? 0
                                     : weatherModel.weathers.length,
                                 itemBuilder: (context, index) => CardWeather(
-                                    weatherModel.weathers[index], context),
+                                  data: weatherModel.weathers[index],
+                                  favorite: listFavorites
+                                      .contains(weatherModel.weathers[index]),
+                                ),
                                 scrollDirection: Axis.horizontal,
                               ),
                       ),
@@ -96,7 +105,7 @@ class WeatherHome extends ConsumerWidget {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
-                          'Địa điểm của bạn',
+                          'Gợi ý cho bạn',
                           style: TextStyle(
                               fontSize: 17,
                               fontWeight: FontWeight.bold,
@@ -118,14 +127,14 @@ class WeatherHome extends ConsumerWidget {
                           borderRadius: BorderRadius.circular(10)),
                       child: SizedBox(
                         height: 160,
-                        child: isLoadingWeather
+                        child: isLoadingWeatherRecommend
                             ? PreLoading()
                             : ListView.builder(
                                 itemCount: weatherModel.isLoading
                                     ? 0
-                                    : weatherModel.weathersFavorites.length,
+                                    : weatherModel.weathersRecommend.length,
                                 itemBuilder: (context, index) => CardBigWeather(
-                                    weatherModel.weathersFavorites[index]),
+                                    weatherModel.weathersRecommend[index]),
                                 scrollDirection: Axis.horizontal,
                               ),
                       ),
@@ -178,9 +187,9 @@ class WeatherHome extends ConsumerWidget {
     return Container(
         height: 130,
         child: Hero(
-          tag: Random().nextInt(999).toString(),
+          tag: Random().nextInt(9999999).toString(),
           child: GestureDetector(
-            onTap: () => {Navigator.pushNamed(context, '/news')},
+            onTap: () => {Navigator.pushNamed(context, 'detail-news')},
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -202,7 +211,7 @@ class WeatherHome extends ConsumerWidget {
                           borderRadius:
                               BorderRadius.circular(20), // Đặt bán kính bo tròn
                           child: Image.network(
-                            'https://scontent.fsgn2-5.fna.fbcdn.net/v/t39.30808-6/394541329_889174202568674_4212189972633908426_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=5f2048&_nc_ohc=WykHN-qrtdMAX--Tb1s&_nc_ht=scontent.fsgn2-5.fna&oh=00_AfB-Ee-ND_ot7riCPEXqJNDYPdER1mWlPyrbq7ew5Ig3dA&oe=653B9D6F',
+                            'https://www.elle.vn/wp-content/uploads/2017/07/25/hinh-anh-dep-1.jpg',
                             fit: BoxFit.fill,
                           ),
                         ),
@@ -247,7 +256,9 @@ class WeatherHome extends ConsumerWidget {
   }
 
 //big card
-  Container CardBigWeather(WeatherModel data) {
+  Container CardBigWeather(
+    WeatherModel data,
+  ) {
     return Container(
       margin: EdgeInsets.only(right: 10),
       child: AspectRatio(
@@ -335,118 +346,7 @@ class WeatherHome extends ConsumerWidget {
       ),
     );
   }
+}
 
 //top card
-  Widget CardWeather(WeatherModel data, context) {
-    return Container(
-      margin: const EdgeInsets.only(right: 10),
-      child: AspectRatio(
-        //w/h
-        aspectRatio: 3 / 4,
-        // Hero: lib animation when change screen at this point
-        child: Hero(
-          tag: data.nameLocation.toString() + Random().nextInt(10).toString(),
-          //GestureDetector: define one tap in this component
-          child: GestureDetector(
-            onTap: () {},
-            child: Material(
-              color: Color.fromARGB(255, 38, 155, 251),
-              borderRadius: BorderRadius.circular(10),
-              child: Container(
-                //background image in component
-                decoration:
-                    BoxDecoration(borderRadius: BorderRadius.circular(10)),
-                child: Container(
-                  padding: const EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      gradient:
-                          LinearGradient(begin: Alignment.bottomRight, colors: [
-                        Colors.black.withOpacity(.2),
-                        Colors.black.withOpacity(.0),
-                      ])),
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 10, right: 10),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        SizedBox(
-                          height: 65,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              SizedBox(
-                                width: 50,
-                                child: Text(data.nameLocation.toString(),
-                                    softWrap: true,
-                                    style:
-                                        const TextStyle(color: Colors.white)),
-                              ),
-                              Text('${data.clounds}%',
-                                  style:
-                                      const TextStyle(color: Colors.white70)),
-                            ],
-                          ),
-                        ),
-                        SizedBox(
-                          height: 120,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              SizedBox(
-                                height: 80,
-                                width: 80,
-                                child: Image.network(
-                                    "https://openweathermap.org/img/wn/${data.urlStatusIcon}.png",
-                                    fit: BoxFit.fitWidth),
-                              ),
-                              Text(
-                                data.descriptionWeather.toString(),
-                                textAlign: TextAlign.center,
-                                style: const TextStyle(color: Colors.white),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Text(
-                          '${data.tempMin}° - ${data.tempMax}°',
-                          style: const TextStyle(
-                            color: Colors.white70,
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
 
-  //end
-}
-
-class PreLoading extends StatelessWidget {
-  const PreLoading({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      color: Color.fromRGBO(9, 98, 169, 1),
-      child: const Center(
-        child: CircularProgressIndicator(
-          valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
-          strokeWidth: 2.0,
-        ),
-      ),
-    );
-  }
-}

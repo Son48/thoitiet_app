@@ -14,7 +14,6 @@ class WeatherReponsitory {
       response =
           await dio.get(ApiEndPointConstants.weatherInLocation(lat, lon));
       if (response.statusCode == 200) {
-        print(response);
         return await WeatherModel.fromJson(
             jsonDecode(await response.toString()));
       }

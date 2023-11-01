@@ -16,12 +16,21 @@ class WeatherHomeViewModel extends ChangeNotifier {
   final Ref _reader;
 
   List<WeatherModel> weathers = [];
-  List<WeatherModel> weathersFavorites = [];
+  List<WeatherModel> weathersRecommend = [];
   bool isLoading = false;
+
   bool _isDefaultData = false;
   bool get isDefaultData => _isDefaultData;
+  List<WeatherModel> weatherFavories = [];
   void setIsDefaultData(bool isDefault) {
     _isDefaultData = isDefault;
+    notifyListeners();
+  }
+
+  bool _updateFavoritesWeather = false;
+  bool get updateFavoritesWeather => _isDefaultData;
+  void setUpdateFavoritesWeather(bool isDefault) {
+    _updateFavoritesWeather = isDefault;
     notifyListeners();
   }
 
@@ -43,14 +52,14 @@ class WeatherHomeViewModel extends ChangeNotifier {
   }
 
   //FUNCTION GET DATA FROM API
-  Future<void> getDataFavoritesWeather() async {
+  Future<void> getDataRecomendWeather() async {
     try {
-      weathersFavorites.clear();
+      weathersRecommend.clear();
       for (var location in Constants.listFavorites) {
         final res = await _weatherReponsitory.getWeatherData(
             location.lat.toString(), location.lon.toString());
         if (res != null) {
-          weathersFavorites.add(res);
+          weathersRecommend.add(res);
         }
       }
       notifyListeners();
