@@ -105,7 +105,7 @@ class NewsHome extends ConsumerWidget {
                           borderRadius:
                               BorderRadius.circular(20), // Đặt bán kính bo tròn
                           child: Image.network(
-                            'https://scontent.fsgn2-5.fna.fbcdn.net/v/t39.30808-6/394541329_889174202568674_4212189972633908426_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=5f2048&_nc_ohc=WykHN-qrtdMAX--Tb1s&_nc_ht=scontent.fsgn2-5.fna&oh=00_AfB-Ee-ND_ot7riCPEXqJNDYPdER1mWlPyrbq7ew5Ig3dA&oe=653B9D6F',
+                            'https://www.elle.vn/wp-content/uploads/2017/07/25/hinh-anh-dep-1.jpg',
                             fit: BoxFit.fill,
                           ),
                         ),
