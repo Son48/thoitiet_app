@@ -422,6 +422,8 @@ class WeatherReportView extends ConsumerWidget {
                               CrossedOutText(
                                 text: 'Thời tiết các khu vực ở Hà Nội',
                                 onTap: () {
+                                  Navigator.pushNamed(
+                                      context, 'detail-forest-weather');
                                   // Xử lý sự kiện khi chữ được nhấp
                                 },
                               ),
