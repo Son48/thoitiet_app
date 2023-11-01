@@ -3,11 +3,9 @@ import 'package:flutter/material.dart';
 import '../core/utils/network_utils.dart';
 
 abstract class BaseViewModel extends ChangeNotifier {
-
   static final List<ChangeNotifier> _notifierList = [];
 
-  List<ChangeNotifier> get notifierList =>
-      _notifierList;
+  List<ChangeNotifier> get notifierList => _notifierList;
 
   bool _isEmptyListeners = false;
 
@@ -35,11 +33,9 @@ abstract class BaseViewModel extends ChangeNotifier {
     this.context = context;
   }
 
-
   bool checkReCalculatorSize({required bool allowReCalculatorSize}) {
     return allowReCalculatorSize;
   }
-
 
   void onBuildComplete({bool isNeedReBuildByOtherViewModel = true}) {
     if (isNeedReBuildByOtherViewModel && !_notifierList.contains(this)) {
@@ -52,19 +48,19 @@ abstract class BaseViewModel extends ChangeNotifier {
   }
 
   void updateUI() {
-
     if (!_isEmptyListeners) {
+      print('update UI !');
       notifyListeners();
     }
     if (_notifierList.isEmpty) return;
 
     for (ChangeNotifier notifier in _notifierList) {
       if (notifier != this) {
+        print(' curent update UI ');
         notifier.notifyListeners();
       }
     }
   }
-
 
   void removeNotifier() {
     if (_notifierList.contains(this)) {
