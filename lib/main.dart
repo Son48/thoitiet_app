@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thoitiet_app/core/constants/firebase_api.dart';
-import 'package:thoitiet_app/core/controller/NotificationController.dart';
 import 'package:thoitiet_app/firebase_options.dart';
 import 'package:thoitiet_app/ui/view/favorites/home_favorites.dart';
 import 'package:thoitiet_app/ui/view/news/home_news_weather.dart';
