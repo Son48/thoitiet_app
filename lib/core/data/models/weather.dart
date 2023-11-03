@@ -1,3 +1,7 @@
+import 'dart:ffi';
+
+import 'package:intl/intl.dart';
+
 class WeatherModel {
   String? nameLocation;
   String? urlStatusIcon;
@@ -13,6 +17,16 @@ class WeatherModel {
   String? descriptionWeather;
   //toc do gio
   String? speedWind;
+  String? lon;
+  String? lat;
+  String? day;
+  String? hour;
+  String? feelLike;
+  String? rain;
+  String? uvi;
+  String? visibility;
+  String? sunrise;
+  String? sunset;
 
   WeatherModel(
       {this.nameLocation,
@@ -22,8 +36,19 @@ class WeatherModel {
       this.tempMax,
       this.clounds,
       this.descriptionWeather,
-      this.speedWind});
-  factory WeatherModel.fromJson(Map<String, dynamic> json) {
+      this.speedWind,
+      this.day,
+      this.hour,
+      this.lon,
+      this.feelLike,
+      this.rain,
+      this.uvi,
+      this.visibility,
+      this.sunrise,
+      this.sunset,
+      this.lat});
+  static Future<WeatherModel> fromJson(
+      Map<String, dynamic> json, String lat, String lon) async {
     return WeatherModel(
         nameLocation: json['name'],
         urlStatusIcon: json['weather'][0]['icon'],
@@ -32,6 +57,25 @@ class WeatherModel {
         tempMax: (json['main']['temp_max']).toString(),
         clounds: (json['clouds']['all']).toString(),
         descriptionWeather: (json['weather'][0]['description']).toString(),
-        speedWind: (json['wind']['speed']).toString());
+        speedWind: (json['wind']['speed']).toString(),
+        day: await convertDaysToDateTime(json['dt'], 0),
+        hour: await convertDaysToDateTime(json['dt'], 1),
+        feelLike: json['main']['feels_like'].toString(),
+        lat: lat,
+        lon: lon);
+  }
+
+  static Future<String> convertDaysToDateTime(int days, int choose) async {
+    final dt = DateTime.fromMillisecondsSinceEpoch(days * 1000);
+    DateFormat timeFormat = DateFormat('HH:mm');
+    String formattedTime = timeFormat.format(dt);
+
+    DateFormat dateFormat = DateFormat('dd/MM/yyyy');
+    String formattedDate = dateFormat.format(dt);
+    if (choose == 0) {
+      return formattedDate.toString();
+    } else {
+      return formattedTime.toString();
+    }
   }
 }

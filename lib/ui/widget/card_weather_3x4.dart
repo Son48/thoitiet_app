@@ -14,9 +14,6 @@ class CardWeather extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final weatherModel = ref.watch(weatherProvider);
     List<WeatherModel> listFavorites = weatherModel.weatherFavories;
-
-    print('render UI card');
-
     // TODO: implement build
     return Container(
       margin: const EdgeInsets.only(right: 10),
