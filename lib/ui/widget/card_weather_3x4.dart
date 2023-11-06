@@ -5,15 +5,20 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thoitiet_app/core/data/models/weather.dart';
 import 'package:thoitiet_app/view_models/weather_home/weather_home_model.dart';
 
+import '../../view_models/weather_report_model/weather_report_model.dart';
+
 class CardWeather extends ConsumerWidget {
   final WeatherModel data;
   final bool favorite;
 
-  CardWeather({required this.data, required this.favorite});
+  CardWeather( {required this.data, required this.favorite});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final weatherModel = ref.watch(weatherProvider);
     List<WeatherModel> listFavorites = weatherModel.weatherFavories;
+    final reportModel=ref.watch(weatherReportProvider);
+
+
     // TODO: implement build
     return Container(
       margin: const EdgeInsets.only(right: 10),
@@ -26,6 +31,7 @@ class CardWeather extends ConsumerWidget {
           //GestureDetector: define one tap in this component
           child: GestureDetector(
             onTap: () {
+              reportModel.setWeatherModel(data);
               Navigator.pushNamed(context, 'detail-weather');
             },
             child: Material(

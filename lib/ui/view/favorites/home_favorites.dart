@@ -9,17 +9,22 @@ import 'package:thoitiet_app/ui/widget/card_weather_3x4.dart';
 import 'package:thoitiet_app/view_models/weather_home/weather_home_model.dart';
 import 'package:thoitiet_app/view_models/weather_home/weather_forest_model.dart';
 
+import '../../widget/column_chart.dart';
+
 bool isLoadingWeatherForest = true;
 
 class FavovitesHome extends ConsumerWidget {
   //
   const FavovitesHome({super.key});
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final weatherModel = ref.watch(weatherProvider);
     List<WeatherModel> listFavorites = weatherModel.weatherFavories;
+
     final weatherForestModel = ref.watch(weatherForestAndFavoriteProvider);
     WeatherModel? weatherFavorite = weatherForestModel.favoriteChosse;
+
     //detail data detail forest
     ForestWeatherModel? forestWeatherModel =
         weatherForestModel.forestWeatherModel;
@@ -443,7 +448,34 @@ class FavovitesHome extends ConsumerWidget {
                                           ),
                                         ),
                                       ),
-                                    )
+                                    ),
+                                    Column(
+                                      children: [
+                                        Align(
+                                          alignment: Alignment.topLeft,
+                                          child: Padding(
+                                            padding: EdgeInsets.all(0),
+                                            child: Text(
+                                              "Nhiệt độ và lượng mưa ${forestWeatherModel.currentWeather?.nameLocation.toString()} những ngày tới",
+                                              textAlign: TextAlign.start,
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.white,
+                                                  fontSize: 13),
+                                            ),
+                                          ),
+                                        ),
+                                        ColumnChart(
+                                          chartData1:
+                                              forestWeatherModel.getChartData1(
+                                                  forestWeatherModel),
+                                          chartData2:
+                                              forestWeatherModel.getChartData2(
+                                                  forestWeatherModel),
+                                        ),
+                                      ],
+                                    ),
+
                                     //end
                                   ])
                             : const Padding(
@@ -539,5 +571,5 @@ class FavovitesHome extends ConsumerWidget {
     );
   }
 
-  //end
+//end
 }

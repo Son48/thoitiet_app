@@ -7,8 +7,8 @@ import 'package:thoitiet_app/firebase_options.dart';
 import 'package:thoitiet_app/ui/view/favorites/home_favorites.dart';
 import 'package:thoitiet_app/ui/view/news/home_news_weather.dart';
 import 'package:thoitiet_app/ui/view/news/news_weater.dart';
+import 'package:thoitiet_app/ui/view/search/weather_search_view.dart';
 import 'package:thoitiet_app/ui/view/setting/home_setting.dart';
-import 'package:thoitiet_app/ui/view/weather_forecast_view.dart';
 import 'package:thoitiet_app/ui/view/weather_home/weather_home_screen.dart';
 import 'package:thoitiet_app/ui/widget/bottom_bar.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
@@ -42,11 +42,12 @@ class MyApp extends StatelessWidget {
         title: 'Flutter Weather App',
         debugShowCheckedModeBanner: false,
         routes: {
+
           "home": (context) => WeatherHome(),
           "detail-news": (context) => NewsWeather(),
           "news": (context) => NewsHome(),
           "detail-weather": (context) => WeatherReportView(),
-          "detail-forest-weather": (context) => WeatherForecastView()
+
         },
         home: Scaffold(
           bottomNavigationBar: BottomBar(routes: routes),
