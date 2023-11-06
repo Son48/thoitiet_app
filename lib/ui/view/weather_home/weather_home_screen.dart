@@ -19,10 +19,16 @@ class WeatherHome extends ConsumerWidget {
   const WeatherHome({super.key});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    print('home render UI');
     final weatherModel = ref.watch(weatherProvider);
 
-    List<WeatherModel> listFavorites = weatherModel.weatherFavories;
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    List<WeatherModel> listWeather = weatherModel.weathers;
+
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      //render ui no condition
+      // List<WeatherModel> listFavoritesFromLocal =
+      //     await weatherModel.getAllFavoriteFromSQL();
+
       if (weatherModel.isDefaultData) {
         isLoadingWeather = false;
         isLoadingWeatherRecommend = false;
@@ -30,6 +36,8 @@ class WeatherHome extends ConsumerWidget {
       }
       weatherModel.getDataWeather();
       weatherModel.getDataRecomendWeather();
+      //get first data from local
+      weatherModel.loadDataLocalToState();
       weatherModel.setIsDefaultData(true);
     });
 
@@ -101,51 +109,65 @@ class WeatherHome extends ConsumerWidget {
                               ],
                             ),
 
-                            //slide card
-                            Padding(
-                              padding: const EdgeInsets.only(top: 10),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10)),
-                                child: SizedBox(
-                                  height: 225,
-                                  child: isLoadingWeather
-                                      ? const PreLoading()
-                                      : ListView.builder(
-                                    itemCount: weatherModel.isLoading
-                                        ? 0
-                                        : weatherModel.weathers.length,
-                                    itemBuilder: (context, index) => CardWeather(
-                                      data: weatherModel.weathers[index],
-                                      favorite: listFavorites
-                                          .contains(weatherModel.weathers[index]),
-                                    ),
-                                    scrollDirection: Axis.horizontal,
-                                  ),
+                  //slide card
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10),
+                    child: Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10)),
+                      child: SizedBox(
+                        height: 225,
+                        child: isLoadingWeather
+                            ? const PreLoading()
+                            : ListView.builder(
+                                itemCount: listWeather.length,
+                                itemBuilder: (context, index) => CardWeather(
+                                  data: listWeather[index],
                                 ),
                               ),
-                            )
-                            //
-                            ,
-                            const Padding(
-                              padding: EdgeInsets.only(top: 30.0, right: 20),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    'Gợi ý cho bạn',
-                                    style: TextStyle(
-                                        fontSize: 17,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white),
-                                  ),
-                                  Text('Xem tất cả',
-                                      style: TextStyle(
-                                          fontSize: 17,
-                                          decoration: TextDecoration.underline,
-                                          color: Colors.white70)),
-                                ],
+
+                      ),
+                    ),
+                  )
+                  //
+                  ,
+                  const Padding(
+                    padding: EdgeInsets.only(top: 30.0, right: 20),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Gợi ý cho bạn',
+                          style: TextStyle(
+                              fontSize: 17,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white),
+                        ),
+                        Text('Xem tất cả',
+                            style: TextStyle(
+                                fontSize: 17,
+                                decoration: TextDecoration.underline,
+                                color: Colors.white70)),
+                      ],
+                    ),
+                  ),
+                  //slide card
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10),
+                    child: Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10)),
+                      child: SizedBox(
+                        height: 170,
+                        child: isLoadingWeatherRecommend
+                            ? PreLoading()
+                            : ListView.builder(
+                                itemCount:
+                                    weatherModel.weathersRecommend.length,
+                                itemBuilder: (context, index) => CardBigWeather(
+                                    weatherModel.weathersRecommend[index]),
+                                scrollDirection: Axis.horizontal,
                               ),
                             ),
                             //slide card
