@@ -20,20 +20,30 @@ class WeatherHomeViewModel extends ChangeNotifier {
 
   List<WeatherModel> weathers = [];
   List<WeatherModel> weathersRecommend = [];
-  bool isLoading = false;
 
   bool _isDefaultData = false;
   bool get isDefaultData => _isDefaultData;
-  List<WeatherModel> weatherFavories = [];
+  List<WeatherModel> _weatherFavories = [];
+  List<WeatherModel> get weatherFavories => _weatherFavories;
+
   void setIsDefaultData(bool isDefault) {
     _isDefaultData = isDefault;
+    _weatherFavories = weatherFavories;
     notifyListeners();
   }
 
-  bool _updateFavoritesWeather = false;
   bool get updateFavoritesWeather => _isDefaultData;
-  void setUpdateFavoritesWeather(bool isDefault) {
-    _updateFavoritesWeather = isDefault;
+  //set the first list favorites
+  Future<void> setUpdateFavoritesWeather() async {
+    print('update lại list favorites trong state');
+    notifyListeners();
+  }
+
+  Future<void> loadDataLocalToState() async {
+    print('set the first list favorites');
+    _weatherFavories = await getAllFavoriteFromSQL();
+    print('trong favorites có: ');
+    print(weatherFavories.length);
     notifyListeners();
   }
 
@@ -76,8 +86,20 @@ class WeatherHomeViewModel extends ChangeNotifier {
     return w;
   }
 
-  Future<void> insertFavoriteFromSQL(String lon, String lat) async {
-    int w = await FavoritesData().insertTable(lon, lat);
+  Future<void> insertFavoriteFromSQL(WeatherModel favorite) async {
+    var w = await FavoritesData()
+        .insertTable(favorite.lon.toString(), favorite.lat.toString());
+    if (w == 1) {
+      print('THEM THANH CONG');
+    }
+    notifyListeners();
+  }
+
+  Future<void> deleteFavoriteFromSQL(WeatherModel favorite) async {
+    print('remove in local');
+    var w = await FavoritesData()
+        .deleteTable(favorite.lon.toString(), favorite.lat.toString());
     print(w);
+    notifyListeners();
   }
 }

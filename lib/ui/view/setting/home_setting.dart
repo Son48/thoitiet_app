@@ -122,8 +122,8 @@ class SettingHome extends ConsumerWidget {
                                       id: 0,
                                       title: 'Notification Title',
                                       body: 'Notification Body',
-                                      scheduledTimeHour: 16,
-                                      scheduledTimeMinute: 31,
+                                      scheduledTimeHour: 13,
+                                      scheduledTimeMinute: 18,
                                     );
                                   },
                                   child: const Text(
