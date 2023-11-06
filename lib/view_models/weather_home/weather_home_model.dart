@@ -1,5 +1,5 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thoitiet_app/core/constants/constants.dart';
@@ -81,6 +81,19 @@ class WeatherHomeViewModel extends ChangeNotifier {
     }
   }
 
+  Future<bool> checkInternetConnection() async {
+    var connectivityResult = await Connectivity().checkConnectivity();
+
+    if (connectivityResult == ConnectivityResult.mobile) {
+      // Kết nối dữ liệu di động (3G, 4G, 5G, ...)
+      return true;
+    } else if (connectivityResult == ConnectivityResult.wifi) {
+      // Kết nối Wi-Fi
+      return true;
+    } else {
+      // Không có kết nối hoặc kết nối khác
+      return false;
+    }
   Future<List<WeatherModel>> getAllFavoriteFromSQL() async {
     List<WeatherModel> w = await FavoritesData().fetchAllFavoritesFromLocal();
     return w;

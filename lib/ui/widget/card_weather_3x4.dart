@@ -5,9 +5,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thoitiet_app/core/data/models/weather.dart';
 import 'package:thoitiet_app/view_models/weather_home/weather_home_model.dart';
 
+import '../../view_models/weather_report_model/weather_report_model.dart';
+
 class CardWeather extends ConsumerWidget {
   final WeatherModel data;
   bool favorite = false;
+
 
   CardWeather({super.key, required this.data});
   @override
@@ -45,6 +48,7 @@ class CardWeather extends ConsumerWidget {
           //GestureDetector: define one tap in this component
           child: GestureDetector(
             onTap: () {
+              reportModel.setWeatherModel(data);
               Navigator.pushNamed(context, 'detail-weather');
             },
             child: Material(

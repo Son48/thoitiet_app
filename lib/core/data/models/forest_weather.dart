@@ -2,6 +2,8 @@ import 'package:thoitiet_app/core/data/models/weather.dart';
 import 'package:intl/intl.dart';
 import 'package:thoitiet_app/core/data/reponsitories/weather_reponsitory.dart';
 
+import '../../../ui/widget/column_chart.dart';
+
 class ForestWeatherModel {
   WeatherModel? currentWeather;
   List<WeatherModel> daily;
@@ -59,12 +61,38 @@ class ForestWeatherModel {
     );
   }
 
+  List<ForeCastData> getChartData1(ForestWeatherModel? model) {
+    if (model != null) {
+      return model.daily.map((daily) {
+        return ForeCastData(
+          day: daily.day.toString(),
+          forecast: daily.temp.toString(),
+        );
+      }).toList();
+    } else {
+      return [];
+    }
+  }
+
+  List<ForeCastData> getChartData2(ForestWeatherModel? model) {
+    if (model != null) {
+      return model.daily.map((daily) {
+        return ForeCastData(
+          day: daily.day.toString(),
+          forecast:"0",
+        );
+      }).toList();
+    } else {
+      return [];
+    }
+  }
+
   static Future<String> convertDaysToDateTime(int days, int choose) async {
     final dt = DateTime.fromMillisecondsSinceEpoch(days * 1000);
     DateFormat timeFormat = DateFormat('HH:mm');
     String formattedTime = timeFormat.format(dt);
 
-    DateFormat dateFormat = DateFormat('dd/MM/yyyy');
+    DateFormat dateFormat = DateFormat('dd/MM');
     String formattedDate = dateFormat.format(dt);
     if (choose == 0) {
       return formattedDate.toString();

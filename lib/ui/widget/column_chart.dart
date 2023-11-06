@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class ColumnChart extends StatelessWidget {
-  final List<ForeCastData1> chartData;
+  final List<ForeCastData> chartData1;
+  final List<ForeCastData> chartData2;
 
   const ColumnChart({
-    required this.chartData,
+    required this.chartData1,
+    required this.chartData2,
   });
 
   @override
@@ -19,24 +21,31 @@ class ColumnChart extends StatelessWidget {
         legend: Legend(isVisible: true),
         tooltipBehavior: TooltipBehavior(enable: true),
         series: <ChartSeries>[
-          ColumnSeries<ForeCastData1, String>(
+          ColumnSeries<ForeCastData, String>(
+            name: 'Nhiệt độ ( °C)',
+            color: Color(0xE8DA5A5A),
+            dataSource: chartData1,
+            xValueMapper: (ForeCastData forecast, _) => forecast.day,
+            yValueMapper: (ForeCastData forecast, _) =>
+                double.tryParse(forecast.forecast),
+            dataLabelSettings: DataLabelSettings(isVisible: true),
+            enableTooltip: true,
+          ),
+          ColumnSeries<ForeCastData, String>(
             name: 'Lượng mưa (mm)',
-            dataSource: chartData,
-            xValueMapper: (ForeCastData1 forecast, _) => forecast.label,
-            yValueMapper: (ForeCastData1 forecast, _) => double.parse(forecast.forecast),
-            dataLabelSettings: DataLabelSettings(
-              isVisible: true,
-              labelAlignment: ChartDataLabelAlignment.bottom,
-              labelPosition: ChartDataLabelPosition.inside,
-            ),
-            color: Color(0x9EB0DAFF),
+            color: Color(0xFF9EB0DA),
+            dataSource: chartData2,
+            xValueMapper: (ForeCastData forecast, _) => forecast.day,
+            yValueMapper: (ForeCastData forecast, _) =>
+                double.tryParse(forecast.forecast),
+            dataLabelSettings: DataLabelSettings(isVisible: true),
             enableTooltip: true,
           ),
         ],
         primaryXAxis: CategoryAxis(
           labelIntersectAction: AxisLabelIntersectAction.none,
           edgeLabelPlacement: EdgeLabelPlacement.shift,
-          labelPosition: ChartDataLabelPosition.outside, // Đặt thành ChartDataLabelPosition.none
+          labelPosition: ChartDataLabelPosition.outside,
         ),
         primaryYAxis: NumericAxis(
           maximumLabels: 5,
@@ -50,13 +59,11 @@ class ColumnChart extends StatelessWidget {
   }
 }
 
-class ForeCastData1 {
-  ForeCastData1(this.day, this.rank, this.forecast);
+class ForeCastData {
+  ForeCastData({required this.day, required this.forecast});
 
-  final String day;
-  final String rank;
-  final String forecast;
+  String day;
+  String forecast;
 
-  // Create a custom label for the data point
-  String get label => '$day/$rank ';
+// Create a custom label for the data point
 }

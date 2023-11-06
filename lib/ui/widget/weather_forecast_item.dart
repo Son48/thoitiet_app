@@ -1,16 +1,12 @@
 import 'package:flutter/material.dart';
+
+import '../../core/data/models/weather.dart';
 class WeatherForecastItem extends StatelessWidget {
-  final String time;
-  final String imageUrl;
-  final String temperature1;
-  final String temperature2;
+  final WeatherModel daily;
 
   const WeatherForecastItem({
     Key? key,
-    required this.time,
-    required this.temperature1,
-    required this.imageUrl,
-    required this.temperature2,
+    required this.daily,
   });
 
   @override
@@ -28,26 +24,26 @@ class WeatherForecastItem extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,// Sử dụng Row để sắp xếp theo chiều ngang
           children: [
             Text(
-              time,
+              daily.day.toString(),
               style: const TextStyle(fontSize: 13, color: Colors.white),
             ),
             const SizedBox(width: 5), // Khoảng cách giữa Text và Image
             Image.network(
-              imageUrl,
+              "https://openweathermap.org/img/wn/${daily.urlStatusIcon}.png",
               fit: BoxFit.fitWidth,
               width: 40, // Chiều rộng của hình ảnh
               height: 40, // Chiều cao của hình ảnh
             ),
             const SizedBox(width: 20), // Khoảng cách giữa Image và Text nhiệt độ
                 Text(
-                  temperature1,
+                  '${daily.tempMax.toString()} °C',
                   style: const TextStyle(
                     fontSize: 13,
                     color: Colors.white,
                   ),
                 ),
                 Text(
-                  temperature2,
+                  '${daily.tempMin.toString()} °C',
                   style: const TextStyle(
                     fontSize: 10,
                     color: Color(0xFFE3E2E2)
