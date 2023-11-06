@@ -78,4 +78,8 @@ class WeatherModel {
       return formattedTime.toString();
     }
   }
+
+  //map from sqflite to model
+  factory WeatherModel.mapSQLtoModel(Map<String, dynamic> map) =>
+      WeatherModel(lat: map['lat'].toString(), lon: map['lon'].toString());
 }

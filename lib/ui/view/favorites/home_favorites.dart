@@ -41,6 +41,7 @@ class FavovitesHome extends ConsumerWidget {
         }
         return;
       }
+
       if (listFavorites.isNotEmpty) {
         await weatherForestModel.setFavoriteChosse(listFavorites[0]);
         await weatherForestModel.setDefaultData(true);
@@ -119,12 +120,9 @@ class FavovitesHome extends ConsumerWidget {
                             child: SizedBox(
                               height: 225,
                               child: ListView.builder(
-                                itemCount: weatherModel.isLoading
-                                    ? 0
-                                    : listFavorites.length,
+                                itemCount: listFavorites.length,
                                 itemBuilder: (context, index) => CardWeather(
                                   data: listFavorites[index],
-                                  favorite: true,
                                 ),
                                 scrollDirection: Axis.horizontal,
                               ),

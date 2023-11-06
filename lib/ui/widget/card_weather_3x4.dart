@@ -9,16 +9,33 @@ import '../../view_models/weather_report_model/weather_report_model.dart';
 
 class CardWeather extends ConsumerWidget {
   final WeatherModel data;
-  final bool favorite;
+  bool favorite = false;
 
-  CardWeather( {required this.data, required this.favorite});
+
+  CardWeather({super.key, required this.data});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final weatherModel = ref.watch(weatherProvider);
     List<WeatherModel> listFavorites = weatherModel.weatherFavories;
-    final reportModel=ref.watch(weatherReportProvider);
+    //check to remove item in favorites
+    void removeWeatherInFavorites(WeatherModel data) {
+      print('remove');
+      for (WeatherModel item in listFavorites) {
+        if (item.lat.toString() == data.lat.toString() &&
+            item.lon.toString() == data.lon.toString()) {
+          listFavorites.remove(item);
+          weatherModel.deleteFavoriteFromSQL(item);
+        }
+      }
+    }
 
-
+    print('state trong home hiẹn tai');
+    print(listFavorites.length);
+    for (WeatherModel item in listFavorites) {
+      if (item.lat.toString() == data.lat.toString()) {
+        favorite = true;
+      }
+    }
     // TODO: implement build
     return Container(
       margin: const EdgeInsets.only(right: 10),
@@ -91,11 +108,15 @@ class CardWeather extends ConsumerWidget {
                                             ),
                                       onPressed: () {
                                         weatherModel
-                                            .setUpdateFavoritesWeather(true);
+                                            .setUpdateFavoritesWeather();
                                         if (!favorite) {
+                                          print('insert');
                                           listFavorites.add(data);
+                                          weatherModel
+                                              .insertFavoriteFromSQL(data);
                                         } else {
-                                          listFavorites.remove(data);
+                                          //check
+                                          removeWeatherInFavorites(data);
                                         }
                                       },
                                     )
@@ -145,4 +166,4 @@ class CardWeather extends ConsumerWidget {
   }
 }
 
-  //end
+//end
