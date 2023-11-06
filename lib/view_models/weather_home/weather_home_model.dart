@@ -1,8 +1,11 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thoitiet_app/core/constants/constants.dart';
 import 'package:thoitiet_app/core/data/models/weather.dart';
 import 'package:thoitiet_app/core/data/reponsitories/weather_reponsitory.dart';
+import 'package:thoitiet_app/core/data/sqflite/FavoritesData.dart';
 import 'package:thoitiet_app/view_models/base_view_model.dart';
 
 final weatherProvider = ChangeNotifierProvider<WeatherHomeViewModel>(
@@ -17,20 +20,30 @@ class WeatherHomeViewModel extends ChangeNotifier {
 
   List<WeatherModel> weathers = [];
   List<WeatherModel> weathersRecommend = [];
-  bool isLoading = false;
 
   bool _isDefaultData = false;
   bool get isDefaultData => _isDefaultData;
-  List<WeatherModel> weatherFavories = [];
+  List<WeatherModel> _weatherFavories = [];
+  List<WeatherModel> get weatherFavories => _weatherFavories;
+
   void setIsDefaultData(bool isDefault) {
     _isDefaultData = isDefault;
+    _weatherFavories = weatherFavories;
     notifyListeners();
   }
 
-  bool _updateFavoritesWeather = false;
   bool get updateFavoritesWeather => _isDefaultData;
-  void setUpdateFavoritesWeather(bool isDefault) {
-    _updateFavoritesWeather = isDefault;
+  //set the first list favorites
+  Future<void> setUpdateFavoritesWeather() async {
+    print('update lại list favorites trong state');
+    notifyListeners();
+  }
+
+  Future<void> loadDataLocalToState() async {
+    print('set the first list favorites');
+    _weatherFavories = await getAllFavoriteFromSQL();
+    print('trong favorites có: ');
+    print(weatherFavories.length);
     notifyListeners();
   }
 
@@ -66,5 +79,27 @@ class WeatherHomeViewModel extends ChangeNotifier {
     } on Exception {
       rethrow;
     }
+  }
+
+  Future<List<WeatherModel>> getAllFavoriteFromSQL() async {
+    List<WeatherModel> w = await FavoritesData().fetchAllFavoritesFromLocal();
+    return w;
+  }
+
+  Future<void> insertFavoriteFromSQL(WeatherModel favorite) async {
+    var w = await FavoritesData()
+        .insertTable(favorite.lon.toString(), favorite.lat.toString());
+    if (w == 1) {
+      print('THEM THANH CONG');
+    }
+    notifyListeners();
+  }
+
+  Future<void> deleteFavoriteFromSQL(WeatherModel favorite) async {
+    print('remove in local');
+    var w = await FavoritesData()
+        .deleteTable(favorite.lon.toString(), favorite.lat.toString());
+    print(w);
+    notifyListeners();
   }
 }

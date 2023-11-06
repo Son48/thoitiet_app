@@ -18,9 +18,15 @@ class WeatherHome extends ConsumerWidget {
   const WeatherHome({super.key});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    print('home render UI');
     final weatherModel = ref.watch(weatherProvider);
-    List<WeatherModel> listFavorites = weatherModel.weatherFavories;
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    List<WeatherModel> listWeather = weatherModel.weathers;
+
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      //render ui no condition
+      // List<WeatherModel> listFavoritesFromLocal =
+      //     await weatherModel.getAllFavoriteFromSQL();
+
       if (weatherModel.isDefaultData) {
         isLoadingWeather = false;
         isLoadingWeatherRecommend = false;
@@ -28,6 +34,8 @@ class WeatherHome extends ConsumerWidget {
       }
       weatherModel.getDataWeather();
       weatherModel.getDataRecomendWeather();
+      //get first data from local
+      weatherModel.loadDataLocalToState();
       weatherModel.setIsDefaultData(true);
     });
     return SafeArea(
@@ -82,13 +90,9 @@ class WeatherHome extends ConsumerWidget {
                         child: isLoadingWeather
                             ? const PreLoading()
                             : ListView.builder(
-                                itemCount: weatherModel.isLoading
-                                    ? 0
-                                    : weatherModel.weathers.length,
+                                itemCount: listWeather.length,
                                 itemBuilder: (context, index) => CardWeather(
-                                  data: weatherModel.weathers[index],
-                                  favorite: listFavorites
-                                      .contains(weatherModel.weathers[index]),
+                                  data: listWeather[index],
                                 ),
                                 scrollDirection: Axis.horizontal,
                               ),
@@ -125,13 +129,12 @@ class WeatherHome extends ConsumerWidget {
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10)),
                       child: SizedBox(
-                        height: 160,
+                        height: 170,
                         child: isLoadingWeatherRecommend
                             ? PreLoading()
                             : ListView.builder(
-                                itemCount: weatherModel.isLoading
-                                    ? 0
-                                    : weatherModel.weathersRecommend.length,
+                                itemCount:
+                                    weatherModel.weathersRecommend.length,
                                 itemBuilder: (context, index) => CardBigWeather(
                                     weatherModel.weathersRecommend[index]),
                                 scrollDirection: Axis.horizontal,
