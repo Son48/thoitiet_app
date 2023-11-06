@@ -28,6 +28,10 @@ class WeatherHome extends ConsumerWidget {
       }
       weatherModel.getDataWeather();
       weatherModel.getDataRecomendWeather();
+
+      weatherModel.insertFavoriteFromSQL(
+          105.1864.toString(), 10.6113.toString());
+      weatherModel.getAllFavoriteFromSQL();
       weatherModel.setIsDefaultData(true);
     });
     return SafeArea(

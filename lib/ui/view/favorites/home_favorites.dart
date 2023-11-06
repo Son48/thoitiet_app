@@ -18,6 +18,7 @@ class FavovitesHome extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final weatherModel = ref.watch(weatherProvider);
     List<WeatherModel> listFavorites = weatherModel.weatherFavories;
+
     final weatherForestModel = ref.watch(weatherForestAndFavoriteProvider);
     WeatherModel? weatherFavorite = weatherForestModel.favoriteChosse;
     //detail data detail forest

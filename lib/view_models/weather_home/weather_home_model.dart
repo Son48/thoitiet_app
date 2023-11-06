@@ -1,8 +1,11 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thoitiet_app/core/constants/constants.dart';
 import 'package:thoitiet_app/core/data/models/weather.dart';
 import 'package:thoitiet_app/core/data/reponsitories/weather_reponsitory.dart';
+import 'package:thoitiet_app/core/data/sqflite/FavoritesData.dart';
 import 'package:thoitiet_app/view_models/base_view_model.dart';
 
 final weatherProvider = ChangeNotifierProvider<WeatherHomeViewModel>(
@@ -66,5 +69,15 @@ class WeatherHomeViewModel extends ChangeNotifier {
     } on Exception {
       rethrow;
     }
+  }
+
+  Future<List<WeatherModel>> getAllFavoriteFromSQL() async {
+    List<WeatherModel> w = await FavoritesData().fetchAllFavoritesFromLocal();
+    return w;
+  }
+
+  Future<void> insertFavoriteFromSQL(String lon, String lat) async {
+    int w = await FavoritesData().insertTable(lon, lat);
+    print(w);
   }
 }

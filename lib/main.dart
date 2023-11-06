@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thoitiet_app/core/constants/firebase_api.dart';
+import 'package:thoitiet_app/core/data/notificatons/notification_services.dart';
 import 'package:thoitiet_app/firebase_options.dart';
 import 'package:thoitiet_app/ui/view/favorites/home_favorites.dart';
 import 'package:thoitiet_app/ui/view/news/home_news_weather.dart';
@@ -17,14 +18,17 @@ import 'package:thoitiet_app/view_models/weather_home/weather_home_model.dart';
 import 'package:thoitiet_app/ui/view/weather_report/weather_report_view.dart';
 
 void main() async {
+  //server send notification
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await FirebaseAPI().initNotification();
-  // // WidgetsFlutterBinding.ensureInitialized();
-  // // // Initialize cho Local Notification
-  // await NotificationController.initializeLocalNotifications(debug: true);
-  // // Initialize cho Push Notification
-  // await NotificationController.initializeRemoteNotifications(debug: true);
+  //local send notification
+  WidgetsFlutterBinding.ensureInitialized();
+  NotificationService().initNotification();
+  // AwesomeNotifications().isNotificationAllowed().then((isAllowed) => {
+  //       if (!isAllowed)
+  //         {AwesomeNotifications().requestPermissionToSendNotifications()}
+  //     });
   runApp(MyApp());
 }
 

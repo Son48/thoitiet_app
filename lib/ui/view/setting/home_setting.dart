@@ -1,11 +1,14 @@
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thoitiet_app/constans/constains.dart';
+import 'package:thoitiet_app/core/data/notificatons/notification_services.dart';
 
 class SettingHome extends ConsumerWidget {
   const SettingHome({super.key});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    //render ui before, add data
     WidgetsBinding.instance.addPostFrameCallback((_) {});
     return SafeArea(
       child: (Scaffold(
@@ -110,11 +113,25 @@ class SettingHome extends ConsumerWidget {
                               // mainAxisAlignment:
                               //     MainAxisAlignment.spaceBetween,
                               children: [
-                                const Text(
-                                  'LUÔN CHO PHÉP',
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.w500),
+                                ElevatedButton(
+                                  onPressed: () async {
+                                    //send daily notification 16h 31p
+
+                                    print('clik');
+                                    NotificationService().showNotification(
+                                      id: 0,
+                                      title: 'Notification Title',
+                                      body: 'Notification Body',
+                                      scheduledTimeHour: 16,
+                                      scheduledTimeMinute: 31,
+                                    );
+                                  },
+                                  child: const Text(
+                                    'LUÔN CHO PHÉP',
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w500),
+                                  ),
                                 ),
                                 SizedBox(
                                   width: 40,
@@ -266,6 +283,5 @@ class SettingHome extends ConsumerWidget {
       ))),
     );
   }
-
   //end
 }
