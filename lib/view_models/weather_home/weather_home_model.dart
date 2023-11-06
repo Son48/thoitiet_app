@@ -94,6 +94,8 @@ class WeatherHomeViewModel extends ChangeNotifier {
       // Không có kết nối hoặc kết nối khác
       return false;
     }
+  }
+
   Future<List<WeatherModel>> getAllFavoriteFromSQL() async {
     List<WeatherModel> w = await FavoritesData().fetchAllFavoritesFromLocal();
     return w;
