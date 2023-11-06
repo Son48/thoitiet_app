@@ -1,3 +1,4 @@
+import 'package:anim_search_bar/anim_search_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thoitiet_app/constans/constains.dart';
@@ -41,6 +42,7 @@ class WeatherReportView extends ConsumerWidget {
 
     // TODO: implement build
 
+    TextEditingController textEditingController = TextEditingController();
     return SafeArea(
       child: isLoadingWeather
           ? PreLoading()
@@ -59,37 +61,52 @@ class WeatherReportView extends ConsumerWidget {
                   scrollDirection: Axis.vertical,
                   child: Column(
                     children: [
+
                       Row(
                         children: [
-                          Text(
-                            'Thời tiết ${weatherModel!.nameLocation.toString()}',
-                            style: const TextStyle(
-                              fontSize: 17,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                            ),
-                          ),
-                          const Spacer(),
-                          IconButton(
-                            icon: const Icon(
-                              Icons.home_outlined,
-                              size: 32,
-                              color: Colors.white,
-                            ),
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                          ),
-                          IconButton(
-                            icon: const Icon(
-                              Icons.search,
-                              size: 32,
-                              color: Colors.white,
-                            ),
-                            onPressed: () {},
+                          Stack(
+                            children: [
+                              Text(
+                                'Thời tiết ${weatherModel!.nameLocation.toString()}',
+                                style: const TextStyle(
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
+                                ),
+                              ),
+                              const Spacer(),
+                              IconButton(
+                                icon: const Icon(
+                                  Icons.home_outlined,
+                                  size: 32,
+                                  color: Colors.white,
+                                ),
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                              ),
+                              Positioned(
+                                child: AnimSearchBar(
+                                  width: 400,
+                                  textController: textEditingController,
+                                  onSuffixTap: () {
+                                    textEditingController.clear();
+                                  },
+                                  autoFocus: true,
+                                  closeSearchOnSuffixTap: true,
+                                  animationDurationInMilli: 2000,
+                                  helpText: "Search Text...",
+                                  onSubmitted: (String) {},
+                                  rtl: true,
+                                  // Điều chỉnh vị trí của AnimSearchBar
+                                ),
+                              ),
+                            ],
                           ),
                         ],
                       ),
+
+
                       const SizedBox(
                         height: 20,
                       ),
@@ -182,8 +199,11 @@ class WeatherReportView extends ConsumerWidget {
                               Padding(
                                 padding: const EdgeInsets.all(15),
                                 child: Container(
-                                  alignment: Alignment.topLeft,
-                                    child: Text("Chất lượng không khí",style: TextStyle(color: Colors.white),)),
+                                    alignment: Alignment.topLeft,
+                                    child: Text(
+                                      "Chất lượng không khí",
+                                      style: TextStyle(color: Colors.white),
+                                    )),
                               ),
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
@@ -196,7 +216,7 @@ class WeatherReportView extends ConsumerWidget {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         const Icon(
-                                          Icons.air_outlined,
+                                          Icons.water_drop,
                                           size: 30,
                                         ),
                                         Column(
@@ -221,8 +241,8 @@ class WeatherReportView extends ConsumerWidget {
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Icon(
-                                          Icons.air_outlined,
+                                        const Icon(
+                                          Icons.dew_point,
                                           size: 30,
                                         ),
                                         Column(
@@ -237,8 +257,7 @@ class WeatherReportView extends ConsumerWidget {
                                               ' ${forestWeatherModel?.currentWeather?.feelLike.toString()}°',
                                               style: const TextStyle(
                                                   color: Colors.white70,
-                                                fontWeight: FontWeight.bold),
-
+                                                  fontWeight: FontWeight.bold),
                                             ),
                                           ],
                                         ),
@@ -249,7 +268,7 @@ class WeatherReportView extends ConsumerWidget {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         Icon(
-                                          Icons.ten_mp_outlined,
+                                          Icons.air_rounded,
                                           size: 30,
                                         ),
                                         Column(
@@ -287,7 +306,7 @@ class WeatherReportView extends ConsumerWidget {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         Icon(
-                                          Icons.ac_unit,
+                                          Icons.sunny,
                                           size: 30,
                                         ),
                                         Column(
@@ -312,7 +331,7 @@ class WeatherReportView extends ConsumerWidget {
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Icon(Icons.ac_unit),
+                                        Icon(Icons.remove_red_eye),
                                         Column(
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
@@ -336,7 +355,7 @@ class WeatherReportView extends ConsumerWidget {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         Icon(
-                                          Icons.confirmation_num_sharp,
+                                          Icons.cloudy_snowing,
                                           size: 30,
                                         ),
                                         Column(
@@ -397,7 +416,10 @@ class WeatherReportView extends ConsumerWidget {
                             children: [
                               Padding(
                                 padding: const EdgeInsets.all(15.0),
-                                child: Text("Nhiệt độ 7 ngày tới",style: TextStyle(color: Colors.white),),
+                                child: Text(
+                                  "Nhiệt độ 7 ngày tới",
+                                  style: TextStyle(color: Colors.white),
+                                ),
                               ),
                               Column(
                                 mainAxisAlignment:
@@ -441,8 +463,7 @@ class WeatherReportView extends ConsumerWidget {
                                 "Khả năng nhiệt độ và lượng mưa ${forestWeatherModel?.currentWeather?.nameLocation.toString()} ",
                                 textAlign: TextAlign.start,
                                 style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 15),
+                                    color: Colors.white, fontSize: 15),
                               ),
                             ),
                           ),

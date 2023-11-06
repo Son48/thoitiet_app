@@ -13,7 +13,6 @@ import 'dart:math';
 
 bool isLoadingWeather = true;
 bool isLoadingWeatherRecommend = true;
-bool hasConnectionInternet=true;
 final counterProvider = StateProvider<int>((ref) => 0);
 
 class WeatherHome extends ConsumerWidget {
@@ -53,10 +52,10 @@ class WeatherHome extends ConsumerWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                  Image.asset("assets/images/image_error_no_internet.png",
-                   color: Colors.blue, // Đổi màu thành màu đỏ
+                   color: Colors.blue,
                    colorBlendMode: BlendMode.modulate,),
                   const SizedBox(height: 10),
-                  Text("No Internet!",style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold),),// Khoảng cách giữa văn bản và nút
+                  Text("No Internet!",style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold),),
                 ],
               )
               );
