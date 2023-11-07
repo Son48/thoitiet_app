@@ -1,3 +1,4 @@
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thoitiet_app/core/constants/constants.dart';
@@ -208,7 +209,7 @@ class WeatherHome extends ConsumerWidget {
                             borderRadius: BorderRadius.circular(10)),
                         child: ClipRRect(
                           borderRadius:
-                              BorderRadius.circular(20), // Đặt bán kính bo tròn
+                          BorderRadius.circular(20), // Đặt bán kính bo tròn
                           child: Image.network(
                             'https://www.elle.vn/wp-content/uploads/2017/07/25/hinh-anh-dep-1.jpg',
                             fit: BoxFit.fill,
@@ -256,8 +257,8 @@ class WeatherHome extends ConsumerWidget {
 
 //big card
   Container CardBigWeather(
-    WeatherModel data,
-  ) {
+      WeatherModel data,
+      ) {
     return Container(
       margin: EdgeInsets.only(right: 10),
       child: AspectRatio(
@@ -286,7 +287,7 @@ class WeatherHome extends ConsumerWidget {
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
                       gradient:
-                          LinearGradient(begin: Alignment.bottomRight, colors: [
+                      LinearGradient(begin: Alignment.bottomRight, colors: [
                         Colors.black.withOpacity(.2),
                         Colors.black.withOpacity(.0),
                       ])),
@@ -300,7 +301,7 @@ class WeatherHome extends ConsumerWidget {
                             children: [
                               Padding(
                                 padding:
-                                    const EdgeInsets.only(top: 8.0, bottom: 10),
+                                const EdgeInsets.only(top: 8.0, bottom: 10),
                                 child: Text(
                                   "${data.temp}°",
                                   style: const TextStyle(
@@ -346,5 +347,3 @@ class WeatherHome extends ConsumerWidget {
     );
   }
 }
-
-//top card
