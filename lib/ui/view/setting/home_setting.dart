@@ -1,7 +1,6 @@
-import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thoitiet_app/constans/constains.dart';
+import 'package:thoitiet_app/core/constants/constants.dart';
 import 'package:thoitiet_app/core/data/notificatons/notification_services.dart';
 
 class SettingHome extends ConsumerWidget {

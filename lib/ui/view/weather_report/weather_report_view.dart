@@ -1,20 +1,16 @@
 import 'package:anim_search_bar/anim_search_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thoitiet_app/constans/constains.dart';
 import 'package:thoitiet_app/ui/widget/card_report.dart';
-import 'package:thoitiet_app/ui/widget/cross_text.dart';
 import 'package:thoitiet_app/ui/widget/pre_loading.dart';
 import 'package:thoitiet_app/ui/widget/transparent_button.dart';
-import 'package:thoitiet_app/ui/widget/weather_report_item.dart';
 import 'package:thoitiet_app/view_models/weather_report_model/weather_report_model.dart';
+import 'package:thoitiet_app/core/constants/constants.dart';
 
 import '../../../core/data/models/forest_weather.dart';
 import '../../../core/data/models/weather.dart';
 import '../../widget/column_chart.dart';
-import '../../widget/crossed_out_text.dart';
 import '../../widget/hourly_forecard_item.dart';
-import '../../widget/detail_bottom_sheet.dart';
 import '../../widget/weather_forecast_item.dart';
 
 bool isLoadingWeather = true;

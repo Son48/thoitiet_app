@@ -11,13 +11,13 @@ class CardWeather extends ConsumerWidget {
   final WeatherModel data;
   bool favorite = false;
 
-
   CardWeather({super.key, required this.data});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final weatherModel = ref.watch(weatherProvider);
     final reportModel=ref.watch(weatherReportProvider);
     List<WeatherModel> listFavorites = weatherModel.weatherFavories;
+    final reportModel = ref.watch(weatherReportProvider);
     //check to remove item in favorites
     void removeWeatherInFavorites(WeatherModel data) {
       print('remove');

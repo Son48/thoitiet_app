@@ -1,11 +1,9 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thoitiet_app/constans/constains.dart';
+import 'package:thoitiet_app/core/constants/constants.dart';
 import 'package:thoitiet_app/core/data/models/weather.dart';
-import 'package:thoitiet_app/ui/view/base_view.dart';
 import 'package:thoitiet_app/ui/view/news/home_news_weather.dart';
-import 'package:thoitiet_app/ui/widget/bottom_bar.dart';
 import 'package:thoitiet_app/ui/widget/card_weather_3x4.dart';
 import 'package:thoitiet_app/view_models/weather_home/weather_home_model.dart';
 import 'dart:math';
@@ -41,146 +39,146 @@ class WeatherHome extends ConsumerWidget {
     return SafeArea(
       child: (Scaffold(
           body: Container(
-            height: MediaQuery.of(context).size.height,
-            decoration: const BoxDecoration(
-                gradient: LinearGradient(begin: Alignment.bottomRight, colors: [
-                  colorBackground,
-                  Color.fromRGBO(9, 98, 169, 1),
-                  Color.fromRGBO(9, 100, 169, 1),
-                  Color.fromRGBO(9, 98, 140, 1)
-                ])),
-            child: SingleChildScrollView(
-                scrollDirection: Axis.vertical,
-                // shrinkWrap: false,
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 10, top: 20),
-                  child: Column(
+        height: MediaQuery.of(context).size.height,
+        decoration: const BoxDecoration(
+            gradient: LinearGradient(begin: Alignment.bottomRight, colors: [
+          colorBackground,
+          Color.fromRGBO(9, 98, 169, 1),
+          Color.fromRGBO(9, 100, 169, 1),
+          Color.fromRGBO(9, 98, 140, 1)
+        ])),
+        child: SingleChildScrollView(
+            scrollDirection: Axis.vertical,
+            // shrinkWrap: false,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 10, top: 20),
+              child: Column(
+                children: [
+                  //top
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      //top
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          const Text(
-                            'Thời tiết hôm nay',
-                            style: TextStyle(
-                                fontSize: 17,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white),
-                          ),
-                          IconButton(
-                            icon: const Icon(
-                              size: 32,
-                              Icons.search,
-                              color: Colors.white,
-                            ),
-                            onPressed: () {},
-                          )
-                        ],
+                      const Text(
+                        'Thời tiết hôm nay',
+                        style: TextStyle(
+                            fontSize: 17,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white),
                       ),
-
-                      //slide card
-                      Padding(
-                        padding: const EdgeInsets.only(top: 10),
-                        child: Container(
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10)),
-                          child: SizedBox(
-                            height: 225,
-                            child: isLoadingWeather
-                                ? const PreLoading()
-                                : ListView.builder(
-                              itemCount: listWeather.length,
-                              itemBuilder: (context, index) => CardWeather(
-                                data: listWeather[index],
-                              ),
-                              scrollDirection: Axis.horizontal,
-                            ),
-                          ),
+                      IconButton(
+                        icon: const Icon(
+                          size: 32,
+                          Icons.search,
+                          color: Colors.white,
                         ),
-                      )
-                      //
-                      ,
-                      const Padding(
-                        padding: EdgeInsets.only(top: 30.0, right: 20),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text(
-                              'Gợi ý cho bạn',
-                              style: TextStyle(
-                                  fontSize: 17,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white),
-                            ),
-                            Text('Xem tất cả',
-                                style: TextStyle(
-                                    fontSize: 17,
-                                    decoration: TextDecoration.underline,
-                                    color: Colors.white70)),
-                          ],
-                        ),
-                      ),
-                      //slide card
-                      Padding(
-                        padding: const EdgeInsets.only(top: 10),
-                        child: Container(
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10)),
-                          child: SizedBox(
-                            height: 170,
-                            child: isLoadingWeatherRecommend
-                                ? PreLoading()
-                                : ListView.builder(
-                              itemCount:
-                              weatherModel.weathersRecommend.length,
-                              itemBuilder: (context, index) => CardBigWeather(
-                                  weatherModel.weathersRecommend[index]),
-                              scrollDirection: Axis.horizontal,
-                            ),
-                          ),
-                        ),
-                      )
-
-                      //news
-                      ,
-                      const Padding(
-                        padding: EdgeInsets.only(top: 70.0, right: 20),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text(
-                              'Bản tin thời tiết',
-                              style: TextStyle(
-                                  fontSize: 17,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white),
-                            ),
-                            Text('Xem tất cả',
-                                style: TextStyle(
-                                    fontSize: 17,
-                                    decoration: TextDecoration.underline,
-                                    color: Colors.white70)),
-                          ],
-                        ),
-                      ),
-                      //card news
-                      ListView.builder(
-                        // scrollDirection: f,
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemCount: 5,
-                        padding: const EdgeInsets.all(8),
-                        itemBuilder: (BuildContext context, int index) {
-                          return NewsCardItem(context);
-                        },
+                        onPressed: () {},
                       )
                     ],
                   ),
-                )),
-          ))),
+
+                  //slide card
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10),
+                    child: Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10)),
+                      child: SizedBox(
+                        height: 225,
+                        child: isLoadingWeather
+                            ? const PreLoading()
+                            : ListView.builder(
+                                itemCount: listWeather.length,
+                                itemBuilder: (context, index) => CardWeather(
+                                  data: listWeather[index],
+                                ),
+                                scrollDirection: Axis.horizontal,
+                              ),
+                      ),
+                    ),
+                  )
+                  //
+                  ,
+                  const Padding(
+                    padding: EdgeInsets.only(top: 30.0, right: 20),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Gợi ý cho bạn',
+                          style: TextStyle(
+                              fontSize: 17,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white),
+                        ),
+                        Text('Xem tất cả',
+                            style: TextStyle(
+                                fontSize: 17,
+                                decoration: TextDecoration.underline,
+                                color: Colors.white70)),
+                      ],
+                    ),
+                  ),
+                  //slide card
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10),
+                    child: Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10)),
+                      child: SizedBox(
+                        height: 170,
+                        child: isLoadingWeatherRecommend
+                            ? PreLoading()
+                            : ListView.builder(
+                                itemCount:
+                                    weatherModel.weathersRecommend.length,
+                                itemBuilder: (context, index) => CardBigWeather(
+                                    weatherModel.weathersRecommend[index]),
+                                scrollDirection: Axis.horizontal,
+                              ),
+                      ),
+                    ),
+                  )
+
+                  //news
+                  ,
+                  const Padding(
+                    padding: EdgeInsets.only(top: 70.0, right: 20),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Bản tin thời tiết',
+                          style: TextStyle(
+                              fontSize: 17,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white),
+                        ),
+                        Text('Xem tất cả',
+                            style: TextStyle(
+                                fontSize: 17,
+                                decoration: TextDecoration.underline,
+                                color: Colors.white70)),
+                      ],
+                    ),
+                  ),
+                  //card news
+                  ListView.builder(
+                    // scrollDirection: f,
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: 5,
+                    padding: const EdgeInsets.all(8),
+                    itemBuilder: (BuildContext context, int index) {
+                      return NewsCardItem(context);
+                    },
+                  )
+                ],
+              ),
+            )),
+      ))),
     );
   }
 
@@ -349,5 +347,3 @@ class WeatherHome extends ConsumerWidget {
     );
   }
 }
-
-//top card

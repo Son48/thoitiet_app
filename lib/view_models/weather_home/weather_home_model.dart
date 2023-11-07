@@ -6,7 +6,6 @@ import 'package:thoitiet_app/core/constants/constants.dart';
 import 'package:thoitiet_app/core/data/models/weather.dart';
 import 'package:thoitiet_app/core/data/reponsitories/weather_reponsitory.dart';
 import 'package:thoitiet_app/core/data/sqflite/FavoritesData.dart';
-import 'package:thoitiet_app/view_models/base_view_model.dart';
 
 final weatherProvider = ChangeNotifierProvider<WeatherHomeViewModel>(
     (ref) => WeatherHomeViewModel(ref));
@@ -96,6 +95,7 @@ class WeatherHomeViewModel extends ChangeNotifier {
       return false;
     }
   }
+
   Future<List<WeatherModel>> getAllFavoriteFromSQL() async {
     List<WeatherModel> w = await FavoritesData().fetchAllFavoritesFromLocal();
     return w;
