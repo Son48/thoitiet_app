@@ -21,6 +21,7 @@ class WeatherHomeViewModel extends ChangeNotifier {
   List<WeatherModel> weathers = [];
   List<WeatherModel> weathersRecommend = [];
 
+  bool isLoading=false;
   bool _isDefaultData = false;
   bool get isDefaultData => _isDefaultData;
   List<WeatherModel> _weatherFavories = [];
@@ -94,6 +95,7 @@ class WeatherHomeViewModel extends ChangeNotifier {
       // Không có kết nối hoặc kết nối khác
       return false;
     }
+  }
   Future<List<WeatherModel>> getAllFavoriteFromSQL() async {
     List<WeatherModel> w = await FavoritesData().fetchAllFavoritesFromLocal();
     return w;
