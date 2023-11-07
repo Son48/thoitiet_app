@@ -1,11 +1,8 @@
-import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thoitiet_app/constans/constains.dart';
+import 'package:thoitiet_app/core/constants/constants.dart';
 import 'package:thoitiet_app/core/data/models/weather.dart';
-import 'package:thoitiet_app/ui/view/base_view.dart';
 import 'package:thoitiet_app/ui/view/news/home_news_weather.dart';
-import 'package:thoitiet_app/ui/widget/bottom_bar.dart';
 import 'package:thoitiet_app/ui/widget/card_weather_3x4.dart';
 import 'package:thoitiet_app/view_models/weather_home/weather_home_model.dart';
 import 'dart:math';

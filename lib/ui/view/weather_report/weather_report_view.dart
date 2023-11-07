@@ -1,19 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thoitiet_app/constans/constains.dart';
 import 'package:thoitiet_app/ui/widget/card_report.dart';
-import 'package:thoitiet_app/ui/widget/cross_text.dart';
 import 'package:thoitiet_app/ui/widget/pre_loading.dart';
 import 'package:thoitiet_app/ui/widget/transparent_button.dart';
-import 'package:thoitiet_app/ui/widget/weather_report_item.dart';
 import 'package:thoitiet_app/view_models/weather_report_model/weather_report_model.dart';
+import 'package:thoitiet_app/core/constants/constants.dart';
 
 import '../../../core/data/models/forest_weather.dart';
 import '../../../core/data/models/weather.dart';
 import '../../widget/column_chart.dart';
-import '../../widget/crossed_out_text.dart';
 import '../../widget/hourly_forecard_item.dart';
-import '../../widget/detail_bottom_sheet.dart';
 import '../../widget/weather_forecast_item.dart';
 
 bool isLoadingWeather = true;
@@ -182,8 +178,11 @@ class WeatherReportView extends ConsumerWidget {
                               Padding(
                                 padding: const EdgeInsets.all(15),
                                 child: Container(
-                                  alignment: Alignment.topLeft,
-                                    child: Text("Chất lượng không khí",style: TextStyle(color: Colors.white),)),
+                                    alignment: Alignment.topLeft,
+                                    child: Text(
+                                      "Chất lượng không khí",
+                                      style: TextStyle(color: Colors.white),
+                                    )),
                               ),
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
@@ -237,8 +236,7 @@ class WeatherReportView extends ConsumerWidget {
                                               ' ${forestWeatherModel?.currentWeather?.feelLike.toString()}°',
                                               style: const TextStyle(
                                                   color: Colors.white70,
-                                                fontWeight: FontWeight.bold),
-
+                                                  fontWeight: FontWeight.bold),
                                             ),
                                           ],
                                         ),
@@ -397,7 +395,10 @@ class WeatherReportView extends ConsumerWidget {
                             children: [
                               Padding(
                                 padding: const EdgeInsets.all(15.0),
-                                child: Text("Nhiệt độ 7 ngày tới",style: TextStyle(color: Colors.white),),
+                                child: Text(
+                                  "Nhiệt độ 7 ngày tới",
+                                  style: TextStyle(color: Colors.white),
+                                ),
                               ),
                               Column(
                                 mainAxisAlignment:
@@ -441,8 +442,7 @@ class WeatherReportView extends ConsumerWidget {
                                 "Khả năng nhiệt độ và lượng mưa ${forestWeatherModel?.currentWeather?.nameLocation.toString()} ",
                                 textAlign: TextAlign.start,
                                 style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 15),
+                                    color: Colors.white, fontSize: 15),
                               ),
                             ),
                           ),

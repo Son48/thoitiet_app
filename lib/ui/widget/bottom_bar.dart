@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:thoitiet_app/constans/constains.dart';
+import 'package:thoitiet_app/core/constants/constants.dart';
 
 class BottomBar extends StatefulWidget {
   final Map<int, Widget> routes;

@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thoitiet_app/constans/constains.dart';
-import 'package:thoitiet_app/core/data/models/weather.dart';
-import 'package:thoitiet_app/ui/view/base_view.dart';
-import 'package:thoitiet_app/ui/widget/bottom_bar.dart';
-import 'package:thoitiet_app/view_models/weather_home/weather_home_model.dart';
+import 'package:thoitiet_app/core/constants/constants.dart';
 import 'dart:math';
 
 bool isLoadingWeather = true;
