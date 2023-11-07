@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:thoitiet_app/constans/constains.dart';
+import 'package:thoitiet_app/core/constants/constants.dart';
 
 class NewsWeather extends StatelessWidget {
   const NewsWeather({super.key});

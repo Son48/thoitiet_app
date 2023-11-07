@@ -4,7 +4,6 @@ import 'package:thoitiet_app/core/constants/constants.dart';
 import 'package:thoitiet_app/core/data/models/forest_weather.dart';
 import 'package:thoitiet_app/core/data/models/weather.dart';
 import 'package:thoitiet_app/core/data/reponsitories/weather_reponsitory.dart';
-import 'package:thoitiet_app/view_models/base_view_model.dart';
 
 final weatherReportProvider = ChangeNotifierProvider<WeatherReportViewModel>(
     (ref) => WeatherReportViewModel(ref));

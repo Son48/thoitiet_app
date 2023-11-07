@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thoitiet_app/constans/constains.dart';
+import 'package:thoitiet_app/core/constants/constants.dart';
 import 'package:thoitiet_app/core/data/models/forest_weather.dart';
 import 'package:thoitiet_app/core/data/models/weather.dart';
 import 'package:thoitiet_app/ui/view/news/home_news_weather.dart';
