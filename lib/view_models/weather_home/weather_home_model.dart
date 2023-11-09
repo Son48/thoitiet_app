@@ -41,8 +41,7 @@ class WeatherHomeViewModel extends ChangeNotifier {
   Future<void> loadDataLocalToState() async {
     print('set the first list favorites');
     _weatherFavories = await getAllFavoriteFromSQL();
-    print('trong favorites có: ');
-    print(weatherFavories.length);
+
     notifyListeners();
   }
 

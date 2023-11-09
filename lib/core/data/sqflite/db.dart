@@ -1,6 +1,7 @@
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import 'package:thoitiet_app/core/data/sqflite/FavoritesData.dart';
+import 'package:thoitiet_app/core/data/sqflite/SettingNotification.dart';
 
 class DatabaseService {
   Database? _database;
@@ -27,5 +28,6 @@ class DatabaseService {
 
   Future<void> create(Database database, int version) async {
     await FavoritesData().createTable(database);
+    await SettingNotification().createTable(database);
   }
 }

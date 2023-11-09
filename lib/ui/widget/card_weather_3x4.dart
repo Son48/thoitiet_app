@@ -29,8 +29,6 @@ class CardWeather extends ConsumerWidget {
       }
     }
 
-    print('state trong home hiẹn tai');
-    print(listFavorites.length);
     for (WeatherModel item in listFavorites) {
       if (item.lat.toString() == data.lat.toString()) {
         favorite = true;
