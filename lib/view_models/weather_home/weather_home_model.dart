@@ -20,6 +20,7 @@ class WeatherHomeViewModel extends ChangeNotifier {
   List<WeatherModel> weathers = [];
   List<WeatherModel> weathersRecommend = [];
 
+  bool isLoading=false;
   bool _isDefaultData = false;
   bool get isDefaultData => _isDefaultData;
   List<WeatherModel> _weatherFavories = [];
@@ -41,8 +42,7 @@ class WeatherHomeViewModel extends ChangeNotifier {
   Future<void> loadDataLocalToState() async {
     print('set the first list favorites');
     _weatherFavories = await getAllFavoriteFromSQL();
-    print('trong favorites có: ');
-    print(weatherFavories.length);
+
     notifyListeners();
   }
 
