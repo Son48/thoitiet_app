@@ -61,4 +61,5 @@ class WeatherReportViewModel extends ChangeNotifier {
       rethrow;
     }
   }
+
 }
