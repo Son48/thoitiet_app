@@ -29,6 +29,7 @@ class WeatherForestViewModel extends ChangeNotifier {
   bool get defaultData => _defaultData;
   Future<void> setDefaultData(bool isDefault) async {
     _defaultData = isDefault;
+    notifyListeners();
   }
 
   //function set value favoriteChosse state

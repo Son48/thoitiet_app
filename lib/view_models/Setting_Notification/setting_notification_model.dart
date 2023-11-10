@@ -68,13 +68,21 @@ class WeatherReportViewModel extends ChangeNotifier {
   //handle input of time
   Future<void> handleTimeNoti(WeatherModel w) async {
     bool error = false;
-    if (int.parse(hourController.text) > 24) {
-      hourController.text = '24';
-      error = true;
-    }
-    if (int.parse(minutesController.text) > 60) {
+
+    if (minutesController.text.isEmpty || hourController.text.isEmpty) {
+      hourController.text = '00';
       minutesController.text = '00';
       error = true;
+    } else {
+      // validation  input
+      if (int.parse(hourController.text) > 24) {
+        hourController.text = '24';
+        error = true;
+      }
+      if (int.parse(minutesController.text) > 60) {
+        minutesController.text = '00';
+        error = true;
+      }
     }
     error ? setErrorTime('Thời gian không hợp lệ!') : setErrorTime('');
     if (!error) {
@@ -121,6 +129,8 @@ class WeatherReportViewModel extends ChangeNotifier {
         nameLocation: favorite.nameLocation.toString());
     setListAllSetting(setting);
     // setLoadSetting(false);
+    hourController.text = '00';
+    minutesController.text = '00';
     print('successfully insert');
     //update worker manager
     print('insert setting in worker');
@@ -164,7 +174,8 @@ class WeatherReportViewModel extends ChangeNotifier {
       }
     }
     //update worker manager
-
+    hourController.text = '00';
+    minutesController.text = '00';
     print('update workermanager');
     Workmanager().cancelAll();
     await NotificationService().scheduledNotifi();
