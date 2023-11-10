@@ -72,7 +72,9 @@ class WeatherHome extends ConsumerWidget {
                           Icons.search,
                           color: Colors.white,
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pushNamed(context, "search");
+                        },
                       )
                     ],
                   ),

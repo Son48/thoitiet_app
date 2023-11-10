@@ -80,6 +80,7 @@ class MyApp extends StatelessWidget {
           "detail-news": (context) => NewsWeather(),
           "news": (context) => NewsHome(),
           "detail-weather": (context) => WeatherReportView(),
+          "search":(context)=>WeatherSearch(),
         },
         home: Scaffold(
           bottomNavigationBar: BottomBar(routes: routes),

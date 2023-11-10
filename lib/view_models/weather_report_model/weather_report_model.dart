@@ -5,6 +5,8 @@ import 'package:thoitiet_app/core/data/models/forest_weather.dart';
 import 'package:thoitiet_app/core/data/models/weather.dart';
 import 'package:thoitiet_app/core/data/reponsitories/weather_reponsitory.dart';
 
+import '../../core/data/models/location.dart';
+
 final weatherReportProvider = ChangeNotifierProvider<WeatherReportViewModel>(
     (ref) => WeatherReportViewModel(ref));
 
@@ -27,6 +29,17 @@ class WeatherReportViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  // Call API to get weather data for location
+  Future<void> setLocation(Location location) async {
+    try {
+      final weatherData = await _weatherReponsitory.getWeatherData(location.lat.toString(), location.lon.toString());
+      _weatherModel = weatherData;
+      notifyListeners();
+    } catch (e) {
+      // Xử lý lỗi nếu có
+      print('Error fetching weather data: $e');
+    }
+  }
   ForestWeatherModel? _forestWeatherModel;
 
   ForestWeatherModel? get forestWeatherModel => _forestWeatherModel;

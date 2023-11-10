@@ -1,83 +1,112 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thoitiet_app/core/constants/constants.dart';
+import 'package:thoitiet_app/ui/widget/card_search.dart';
+import 'package:thoitiet_app/view_models/weather_search/weather_search_model.dart';
+import 'package:thoitiet_app/core/data/models/location.dart';
 
-import '../../widget/card_view.dart';
+import '../../../core/constants/constants.dart';
 
 class WeatherSearch extends ConsumerWidget {
-  const WeatherSearch({super.key});
+
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+
+    final weatherSearchModel = ref.watch(weatherSearchProvider);
+    String searchQuery=weatherSearchModel.searchQuery;
+    List<Location> rs_search =  weatherSearchModel.weatherSearch;
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      if (weatherSearchModel.defaultData) {
+        return;
+      }
+      weatherSearchModel.setDefaultData(true);
+      weatherSearchModel.setSearchQuery('');
+      weatherSearchModel.setController('');
+
+    });
     return SafeArea(
-      child: (Scaffold(
-          body: Container(
-        height: MediaQuery.of(context).size.height,
-        decoration: const BoxDecoration(
-            gradient: LinearGradient(begin: Alignment.bottomRight, colors: [
-          colorBackground,
-          Color.fromRGBO(9, 98, 169, 1),
-          Color.fromRGBO(9, 100, 169, 1),
-          Color.fromRGBO(9, 98, 140, 1)
-        ])),
-        child: SingleChildScrollView(
-          scrollDirection: Axis.vertical,
-          // shrinkWrap: false,
-          child: Padding(
-            padding: const EdgeInsets.only(left: 10, top: 20),
-            child: Column(
-              children: [
-                //top
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    const Text(
-                      'Thời tiết hôm nay',
-                      style: TextStyle(
-                          fontSize: 17,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white),
-                    ),
-                    IconButton(
-                      icon: const Icon(
-                        size: 32,
-                        Icons.search,
-                        color: Colors.white,
+      child: Scaffold(
+        body: SingleChildScrollView(
+          child: Material(
+            color: Colors.blue,
+            child: Container(
+              decoration: const BoxDecoration(
+                  gradient: LinearGradient(begin: Alignment.bottomRight, colors: [
+                    colorBackground,
+                    Color.fromRGBO(9, 98, 169, 1),
+                    Color.fromRGBO(9, 100, 169, 1),
+                    Color.fromRGBO(9, 98, 140, 1)
+                  ])),
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      IconButton(
+                        icon: Icon(Icons.arrow_back, color: Colors.grey),
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
                       ),
-                      onPressed: () {},
-                    )
-                  ],
-                ),
-                //slide card
-                Padding(
-                  padding: const EdgeInsets.only(top: 10),
-                  child: Container(
-                    decoration:
-                        BoxDecoration(borderRadius: BorderRadius.circular(10)),
-                    child: SizedBox(
-                      height: 160,
-                      child: ListView.builder(
-                          itemCount: 5,
-                          itemBuilder: (context, index) {
-                            return const CardBigWeather(
-                              tag: '1',
-                              temp: '1',
-                              tempmin: '1',
-                              tempmax: '1',
-                              nameLocation: 'da nang',
-                              urlStatusIcon: '09',
-                              descriptionWeather: 'mưa vừa',
-                            );
-                          }),
+                      Expanded(
+                        child: Padding(
+                          padding: EdgeInsets.all(8),
+                          child:   TextField(
+                            controller: weatherSearchModel.getController,
+                            onChanged: (newText) => weatherSearchModel.handleSearch(newText),
+                            decoration: InputDecoration(
+                              filled: true,
+                              fillColor: Colors.grey,
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(30),
+                                borderSide: BorderSide.none,
+                              ),
+                              hintText: "Search weather....",
+                              prefixIcon: const Icon(Icons.search),
+                              prefixIconColor: Colors.white,
+                              contentPadding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+
+                  Container(
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height,
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 10),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: SizedBox(
+                          height: 170,
+                          child: ListView.builder(
+                            itemCount:  rs_search.length,
+                            itemBuilder: (context, index) {
+                              if (rs_search.isNotEmpty&&searchQuery.toLowerCase().contains(searchQuery.toLowerCase())) {
+                                return CardSearch(data: rs_search[index]);
+                              }
+                              return SizedBox.shrink();
+                            },
+                            scrollDirection: Axis.vertical,
+                            shrinkWrap: true,
+                          ),
+                        ),
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
-      ))),
+      ),
     );
   }
 }
