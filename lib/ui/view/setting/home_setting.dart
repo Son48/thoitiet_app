@@ -257,49 +257,6 @@ class SettingHome extends ConsumerWidget {
                         ],
                       ),
                     ),
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Text(
-                            'Cài đặt chi đó nữa: ',
-                            style: TextStyle(color: Colors.white),
-                          ),
-                          Row(
-                            // mainAxisAlignment:
-                            //     MainAxisAlignment.spaceBetween,
-                            children: [
-                              const Text(
-                                'LUÔN CHO PHÉP12',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w500),
-                              ),
-                              SizedBox(
-                                width: 40,
-                                child: IconButton(
-                                  onPressed: () async {
-                                    await NotificationService()
-                                        .showNotification(
-                                      id: DateTime.now().second +
-                                          Random().nextInt(100),
-                                      title: 'Thông báo thời tiết định kì.',
-                                      body: 'oke',
-                                    );
-                                  },
-                                  icon: const Icon(
-                                    size: 20,
-                                    Icons.arrow_right,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              )
-                            ],
-                          )
-                        ],
-                      ),
-                    ),
                     Row(
                       // mainAxisAlignment:
                       //     MainAxisAlignment.spaceBetween,

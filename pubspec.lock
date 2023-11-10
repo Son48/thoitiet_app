@@ -25,16 +25,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.2.0"
-<<<<<<< HEAD
-  android_alarm_manager_plus:
-    dependency: "direct main"
-    description:
-      name: android_alarm_manager_plus
-      sha256: "82fb28c867c4b3dd7e9157728e46426b8916362f977dbba46b949210f00099f4"
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.0.3"
-=======
   anim_search_bar:
     dependency: "direct main"
     description:
@@ -43,7 +33,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.3"
->>>>>>> d02442ba7743abce380e1834a8cdb981a7f0a60d
   animate_do:
     dependency: "direct main"
     description:

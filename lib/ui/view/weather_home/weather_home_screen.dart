@@ -203,13 +203,13 @@ class WeatherHome extends ConsumerWidget {
                     padding: const EdgeInsets.all(2.0),
                     child: SizedBox(
                       height: 110,
-                      width: 110,
+                      width: 100,
                       child: DecoratedBox(
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10)),
                         child: ClipRRect(
                           borderRadius:
-                          BorderRadius.circular(20), // Đặt bán kính bo tròn
+                              BorderRadius.circular(20), // Đặt bán kính bo tròn
                           child: Image.network(
                             'https://www.elle.vn/wp-content/uploads/2017/07/25/hinh-anh-dep-1.jpg',
                             fit: BoxFit.fill,
@@ -223,8 +223,8 @@ class WeatherHome extends ConsumerWidget {
                 Container(
                   padding: EdgeInsets.only(left: 10, right: 10),
                   child: const SizedBox(
-                    width: 230,
-                    height: 100,
+                    width: 220,
+                    height: 80,
                     child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -257,8 +257,8 @@ class WeatherHome extends ConsumerWidget {
 
 //big card
   Container CardBigWeather(
-      WeatherModel data,
-      ) {
+    WeatherModel data,
+  ) {
     return Container(
       margin: EdgeInsets.only(right: 10),
       child: AspectRatio(
@@ -287,7 +287,7 @@ class WeatherHome extends ConsumerWidget {
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
                       gradient:
-                      LinearGradient(begin: Alignment.bottomRight, colors: [
+                          LinearGradient(begin: Alignment.bottomRight, colors: [
                         Colors.black.withOpacity(.2),
                         Colors.black.withOpacity(.0),
                       ])),
@@ -301,7 +301,7 @@ class WeatherHome extends ConsumerWidget {
                             children: [
                               Padding(
                                 padding:
-                                const EdgeInsets.only(top: 8.0, bottom: 10),
+                                    const EdgeInsets.only(top: 8.0, bottom: 10),
                                 child: Text(
                                   "${data.temp}°",
                                   style: const TextStyle(

@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
 import 'package:thoitiet_app/core/data/models/setting_notifi.dart';
 import 'package:thoitiet_app/core/data/models/weather.dart';
 import 'package:thoitiet_app/core/data/reponsitories/weather_reponsitory.dart';
@@ -62,22 +61,39 @@ class NotificationService {
           int.parse(item.hour.toString()), int.parse(item.minute.toString()));
       var initialDelay = specificTime.difference(now);
       print('time left to notifi: ${initialDelay}');
-
-      await Workmanager().registerPeriodicTask(
-        (DateTime.now().second + Random().nextInt(999)).toString() +
-            (item.lon.toString()) +
-            (item.lat.toString()),
-        'CALL_API',
-        frequency: Duration(hours: 24),
-        inputData: {
-          'lon': item.lon.toString(),
-          'lat': item.lat.toString(),
-        },
-        initialDelay: Duration(minutes: initialDelay.inMinutes),
-        // constraints: Constraints(
-        //   networkType: NetworkType.connected,
-        // )
-      );
+      if (initialDelay.inMinutes > 0) {
+        await Workmanager().registerPeriodicTask(
+          (DateTime.now().second + Random().nextInt(999)).toString() +
+              (item.lon.toString()) +
+              (item.lat.toString()),
+          'CALL_API',
+          frequency: Duration(hours: 24),
+          inputData: {
+            'lon': item.lon.toString(),
+            'lat': item.lat.toString(),
+          },
+          initialDelay: Duration(minutes: initialDelay.inMinutes),
+          // constraints: Constraints(
+          //   networkType: NetworkType.connected,
+          // )
+        );
+      } else {
+        await Workmanager().registerPeriodicTask(
+          (DateTime.now().second + Random().nextInt(999)).toString() +
+              (item.lon.toString()) +
+              (item.lat.toString()),
+          'CALL_API',
+          frequency: Duration(hours: 24),
+          inputData: {
+            'lon': item.lon.toString(),
+            'lat': item.lat.toString(),
+          },
+          initialDelay: Duration(minutes: (24 * 60) + initialDelay.inMinutes),
+          // constraints: Constraints(
+          //   networkType: NetworkType.connected,
+          // )
+        );
+      }
     }
   }
 
