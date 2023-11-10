@@ -81,22 +81,6 @@ class WeatherReportView extends ConsumerWidget {
                                   Navigator.pop(context);
                                 },
                               ),
-                              Positioned(
-                                child: AnimSearchBar(
-                                  width: 400,
-                                  textController: textEditingController,
-                                  onSuffixTap: () {
-                                    textEditingController.clear();
-                                  },
-                                  autoFocus: true,
-                                  closeSearchOnSuffixTap: true,
-                                  animationDurationInMilli: 2000,
-                                  helpText: "Search Text...",
-                                  onSubmitted: (String) {},
-                                  rtl: true,
-                                  // Điều chỉnh vị trí của AnimSearchBar
-                                ),
-                              ),
                             ],
                           ),
                         ],

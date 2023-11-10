@@ -3,5 +3,6 @@ import 'dart:ffi';
 class Location {
   String? lon;
   String? lat;
-  Location({this.lon, this.lat});
+  String? nameLocation;
+  Location({this.lon, this.lat,this.nameLocation});
 }
