@@ -1,4 +1,3 @@
-import 'package:anim_search_bar/anim_search_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thoitiet_app/ui/widget/card_report.dart';
@@ -13,9 +12,6 @@ import '../../widget/column_chart.dart';
 import '../../widget/hourly_forecard_item.dart';
 import '../../widget/weather_forecast_item.dart';
 
-bool isLoadingWeather = true;
-bool isLoadingHourlyWeather = true;
-
 class WeatherReportView extends ConsumerWidget {
   const WeatherReportView({super.key});
 
@@ -28,19 +24,13 @@ class WeatherReportView extends ConsumerWidget {
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       if (reportModel.defaultData) {
-        isLoadingWeather = false;
-        isLoadingHourlyWeather = false;
         return;
       }
       await reportModel.getDataForestWeather(weatherModel!);
       await reportModel.setDefaultData(true);
     });
-
-    // TODO: implement build
-
-    TextEditingController textEditingController = TextEditingController();
     return SafeArea(
-      child: isLoadingWeather
+      child: !reportModel.defaultData
           ? PreLoading()
           : Scaffold(
               body: Container(
@@ -57,7 +47,6 @@ class WeatherReportView extends ConsumerWidget {
                   scrollDirection: Axis.vertical,
                   child: Column(
                     children: [
-
                       Row(
                         children: [
                           Stack(
@@ -85,7 +74,6 @@ class WeatherReportView extends ConsumerWidget {
                           ),
                         ],
                       ),
-
 
                       const SizedBox(
                         height: 20,

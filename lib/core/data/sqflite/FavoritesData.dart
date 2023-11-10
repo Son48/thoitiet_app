@@ -1,6 +1,7 @@
 import 'dart:ffi';
 
 import 'package:sqflite/sqflite.dart';
+import 'package:thoitiet_app/core/data/models/setting_notifi.dart';
 import 'package:thoitiet_app/core/data/models/weather.dart';
 import 'package:thoitiet_app/core/data/reponsitories/weather_reponsitory.dart';
 import 'package:thoitiet_app/core/data/sqflite/db.dart';
@@ -9,6 +10,7 @@ class FavoritesData {
   final WeatherReponsitory _weatherReponsitory = WeatherReponsitory();
 
   final tableName = 'favorites_weather';
+
   //function to create table
   Future<void> createTable(Database database) async {
     await database.execute("CREATE TABLE $tableName (lon STRING, lat STRING);");

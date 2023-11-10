@@ -1,14 +1,82 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thoitiet_app/core/constants/constants.dart';
+import 'package:thoitiet_app/core/data/models/setting_notifi.dart';
 import 'package:thoitiet_app/core/data/notificatons/notification_services.dart';
+import 'package:thoitiet_app/ui/view/news/home_news_weather.dart';
+import 'package:thoitiet_app/view_models/Setting_Notification/setting_notification_model.dart';
+import 'package:workmanager/workmanager.dart';
 
 class SettingHome extends ConsumerWidget {
   const SettingHome({super.key});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    print('render setting');
     //render ui before, add data
-    WidgetsBinding.instance.addPostFrameCallback((_) {});
+    final handleTimeToNotifi = ref.watch(weatherFavoritesProvider);
+    List<SettingNotificationModel> listAllSettingNoti =
+        handleTimeToNotifi.listAllSetting;
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (handleTimeToNotifi.loadSetting) {
+        return;
+      }
+      handleTimeToNotifi.getAllSettingFromLocal();
+      handleTimeToNotifi.setLoadSetting(true);
+    });
+    //fucntion return widget and delete setting in db
+    Widget ItemSettingNoti(SettingNotificationModel setting) {
+      return Padding(
+        padding: const EdgeInsets.only(bottom: 10, right: 10),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            SizedBox(
+              width: 200,
+              child: Text(
+                '*Thông báo ${setting.nameLocation} vào lúc: ',
+                style: const TextStyle(color: Colors.white),
+              ),
+            ),
+            Row(
+              children: [
+                Column(
+                  children: [
+                    Text(
+                      '${setting.hour} giờ ',
+                      style: const TextStyle(color: Colors.yellow),
+                    ),
+                    Text(
+                      '${setting.minute} phút ',
+                      style: const TextStyle(color: Colors.yellow),
+                    ),
+                  ],
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: IconButton(
+                    onPressed: () {
+                      handleTimeToNotifi.deleteSettingFromSQL(
+                          setting.lon.toString(),
+                          setting.lat.toString(),
+                          setting.hour.toString(),
+                          setting.minute.toString());
+                    },
+                    icon: Icon(
+                      Icons.cancel_outlined,
+                      color: Colors.orange[500],
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ],
+        ),
+      );
+    }
+
     return SafeArea(
       child: (Scaffold(
           body: Container(
@@ -101,49 +169,19 @@ class SettingHome extends ConsumerWidget {
                       padding: const EdgeInsets.only(top: 20.0),
                       child: SizedBox(
                         width: MediaQuery.of(context).size.width,
-                        child: Row(
+                        child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Text(
-                              'Cài đặt cấp phép quyền: ',
-                              style: TextStyle(color: Colors.white),
-                            ),
-                            Row(
-                              // mainAxisAlignment:
-                              //     MainAxisAlignment.spaceBetween,
-                              children: [
-                                ElevatedButton(
-                                  onPressed: () async {
-                                    //send daily notification 16h 31p
-
-                                    print('clik');
-                                    NotificationService().showNotification(
-                                      id: 0,
-                                      title: 'Notification Title',
-                                      body: 'Notification Body',
-                                      scheduledTimeHour: 13,
-                                      scheduledTimeMinute: 18,
-                                    );
-                                  },
-                                  child: const Text(
-                                    'LUÔN CHO PHÉP',
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.w500),
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 40,
-                                  child: IconButton(
-                                    onPressed: () => {},
-                                    icon: const Icon(
-                                      size: 20,
-                                      Icons.arrow_right,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                )
-                              ],
+                            Padding(
+                              padding: const EdgeInsets.only(top: 20),
+                              child: ListView.builder(
+                                scrollDirection: Axis.vertical,
+                                shrinkWrap: true,
+                                itemCount: listAllSettingNoti.length,
+                                itemBuilder: (context, index) =>
+                                    ItemSettingNoti(listAllSettingNoti[index]),
+                              ),
                             )
                           ],
                         ),
@@ -219,41 +257,6 @@ class SettingHome extends ConsumerWidget {
                         ],
                       ),
                     ),
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Text(
-                            'Cài đặt chi đó nữa: ',
-                            style: TextStyle(color: Colors.white),
-                          ),
-                          Row(
-                            // mainAxisAlignment:
-                            //     MainAxisAlignment.spaceBetween,
-                            children: [
-                              const Text(
-                                'LUÔN CHO PHÉP',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w500),
-                              ),
-                              SizedBox(
-                                width: 40,
-                                child: IconButton(
-                                  onPressed: () => {},
-                                  icon: const Icon(
-                                    size: 20,
-                                    Icons.arrow_right,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              )
-                            ],
-                          )
-                        ],
-                      ),
-                    ),
                     Row(
                       // mainAxisAlignment:
                       //     MainAxisAlignment.spaceBetween,
@@ -282,5 +285,6 @@ class SettingHome extends ConsumerWidget {
       ))),
     );
   }
+
   //end
 }

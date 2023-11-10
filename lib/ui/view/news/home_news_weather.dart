@@ -93,7 +93,7 @@ class NewsHome extends ConsumerWidget {
                     padding: const EdgeInsets.all(2.0),
                     child: SizedBox(
                       height: 110,
-                      width: 110,
+                      width: 80,
                       child: DecoratedBox(
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10)),
