@@ -48,75 +48,65 @@ class WeatherReportView extends ConsumerWidget {
                   child: Column(
                     children: [
                       Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Stack(
-                            children: [
-                              Text(
-                                'Thời tiết ${weatherModel!.nameLocation.toString()}',
-                                style: const TextStyle(
-                                  fontSize: 17,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white,
-                                ),
+                          IconButton(
+                            icon: const Icon(
+                              Icons.arrow_back,
+                              size: 32,
+                              color: Colors.white,
+                            ),
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(right: 10),
+                            child: Text(
+                              'Thời tiết ${weatherModel!.nameLocation.toString()}',
+                              style: const TextStyle(
+                                fontSize: 17,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
                               ),
-                              const Spacer(),
-                              IconButton(
-                                icon: const Icon(
-                                  Icons.home_outlined,
-                                  size: 32,
-                                  color: Colors.white,
-                                ),
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                              ),
-                            ],
+                            ),
                           ),
                         ],
                       ),
 
-                      const SizedBox(
-                        height: 20,
-                      ),
-
-                      Padding(
-                        padding: const EdgeInsets.only(top: 10),
-                        child: Container(
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10)),
-                          child: SizedBox(
-                            height: 160,
-                            child: CardReport(
-                              tag: '${weatherModel?.nameLocation.toString()}',
-                              temp: '${weatherModel?.temp.toString()}',
-                              tempmin: '${weatherModel?.tempMin.toString()}',
-                              tempmax: '${weatherModel?.tempMax.toString()}',
-                              nameLocation:
-                                  '${weatherModel?.nameLocation.toString()}',
-                              urlStatusIcon:
-                                  '${weatherModel?.urlStatusIcon.toString()}',
-                              descriptionWeather:
-                                  '${weatherModel?.descriptionWeather.toString()}',
-                            ),
-                          ),
+                      SizedBox(
+                        height: 150,
+                        child: CardReport(
+                          tag: weatherModel.nameLocation.toString(),
+                          temp: weatherModel.temp.toString(),
+                          tempmin: weatherModel.tempMin.toString(),
+                          tempmax: weatherModel.tempMax.toString(),
+                          nameLocation: weatherModel.nameLocation.toString(),
+                          urlStatusIcon: weatherModel.urlStatusIcon.toString(),
+                          descriptionWeather:
+                              weatherModel.descriptionWeather.toString(),
                         ),
                       ),
                       const SizedBox(
                         height: 20,
                       ),
                       //container 2
-                      Center(
-                        child: Container(
-                          alignment: Alignment.topLeft,
-                          child: const Padding(
-                            padding: EdgeInsets.only(top: 20),
-                            child: Text(
+                      Padding(
+                        padding: const EdgeInsets.only(left: 10),
+                        child: Center(
+                          child: Container(
+                            alignment: Alignment.topLeft,
+                            child: const Text(
                               'Dự báo thời tiết trong 24h tới',
                               style:
                                   TextStyle(color: Colors.white, fontSize: 15),
                             ),
                           ),
                         ),
+                      ),
+                      const SizedBox(
+                        height: 10,
                       ),
                       Container(
                         decoration: BoxDecoration(
@@ -149,215 +139,254 @@ class WeatherReportView extends ConsumerWidget {
                       Material(
                         color: Colors.blue,
                         borderRadius: BorderRadius.circular(20.0),
-                        child: Container(
-                          width: MediaQuery.of(context).size.width - 20,
-                          height: MediaQuery.of(context).size.height * 0.25,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20.0),
-                            gradient: LinearGradient(
-                              begin: Alignment.bottomRight,
-                              colors: [
-                                Colors.black.withOpacity(.2),
-                                Colors.black.withOpacity(.0),
+                        child: Padding(
+                          padding: const EdgeInsets.only(bottom: 10),
+                          child: Container(
+                            width: MediaQuery.of(context).size.width - 20,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20.0),
+                            ),
+                            child: Column(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(15),
+                                  child: Container(
+                                      alignment: Alignment.topLeft,
+                                      child: const Text(
+                                        "Chất lượng không khí",
+                                        style: TextStyle(color: Colors.white),
+                                      )),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          const Icon(
+                                            Icons.water_drop,
+                                            color: Color.fromARGB(
+                                                255, 249, 236, 124),
+                                            size: 30,
+                                          ),
+                                          Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              const Text(
+                                                "Độ ẩm",
+                                                style: TextStyle(
+                                                    color: Colors.white70),
+                                              ),
+                                              const SizedBox(
+                                                height: 10,
+                                              ),
+                                              Text(
+                                                ' ${forestWeatherModel?.currentWeather?.clounds.toString()}%',
+                                                style: const TextStyle(
+                                                    color: Colors.white70,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          const Icon(
+                                            Icons.dew_point,
+                                            color: Color.fromARGB(
+                                                255, 249, 236, 124),
+                                            size: 30,
+                                          ),
+                                          Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text(
+                                                'Cảm giác',
+                                                style: TextStyle(
+                                                    color: Colors.white),
+                                              ),
+                                              const SizedBox(
+                                                height: 10,
+                                              ),
+                                              Text(
+                                                ' ${forestWeatherModel?.currentWeather?.feelLike.toString()}°',
+                                                style: const TextStyle(
+                                                    color: Colors.white70,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Icon(
+                                            Icons.air_rounded,
+                                            size: 30,
+                                            color: Color.fromARGB(
+                                                255, 249, 236, 124),
+                                          ),
+                                          Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text(
+                                                "Tốc độ gió",
+                                                style: TextStyle(
+                                                    color: Colors.white),
+                                              ),
+                                              SizedBox(
+                                                height: 10,
+                                              ),
+                                              Text(
+                                                '${forestWeatherModel?.currentWeather?.speedWind.toString()}m/s',
+                                                style: const TextStyle(
+                                                    color: Colors.white70,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Icon(
+                                            Icons.sunny,
+                                            size: 30,
+                                            color: Color.fromARGB(
+                                                255, 249, 236, 124),
+                                          ),
+                                          Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text(
+                                                "Chỉ số UV",
+                                                style: TextStyle(
+                                                    color: Colors.white),
+                                              ),
+                                              SizedBox(
+                                                height: 10,
+                                              ),
+                                              Text(
+                                                '${forestWeatherModel?.currentWeather?.uvi.toString()} UV',
+                                                style: TextStyle(
+                                                    color: Colors.white70,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Icon(
+                                            Icons.remove_red_eye,
+                                            color: Color.fromARGB(
+                                                255, 249, 236, 124),
+                                          ),
+                                          Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text(
+                                                "Tầm nhìn",
+                                                style: TextStyle(
+                                                    color: Colors.white),
+                                              ),
+                                              SizedBox(
+                                                height: 10,
+                                              ),
+                                              Text(
+                                                '${forestWeatherModel?.currentWeather?.visibility.toString()} m',
+                                                style: TextStyle(
+                                                    color: Colors.white70,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Icon(
+                                            Icons.cloudy_snowing,
+                                            color: Color.fromARGB(
+                                                255, 249, 236, 124),
+                                            size: 30,
+                                          ),
+                                          Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text(
+                                                "Lượng mưa",
+                                                style: TextStyle(
+                                                    color: Colors.white),
+                                              ),
+                                              SizedBox(
+                                                height: 10,
+                                              ),
+                                              Text(
+                                                '${forestWeatherModel?.currentWeather != null ? forestWeatherModel?.currentWeather?.rain.toString() : 'Không có'}',
+                                                style: TextStyle(
+                                                    color: Colors.white70,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                const Padding(
+                                  padding: EdgeInsets.only(top: 8.0),
+                                  child: Text(
+                                    'Lưu ý: viêm họng bão lũ mưa giông gì đó',
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w600),
+                                  ),
+                                ),
                               ],
                             ),
-                          ),
-                          child: Column(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(15),
-                                child: Container(
-                                    alignment: Alignment.topLeft,
-                                    child: Text(
-                                      "Chất lượng không khí",
-                                      style: TextStyle(color: Colors.white),
-                                    )),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        const Icon(
-                                          Icons.water_drop,
-                                          size: 30,
-                                        ),
-                                        Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            const Text("Độ ẩm"),
-                                            const SizedBox(
-                                              height: 10,
-                                            ),
-                                            Text(
-                                              ' ${forestWeatherModel?.currentWeather?.clounds.toString()}%',
-                                              style: const TextStyle(
-                                                  color: Colors.white70,
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        const Icon(
-                                          Icons.dew_point,
-                                          size: 30,
-                                        ),
-                                        Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text('Cảm giác'),
-                                            const SizedBox(
-                                              height: 10,
-                                            ),
-                                            Text(
-                                              ' ${forestWeatherModel?.currentWeather?.feelLike.toString()}°',
-                                              style: const TextStyle(
-                                                  color: Colors.white70,
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Icon(
-                                          Icons.air_rounded,
-                                          size: 30,
-                                        ),
-                                        Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text("Tốc độ gió"),
-                                            SizedBox(
-                                              height: 10,
-                                            ),
-                                            Text(
-                                              '${forestWeatherModel?.currentWeather?.speedWind.toString()}m/s',
-                                              style: const TextStyle(
-                                                  color: Colors.white70,
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Icon(
-                                          Icons.sunny,
-                                          size: 30,
-                                        ),
-                                        Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text("Chỉ số UV"),
-                                            SizedBox(
-                                              height: 10,
-                                            ),
-                                            Text(
-                                              '${forestWeatherModel?.currentWeather?.uvi.toString()} UV',
-                                              style: TextStyle(
-                                                  color: Colors.white70,
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Icon(Icons.remove_red_eye),
-                                        Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text("Tầm nhìn"),
-                                            SizedBox(
-                                              height: 10,
-                                            ),
-                                            Text(
-                                              '${forestWeatherModel?.currentWeather?.visibility.toString()} m',
-                                              style: TextStyle(
-                                                  color: Colors.white70,
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Icon(
-                                          Icons.cloudy_snowing,
-                                          size: 30,
-                                        ),
-                                        Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text("Lượng mưa"),
-                                            SizedBox(
-                                              height: 10,
-                                            ),
-                                            Text(
-                                              '${forestWeatherModel?.currentWeather != null ? forestWeatherModel?.currentWeather?.rain.toString() : 'Không có'}',
-                                              style: TextStyle(
-                                                  color: Colors.white70,
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              const Padding(
-                                padding: EdgeInsets.only(top: 8.0),
-                                child: Text(
-                                  'Lưu ý: viêm họng bão lũ mưa giông gì đó',
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w600),
-                                ),
-                              ),
-                            ],
                           ),
                         ),
                       ),
@@ -369,7 +398,6 @@ class WeatherReportView extends ConsumerWidget {
                         borderRadius: BorderRadius.circular(20.0),
                         child: Container(
                           width: MediaQuery.of(context).size.width - 20,
-                          height: MediaQuery.of(context).size.height * 0.6,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(20.0),
                             gradient: LinearGradient(
@@ -382,7 +410,7 @@ class WeatherReportView extends ConsumerWidget {
                           ),
                           child: Stack(
                             children: [
-                              Padding(
+                              const Padding(
                                 padding: const EdgeInsets.all(15.0),
                                 child: Text(
                                   "Nhiệt độ 7 ngày tới",
@@ -394,13 +422,12 @@ class WeatherReportView extends ConsumerWidget {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   SizedBox(
-                                    height: MediaQuery.of(context).size.height *
-                                        0.56,
-                                    width: MediaQuery.of(context).size.height *
-                                        0.56,
+                                    height: 500,
                                     child: Padding(
                                       padding: const EdgeInsets.only(top: 30),
                                       child: ListView.builder(
+                                        physics:
+                                            const NeverScrollableScrollPhysics(),
                                         itemCount:
                                             forestWeatherModel?.daily.length,
                                         itemBuilder: (context, index) =>
@@ -426,11 +453,12 @@ class WeatherReportView extends ConsumerWidget {
                           Align(
                             alignment: Alignment.topLeft,
                             child: Padding(
-                              padding: EdgeInsets.all(0),
+                              padding:
+                                  const EdgeInsets.only(bottom: 10, left: 10),
                               child: Text(
                                 "Khả năng nhiệt độ và lượng mưa ${forestWeatherModel?.currentWeather?.nameLocation.toString()} ",
                                 textAlign: TextAlign.start,
-                                style: TextStyle(
+                                style: const TextStyle(
                                     color: Colors.white, fontSize: 15),
                               ),
                             ),
@@ -442,20 +470,6 @@ class WeatherReportView extends ConsumerWidget {
                                 .getChartData2(forestWeatherModel),
                           ),
                         ],
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: TransparentButton(
-                            icon: Icons.sunny_snowing,
-                            text1: "https://thoitiet.vn",
-                            text2: "Thời tiết Việt Nam",
-                            onPressed: () {}),
-                      ),
-                      const SizedBox(
-                        height: 30,
                       ),
                     ],
                   ),

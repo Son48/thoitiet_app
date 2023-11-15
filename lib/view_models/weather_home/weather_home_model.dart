@@ -20,7 +20,7 @@ class WeatherHomeViewModel extends ChangeNotifier {
   List<WeatherModel> weathers = [];
   List<WeatherModel> weathersRecommend = [];
 
-  bool isLoading=false;
+  bool isLoading = false;
   bool _isDefaultData = false;
   bool get isDefaultData => _isDefaultData;
   List<WeatherModel> _weatherFavories = [];
@@ -44,6 +44,19 @@ class WeatherHomeViewModel extends ChangeNotifier {
     _weatherFavories = await getAllFavoriteFromSQL();
 
     notifyListeners();
+  }
+
+//fucntion get weather by lon lat
+  Future<WeatherModel> getDetailWeather(String lon, String lat) async {
+    try {
+      WeatherModel w;
+      final res = await _weatherReponsitory.getWeatherData(
+          lat.toString(), lon.toString());
+      notifyListeners();
+      return res;
+    } on Exception {
+      rethrow;
+    }
   }
 
   //FUNCTION GET DATA FROM API
