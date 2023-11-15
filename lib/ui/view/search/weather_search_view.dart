@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thoitiet_app/ui/widget/card_search.dart';
@@ -6,16 +5,14 @@ import 'package:thoitiet_app/view_models/weather_search/weather_search_model.dar
 import 'package:thoitiet_app/core/data/models/location.dart';
 
 import '../../../core/constants/constants.dart';
+import '../../widget/card_history.dart';
 
 class WeatherSearch extends ConsumerWidget {
-
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-
     final weatherSearchModel = ref.watch(weatherSearchProvider);
-    String searchQuery=weatherSearchModel.searchQuery;
-    List<Location> rs_search =  weatherSearchModel.weatherSearch;
+    List<Location> rs_search = weatherSearchModel.weatherSearch;
+    List<Location> h_search = weatherSearchModel.weatherHistory;
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       if (weatherSearchModel.defaultData) {
         return;
@@ -23,7 +20,7 @@ class WeatherSearch extends ConsumerWidget {
       weatherSearchModel.setDefaultData(true);
       weatherSearchModel.setSearchQuery('');
       weatherSearchModel.setController('');
-
+      weatherSearchModel.getAllSearchFromSQLAndSetState();
     });
     return SafeArea(
       child: Scaffold(
@@ -32,12 +29,13 @@ class WeatherSearch extends ConsumerWidget {
             color: Colors.blue,
             child: Container(
               decoration: const BoxDecoration(
-                  gradient: LinearGradient(begin: Alignment.bottomRight, colors: [
-                    colorBackground,
-                    Color.fromRGBO(9, 98, 169, 1),
-                    Color.fromRGBO(9, 100, 169, 1),
-                    Color.fromRGBO(9, 98, 140, 1)
-                  ])),
+                  gradient:
+                      LinearGradient(begin: Alignment.bottomRight, colors: [
+                colorBackground,
+                Color.fromRGBO(9, 98, 169, 1),
+                Color.fromRGBO(9, 100, 169, 1),
+                Color.fromRGBO(9, 98, 140, 1)
+              ])),
               child: Column(
                 children: [
                   Row(
@@ -51,9 +49,10 @@ class WeatherSearch extends ConsumerWidget {
                       Expanded(
                         child: Padding(
                           padding: EdgeInsets.all(8),
-                          child:   TextField(
+                          child: TextField(
                             controller: weatherSearchModel.getController,
-                            onChanged: (newText) => weatherSearchModel.handleSearch(newText),
+                            onChanged: (newText) =>
+                                weatherSearchModel.handleSearch(newText),
                             decoration: InputDecoration(
                               filled: true,
                               fillColor: Colors.grey,
@@ -64,7 +63,8 @@ class WeatherSearch extends ConsumerWidget {
                               hintText: "Search weather....",
                               prefixIcon: const Icon(Icons.search),
                               prefixIconColor: Colors.white,
-                              contentPadding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+                              contentPadding: EdgeInsets.symmetric(
+                                  horizontal: 16.0, vertical: 12.0),
                             ),
                           ),
                         ),
@@ -74,7 +74,6 @@ class WeatherSearch extends ConsumerWidget {
                   const SizedBox(
                     height: 5,
                   ),
-
                   Container(
                     width: MediaQuery.of(context).size.width,
                     height: MediaQuery.of(context).size.height,
@@ -87,12 +86,11 @@ class WeatherSearch extends ConsumerWidget {
                         child: SizedBox(
                           height: 170,
                           child: ListView.builder(
-                            itemCount:  rs_search.length,
+                            itemCount: rs_search.isNotEmpty ? rs_search.length : h_search.length,
                             itemBuilder: (context, index) {
-                              if (rs_search.isNotEmpty&&searchQuery.toLowerCase().contains(searchQuery.toLowerCase())) {
-                                return CardSearch(data: rs_search[index]);
-                              }
-                              return SizedBox.shrink();
+                              return rs_search.isNotEmpty
+                                  ? CardSearch(data: rs_search[index])
+                                  : CardHistory(data: h_search[index]);
                             },
                             scrollDirection: Axis.vertical,
                             shrinkWrap: true,
