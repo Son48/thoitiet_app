@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:provider/provider.dart';
-import 'package:thoitiet_app/core/data/models/location.dart';
-import 'package:thoitiet_app/view_models/weather_search/weather_search_model.dart';
-import '../../core/data/models/weather.dart';
-import '../../view_models/weather_report_model/weather_report_model.dart';
 
-class CardSearch extends ConsumerWidget {
+import '../../core/data/models/location.dart';
+import '../../view_models/weather_report_model/weather_report_model.dart';
+import '../../view_models/weather_search/weather_search_model.dart';
+
+class CardHistory extends ConsumerWidget {
   final Location data;
 
-  CardSearch({super.key, required this.data});
+  CardHistory({super.key, required this.data});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -21,7 +20,6 @@ class CardSearch extends ConsumerWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
-        margin: EdgeInsets.only(right: 10),
         child: GestureDetector(
           onTap: () {
             // Set the location for weatherReportModel
@@ -57,23 +55,29 @@ class CardSearch extends ConsumerWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    SizedBox(
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Icon(Icons.search),
-                          SizedBox(
-                            width: 10,
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Icon(Icons.access_time),
+                        SizedBox(width: 10,),
+                        Text(
+                          data.nameLocation.toString(),
+                          style: const TextStyle(
+                            fontSize: 13,
+                            color: Colors.black,
                           ),
-                          Text(
-                            data.nameLocation.toString(),
-                            style: const TextStyle(
-                              fontSize: 13,
-                              color: Colors.black,
-                            ),
-                          ),
-                        ],
+                        ),
+                      ],
+                    ),
+                    IconButton(
+                      onPressed: () {
+                        // Delete the location from favorites list in weatherSearchModel
+                        searchModel.deleteFavoriteFromSQL(data);
+                      },
+                      icon: Icon(
+                        Icons.clear,
+                        color: Colors.black,
                       ),
                     ),
                   ],

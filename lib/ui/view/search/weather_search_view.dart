@@ -1,30 +1,30 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thoitiet_app/ui/widget/card_search.dart';
-import 'package:thoitiet_app/view_models/weather_search/weather_search_model.dart';
-import 'package:thoitiet_app/core/data/models/location.dart';
+import 'package:thoitiet_app/core/constants/constants.dart';
 
-import '../../../core/constants/constants.dart';
+import '../../../core/data/models/location.dart';
+import '../../../view_models/weather_search/weather_search_model.dart';
+import '../../widget/card_history.dart';
+import '../../widget/card_search.dart';
 
 class WeatherSearch extends ConsumerWidget {
-
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-
     final weatherSearchModel = ref.watch(weatherSearchProvider);
-    String searchQuery=weatherSearchModel.searchQuery;
-    List<Location> rs_search =  weatherSearchModel.weatherSearch;
+    List<Location> rs_search = weatherSearchModel.weatherSearch;
+    List<Location> h_search = weatherSearchModel.weatherHistory;
+
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       if (weatherSearchModel.defaultData) {
         return;
       }
+
       weatherSearchModel.setDefaultData(true);
       weatherSearchModel.setSearchQuery('');
       weatherSearchModel.setController('');
-
+      weatherSearchModel.getAllSearchFromSQLAndSetState();
     });
+
     return SafeArea(
       child: Scaffold(
         body: SingleChildScrollView(
@@ -32,7 +32,8 @@ class WeatherSearch extends ConsumerWidget {
             color: Colors.blue,
             child: Container(
               decoration: const BoxDecoration(
-                  gradient: LinearGradient(begin: Alignment.bottomRight, colors: [
+                  gradient:
+                  LinearGradient(begin: Alignment.bottomRight, colors: [
                     colorBackground,
                     Color.fromRGBO(9, 98, 169, 1),
                     Color.fromRGBO(9, 100, 169, 1),
@@ -43,7 +44,7 @@ class WeatherSearch extends ConsumerWidget {
                   Row(
                     children: [
                       IconButton(
-                        icon: Icon(Icons.arrow_back, color: Colors.grey),
+                        icon: Icon(Icons.arrow_back, color: Colors.black),
                         onPressed: () {
                           Navigator.pop(context);
                         },
@@ -51,20 +52,22 @@ class WeatherSearch extends ConsumerWidget {
                       Expanded(
                         child: Padding(
                           padding: EdgeInsets.all(8),
-                          child:   TextField(
+                          child: TextField(
                             controller: weatherSearchModel.getController,
-                            onChanged: (newText) => weatherSearchModel.handleSearch(newText),
+                            onChanged: (newText) =>
+                                weatherSearchModel.handleSearch(newText),
                             decoration: InputDecoration(
                               filled: true,
-                              fillColor: Colors.grey,
+                              fillColor: Colors.white,
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(30),
                                 borderSide: BorderSide.none,
                               ),
                               hintText: "Search weather....",
                               prefixIcon: const Icon(Icons.search),
-                              prefixIconColor: Colors.white,
-                              contentPadding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+                              prefixIconColor: Colors.black,
+                              contentPadding: const EdgeInsets.symmetric(
+                                  horizontal: 16.0, vertical: 12.0),
                             ),
                           ),
                         ),
@@ -74,7 +77,6 @@ class WeatherSearch extends ConsumerWidget {
                   const SizedBox(
                     height: 5,
                   ),
-
                   Container(
                     width: MediaQuery.of(context).size.width,
                     height: MediaQuery.of(context).size.height,
@@ -86,16 +88,54 @@ class WeatherSearch extends ConsumerWidget {
                         ),
                         child: SizedBox(
                           height: 170,
-                          child: ListView.builder(
-                            itemCount:  rs_search.length,
-                            itemBuilder: (context, index) {
-                              if (rs_search.isNotEmpty&&searchQuery.toLowerCase().contains(searchQuery.toLowerCase())) {
-                                return CardSearch(data: rs_search[index]);
-                              }
-                              return SizedBox.shrink();
-                            },
-                            scrollDirection: Axis.vertical,
-                            shrinkWrap: true,
+                          child: Column(
+                            children: [
+                              // Display custom message when search results are empty
+                              rs_search.isEmpty && h_search.isEmpty
+                                  ? Container(
+                                alignment: Alignment.center,
+                                padding: const EdgeInsets.only(top: 20),
+                                child: Text(
+                                  weatherSearchModel.searchQuery.isNotEmpty
+                                      ? "Khzông tìm thấy kết quả cho '${weatherSearchModel.searchQuery}'"
+                                      : '',
+                                  style: const TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                              )
+                                  : Container(),
+                              // Display "Gần đây" if the recent search results are empty
+                              rs_search.isEmpty && h_search.isNotEmpty
+                                  ? Container(
+                                alignment: Alignment.topLeft,
+                                padding: const EdgeInsets.only(left: 10),
+                                child: const Text(
+                                  "Gần đây",
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                              )
+                                  : Container(),
+                              // List view for displaying search results
+                              ListView.builder(
+                                itemCount: rs_search.isNotEmpty
+                                    ? rs_search.length
+                                    : h_search.length,
+                                itemBuilder: (context, index) {
+                                  return rs_search.isNotEmpty
+                                      ? CardSearch(data: rs_search[index])
+                                      : CardHistory(data: h_search[index]);
+                                },
+                                scrollDirection: Axis.vertical,
+                                shrinkWrap: true,
+                              ),
+                            ],
                           ),
                         ),
                       ),
