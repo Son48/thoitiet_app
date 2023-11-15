@@ -25,6 +25,7 @@ class CardWeather extends ConsumerWidget {
             item.lon.toString() == data.lon.toString()) {
           listFavorites.remove(item);
           weatherModel.deleteFavoriteFromSQL(item);
+          break;
         }
       }
     }

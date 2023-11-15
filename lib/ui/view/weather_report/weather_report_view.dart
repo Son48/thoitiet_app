@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thoitiet_app/ui/widget/card_report.dart';
 import 'package:thoitiet_app/ui/widget/pre_loading.dart';
 import 'package:thoitiet_app/ui/widget/transparent_button.dart';
+import 'package:thoitiet_app/view_models/Setting_Notification/setting_notification_model.dart';
+import 'package:thoitiet_app/view_models/weather_home/weather_home_model.dart';
 import 'package:thoitiet_app/view_models/weather_report_model/weather_report_model.dart';
 import 'package:thoitiet_app/core/constants/constants.dart';
 
@@ -19,8 +22,16 @@ class WeatherReportView extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final reportModel = ref.watch(weatherReportProvider);
     WeatherModel? weatherModel = reportModel.weatherModel;
+    bool isFavovite = reportModel.isFavoritesWeather;
+    final handleTimeToNotifi = ref.watch(weatherFavoritesProvider);
+    final listFavorites = ref.watch(weatherProvider);
 
     ForestWeatherModel? forestWeatherModel = reportModel.forestWeatherModel;
+    void addFavorites() async {
+      await reportModel.setDefaultData(false);
+      listFavorites.weatherFavories.add(weatherModel!);
+      listFavorites.insertFavoriteFromSQL(weatherModel);
+    }
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       if (reportModel.defaultData) {
@@ -28,6 +39,9 @@ class WeatherReportView extends ConsumerWidget {
       }
       await reportModel.getDataForestWeather(weatherModel!);
       await reportModel.setDefaultData(true);
+      await reportModel.setFavoriteWeather();
+
+      await handleTimeToNotifi.getListSettingFromLocal(weatherModel);
     });
     return SafeArea(
       child: !reportModel.defaultData
@@ -107,6 +121,181 @@ class WeatherReportView extends ConsumerWidget {
                       ),
                       const SizedBox(
                         height: 10,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 10),
+                        child: Row(
+                          children: [
+                            isFavovite
+                                ? Icon(Icons.favorite, color: Colors.yellow)
+                                : IconButton(
+                                    icon: const Icon(
+                                      Icons.favorite_border_outlined,
+                                      color: Colors.yellow,
+                                    ),
+                                    onPressed: () {
+                                      addFavorites();
+                                    },
+                                  ),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              isFavovite
+                                  ? 'Đã có trong danh mục yêu thích !'
+                                  : 'Thêm vào danh mục yêu thích ',
+                              style: TextStyle(color: Colors.yellow),
+                            )
+                          ],
+                        ),
+                      ),
+                      //set up time to send notification
+                      const Padding(
+                        padding: EdgeInsets.only(top: 10, bottom: 10),
+                        child: Text('Lên lịch thông báo cho địa điểm này',
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: Colors.white,
+                            )),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(bottom: 10),
+                        child: SizedBox(
+                          width: MediaQuery.of(context).size.width,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const Icon(
+                                Icons.timer_outlined,
+                                color: Colors.white,
+                                size: 20,
+                              ),
+                              SizedBox(
+                                  width: 60,
+                                  child: Text(
+                                    handleTimeToNotifi.errorTime,
+                                    style:
+                                        const TextStyle(color: Colors.yellow),
+                                  )),
+                              Row(
+                                children: [
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      const Text(
+                                        'Giờ: ',
+                                        style: TextStyle(color: Colors.white),
+                                      ),
+                                      SizedBox(
+                                        width: 65,
+                                        height: 40,
+                                        child: TextField(
+                                          style: const TextStyle(
+                                              color: Colors.white),
+                                          cursorColor: Colors.white,
+                                          keyboardType: const TextInputType
+                                              .numberWithOptions(
+                                            signed: false,
+                                            decimal: false,
+                                          ),
+                                          inputFormatters: [
+                                            LengthLimitingTextInputFormatter(2),
+                                            FilteringTextInputFormatter.allow(
+                                                RegExp(r'^\d+\.?\d*')),
+                                            FilteringTextInputFormatter.allow(
+                                                RegExp(r'^\d+\.?\d{0,1}')),
+                                          ],
+                                          controller:
+                                              handleTimeToNotifi.hourController,
+                                          decoration: const InputDecoration(
+                                            enabledBorder: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                  width: 1,
+                                                  color: Color.fromARGB(
+                                                      255,
+                                                      255,
+                                                      255,
+                                                      255)), //<-- SEE HERE
+                                            ),
+                                            border: OutlineInputBorder(),
+                                            fillColor: Colors.white,
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                  Row(
+                                    children: [
+                                      const Text(
+                                        'Phút: ',
+                                        style: TextStyle(color: Colors.white),
+                                      ),
+                                      SizedBox(
+                                        width: 65,
+                                        height: 40,
+                                        child: TextField(
+                                          controller: handleTimeToNotifi
+                                              .minutesController,
+                                          style: const TextStyle(
+                                              color: Colors.white),
+                                          cursorColor: Colors.white,
+                                          keyboardType: const TextInputType
+                                              .numberWithOptions(
+                                            signed: false,
+                                            decimal: false,
+                                          ),
+                                          inputFormatters: [
+                                            LengthLimitingTextInputFormatter(2),
+                                            FilteringTextInputFormatter.allow(
+                                                RegExp(r'^\d+\.?\d*')),
+                                            FilteringTextInputFormatter.allow(
+                                                RegExp(r'^\d+\.?\d{0,1}')),
+                                          ],
+                                          decoration: const InputDecoration(
+                                            enabledBorder: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                  width: 1,
+                                                  color: Color.fromARGB(
+                                                      255,
+                                                      255,
+                                                      255,
+                                                      255)), //<-- SEE HERE
+                                            ),
+                                            border: OutlineInputBorder(),
+                                            fillColor: Colors.white,
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: GestureDetector(
+                                      onTap: () => handleTimeToNotifi
+                                          .handleTimeNoti(weatherModel),
+                                      child: const Row(
+                                        children: [
+                                          Text(
+                                            'Lưu',
+                                            style:
+                                                TextStyle(color: Colors.white),
+                                          ),
+                                          Icon(
+                                            Icons.done,
+                                            color: Colors.white,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              )
+                            ],
+                          ),
+                        ),
                       ),
                       Container(
                         decoration: BoxDecoration(
