@@ -4,6 +4,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:thoitiet_app/core/data/models/setting_notifi.dart';
 import 'package:thoitiet_app/core/data/models/weather.dart';
 import 'package:thoitiet_app/core/data/reponsitories/weather_reponsitory.dart';
+import 'package:thoitiet_app/core/data/sqflite/NotificationData.dart';
 import 'package:thoitiet_app/core/data/sqflite/SettingNotification.dart';
 
 import 'package:timezone/data/latest.dart' as tz;
@@ -109,5 +110,17 @@ class NotificationService {
       body:
           'Nhiệt độ tại ${w.nameLocation.toString()} ngay lúc này là: ${w.temp}°C, ${w.descriptionWeather}.',
     );
+    //save notification in db
+    DateTime date = DateTime.now();
+    await NotificationData().insertTable(
+        lon,
+        lat,
+        date.hour.toString(),
+        date.year.toString(),
+        'Nhiệt độ tại ${w.nameLocation.toString()} ngay lúc này là: ${w.temp}°C, ${w.descriptionWeather}.',
+        date.minute.toString(),
+        w.nameLocation.toString(),
+        date.toString(),
+        w.urlStatusIcon.toString());
   }
 }

@@ -3,9 +3,7 @@ import 'package:thoitiet_app/core/constants/constants.dart';
 
 class BottomBar extends StatefulWidget {
   final Map<int, Widget> routes;
-
   const BottomBar({Key? key, required this.routes}) : super(key: key);
-
   @override
   _BottomBarState createState() => _BottomBarState();
 }
@@ -22,7 +20,6 @@ class _BottomBarState extends State<BottomBar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
       body: widget.routes[_selectedTab],
       bottomNavigationBar: Theme(
         data: ThemeData(

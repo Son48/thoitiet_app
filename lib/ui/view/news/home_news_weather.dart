@@ -93,7 +93,7 @@ class NewsHome extends ConsumerWidget {
                     padding: const EdgeInsets.all(2.0),
                     child: SizedBox(
                       height: 110,
-                      width: 80,
+                      width: 100,
                       child: DecoratedBox(
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10)),
@@ -113,8 +113,8 @@ class NewsHome extends ConsumerWidget {
                 Container(
                   padding: EdgeInsets.only(left: 10, right: 10),
                   child: const SizedBox(
-                    width: 230,
-                    height: 100,
+                    width: 210,
+                    height: 80,
                     child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,

@@ -225,7 +225,7 @@ class WeatherHome extends ConsumerWidget {
                 Container(
                   padding: EdgeInsets.only(left: 10, right: 10),
                   child: const SizedBox(
-                    width: 220,
+                    width: 200,
                     height: 80,
                     child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,

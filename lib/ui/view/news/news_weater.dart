@@ -31,24 +31,24 @@ class NewsWeather extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      const Text(
-                        'Bản tin thời tiết',
-                        style: TextStyle(
-                            fontSize: 17,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white),
+                      IconButton(
+                        icon: const Icon(
+                          size: 32,
+                          Icons.arrow_back,
+                          color: Colors.white,
+                        ),
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
                       ),
                       Row(
                         children: [
-                          IconButton(
-                            icon: const Icon(
-                              size: 32,
-                              Icons.home_outlined,
-                              color: Colors.white,
-                            ),
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
+                          const Text(
+                            'Bản tin thời tiết',
+                            style: TextStyle(
+                                fontSize: 17,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white),
                           ),
                           IconButton(
                             icon: const Icon(
@@ -62,7 +62,6 @@ class NewsWeather extends StatelessWidget {
                       ),
                     ],
                   ),
-
                   //news view
                   Padding(
                     padding: const EdgeInsets.only(top: 10, right: 10),
@@ -125,117 +124,10 @@ class NewsWeather extends StatelessWidget {
                           )),
                     ),
                   ),
-                  //news,
-                  const Padding(
-                    padding: EdgeInsets.only(top: 20.0, right: 20),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Bản tin thời tiết',
-                          style: TextStyle(
-                              fontSize: 17,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white),
-                        ),
-                        Text('Xem tất cả',
-                            style: TextStyle(
-                                fontSize: 17,
-                                decoration: TextDecoration.underline,
-                                color: Colors.white70)),
-                      ],
-                    ),
-                  ),
-                  //card news
-                  ListView.builder(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: 5,
-                    padding: const EdgeInsets.all(8),
-                    itemBuilder: (BuildContext context, int index) {
-                      return NewsCardItem(context);
-                    },
-                  )
                 ],
               ),
             )),
       ))),
     );
   }
-
-  //news cart
-  Container NewsCardItem(context) {
-    return Container(
-        height: 130,
-        child: Hero(
-          tag: Random().nextInt(999).toString(),
-          child: GestureDetector(
-            onTap: () => {Navigator.pushNamed(context, 'detail-news')},
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                //image new
-                Container(
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(20)),
-                  child: Padding(
-                    padding: const EdgeInsets.all(2.0),
-                    child: SizedBox(
-                      height: 110,
-                      width: 80,
-                      child: DecoratedBox(
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10)),
-                        child: ClipRRect(
-                          borderRadius:
-                              BorderRadius.circular(20), // Đặt bán kính bo tròn
-                          child: Image.network(
-                            'https://www.elle.vn/wp-content/uploads/2017/07/25/hinh-anh-dep-1.jpg',
-                            fit: BoxFit.fill,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                //detail card news
-                Container(
-                  padding: EdgeInsets.only(left: 10, right: 10),
-                  child: const SizedBox(
-                    width: 230,
-                    height: 100,
-                    child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Text(
-                            "Tổng Hợp",
-                            style: TextStyle(color: Colors.white70),
-                          ),
-                          SizedBox(
-                            width: 230,
-                            child: Text(
-                              "Dự báo thời tiết- đêm 7 và ngày 24, trời, âm âm, u u và nhớ em.",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                          Text('Xem thêm',
-                              style: TextStyle(
-                                color: Colors.white,
-                              ))
-                        ]),
-                  ),
-                )
-              ],
-            ),
-          ),
-        ));
-  }
-
-  //end
 }

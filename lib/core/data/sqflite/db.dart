@@ -2,6 +2,7 @@ import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import 'package:thoitiet_app/core/data/sqflite/FavoritesData.dart';
 import 'package:thoitiet_app/core/data/sqflite/SearchData.dart';
+import 'package:thoitiet_app/core/data/sqflite/NotificationData.dart';
 import 'package:thoitiet_app/core/data/sqflite/SettingNotification.dart';
 
 class DatabaseService {
@@ -31,5 +32,6 @@ class DatabaseService {
     await FavoritesData().createTable(database);
     await SettingNotification().createTable(database);
     await SearchData().createTable(database);
+    await NotificationData().createTable(database);
   }
 }
