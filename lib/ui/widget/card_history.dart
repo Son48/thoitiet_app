@@ -12,7 +12,9 @@ class CardHistory extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // Get a reference to weatherReportProvider
     final reportModel = ref.watch(weatherReportProvider);
+    // Get a reference to weatherSearchProvider
     final searchModel = ref.watch(weatherSearchProvider);
 
     return Padding(
@@ -20,9 +22,13 @@ class CardHistory extends ConsumerWidget {
       child: Container(
         child: GestureDetector(
           onTap: () {
+            // Set the location for weatherReportModel
             reportModel.setLocation(data);
+            // Navigate to the weather detail page
             Navigator.pushNamed(context, 'detail-weather');
+            // Reset the default values of weatherSearchModel
             searchModel.setDefaultData(false);
+            // Add the location to the favorites list in weatherSearchModel
             searchModel.insertFavoriteFromSQL(data);
           },
           child: Material(
@@ -66,6 +72,7 @@ class CardHistory extends ConsumerWidget {
                     ),
                     IconButton(
                       onPressed: () {
+                        // Delete the location from favorites list in weatherSearchModel
                         searchModel.deleteFavoriteFromSQL(data);
                       },
                       icon: Icon(

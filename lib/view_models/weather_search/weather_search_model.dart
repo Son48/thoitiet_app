@@ -6,52 +6,53 @@ import 'package:thoitiet_app/core/data/sqflite/SearchData.dart';
 
 import '../../core/data/reponsitories/weather_reponsitory.dart';
 
+// Define a provider for WeatherSearchViewModel
 final weatherSearchProvider = ChangeNotifierProvider<WeatherSearchViewModel>(
   (ref) => WeatherSearchViewModel(ref),
 );
 
-final WeatherReponsitory _weatherReponsitory = WeatherReponsitory();
 
 class WeatherSearchViewModel extends ChangeNotifier {
   WeatherSearchViewModel(this._reader);
 
   final Ref _reader;
-
+  // List to store search results
   List<Location> _weatherSearch = [];
-
   List<Location> get weatherSearch => _weatherSearch;
 
+  // List to store unique history items
   List<Location> _weatherHistory = [];
-
   List<Location> get weatherHistory => _weatherHistory;
 
-  bool isLoadingWeather = true;
+  // Boolean to track whether default data should be used
   bool _defaultData = false;
-
   bool get defaultData => _defaultData;
 
+  // TextEditingController for the search input
+  TextEditingController _searchController = TextEditingController();
+  TextEditingController get getController => _searchController;
+
+  // String to store the search query
+  String _searchQuery = '';
+  String get searchQuery => _searchQuery;
+
+  // Method to set the default data flag
   Future<void> setDefaultData(bool isDefault) async {
     _defaultData = isDefault;
   }
-
-  TextEditingController _searchController = TextEditingController();
-
-  TextEditingController get getController => _searchController;
-
+  // Method to set the search input controller
   Future<void> setController(String searchController) async {
     _searchController.text = searchController;
     notifyListeners();
   }
 
-  String _searchQuery = '';
-
-  String get searchQuery => _searchQuery;
-
+  // Method to handle changes in the search input
   void handleSearch(String query) {
     setSearchQuery(query);
     notifyListeners();
   }
 
+  // Method to set the search query and fetch search results
   Future<void> setSearchQuery(String query) async {
     _searchQuery = query;
     try {
@@ -63,11 +64,13 @@ class WeatherSearchViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  // Method to set the search results
   void setSearchWeather(List<Location> list) {
     _weatherSearch = list;
     notifyListeners();
   }
 
+  // Method to filter and set unique history items
   void setHistoryWeather(List<Location> list) {
     Set<String> uniqueLocations = {};
     List<Location> filteredList = [];
@@ -84,6 +87,7 @@ class WeatherSearchViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  // Method to fetch test data based on the search query
   Future<List<Location>> getListTest() async {
     if (_searchQuery.isEmpty) {
       return [];
@@ -99,6 +103,7 @@ class WeatherSearchViewModel extends ChangeNotifier {
     return searchResult;
   }
 
+  // Method to fetch all search history from SQLite
   Future<List<Location>> getAllSearchFromSQL() async {
     try {
       List<Location> historyWeather = await SearchData().fetchAllSearchFromLocal();
@@ -108,7 +113,7 @@ class WeatherSearchViewModel extends ChangeNotifier {
     }
   }
 
-  //
+  // Method to fetch all search history from SQLite and set the state
   Future<void> getAllSearchFromSQLAndSetState() async {
     try {
       List<Location> historyWeather = await getAllSearchFromSQL();
@@ -119,6 +124,7 @@ class WeatherSearchViewModel extends ChangeNotifier {
     }
   }
 
+  // Method to insert a favorite item into SQLite
   Future<void> insertFavoriteFromSQL(Location history) async {
     try {
       int result = await SearchData().insertTable(
@@ -135,6 +141,7 @@ class WeatherSearchViewModel extends ChangeNotifier {
     }
   }
 
+  // Method to delete a favorite item from SQLite and update the state
   Future<void> deleteFavoriteFromSQL(Location history) async {
     try {
       print('Xóa khỏi local');
