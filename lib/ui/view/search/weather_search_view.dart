@@ -1,33 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thoitiet_app/ui/widget/card_search.dart';
-import 'package:thoitiet_app/view_models/weather_search/weather_search_model.dart';
-import 'package:thoitiet_app/core/data/models/location.dart';
+import 'package:thoitiet_app/core/constants/constants.dart';
 
-import '../../../core/constants/constants.dart';
+import '../../../core/data/models/location.dart';
+import '../../../view_models/weather_search/weather_search_model.dart';
 import '../../widget/card_history.dart';
+import '../../widget/card_search.dart';
 
 class WeatherSearch extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // Watch the WeatherSearchViewModel using Riverpod
     final weatherSearchModel = ref.watch(weatherSearchProvider);
     List<Location> rs_search = weatherSearchModel.weatherSearch;
     List<Location> h_search = weatherSearchModel.weatherHistory;
 
-    // Execute code after the frame is displayed
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      // Check if default data should be used
       if (weatherSearchModel.defaultData) {
         return;
       }
 
-      // Set default data and clear search query and controller
       weatherSearchModel.setDefaultData(true);
       weatherSearchModel.setSearchQuery('');
       weatherSearchModel.setController('');
-
-      // Fetch and set search history from SQLite
       weatherSearchModel.getAllSearchFromSQLAndSetState();
     });
 
@@ -39,19 +33,18 @@ class WeatherSearch extends ConsumerWidget {
             child: Container(
               decoration: const BoxDecoration(
                   gradient:
-                      LinearGradient(begin: Alignment.bottomRight, colors: [
-                colorBackground,
-                Color.fromRGBO(9, 98, 169, 1),
-                Color.fromRGBO(9, 100, 169, 1),
-                Color.fromRGBO(9, 98, 140, 1)
-              ])),
+                  LinearGradient(begin: Alignment.bottomRight, colors: [
+                    colorBackground,
+                    Color.fromRGBO(9, 98, 169, 1),
+                    Color.fromRGBO(9, 100, 169, 1),
+                    Color.fromRGBO(9, 98, 140, 1)
+                  ])),
               child: Column(
                 children: [
-                  // Search bar with back button
                   Row(
                     children: [
                       IconButton(
-                        icon: Icon(Icons.arrow_back, color: Colors.grey),
+                        icon: Icon(Icons.arrow_back, color: Colors.black),
                         onPressed: () {
                           Navigator.pop(context);
                         },
@@ -65,15 +58,15 @@ class WeatherSearch extends ConsumerWidget {
                                 weatherSearchModel.handleSearch(newText),
                             decoration: InputDecoration(
                               filled: true,
-                              fillColor: Colors.grey,
+                              fillColor: Colors.white,
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(30),
                                 borderSide: BorderSide.none,
                               ),
                               hintText: "Search weather....",
                               prefixIcon: const Icon(Icons.search),
-                              prefixIconColor: Colors.white,
-                              contentPadding: EdgeInsets.symmetric(
+                              prefixIconColor: Colors.black,
+                              contentPadding: const EdgeInsets.symmetric(
                                   horizontal: 16.0, vertical: 12.0),
                             ),
                           ),
@@ -84,7 +77,6 @@ class WeatherSearch extends ConsumerWidget {
                   const SizedBox(
                     height: 5,
                   ),
-                  // Container for displaying search results
                   Container(
                     width: MediaQuery.of(context).size.width,
                     height: MediaQuery.of(context).size.height,
@@ -98,16 +90,37 @@ class WeatherSearch extends ConsumerWidget {
                           height: 170,
                           child: Column(
                             children: [
-                              // Display "Gần đây" if the recent search results are empty
-                              rs_search.isEmpty
+                              // Display custom message when search results are empty
+                              rs_search.isEmpty && h_search.isEmpty
                                   ? Container(
-                                      alignment: Alignment.topLeft,
-                                      padding: const EdgeInsets.only(left: 10),
-                                      child: const Text("Gần đây",
-                                          style: TextStyle(
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.bold)),
-                                    )
+                                alignment: Alignment.center,
+                                padding: const EdgeInsets.only(top: 20),
+                                child: Text(
+                                  weatherSearchModel.searchQuery.isNotEmpty
+                                      ? "Khzông tìm thấy kết quả cho '${weatherSearchModel.searchQuery}'"
+                                      : '',
+                                  style: const TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                              )
+                                  : Container(),
+                              // Display "Gần đây" if the recent search results are empty
+                              rs_search.isEmpty && h_search.isNotEmpty
+                                  ? Container(
+                                alignment: Alignment.topLeft,
+                                padding: const EdgeInsets.only(left: 10),
+                                child: const Text(
+                                  "Gần đây",
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                              )
                                   : Container(),
                               // List view for displaying search results
                               ListView.builder(
