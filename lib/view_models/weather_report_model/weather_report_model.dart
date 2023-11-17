@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thoitiet_app/core/constants/constants.dart';
+import 'package:thoitiet_app/core/data/geolocator/geolocator_setting.dart';
 import 'package:thoitiet_app/core/data/models/forest_weather.dart';
 import 'package:thoitiet_app/core/data/models/weather.dart';
 import 'package:thoitiet_app/core/data/reponsitories/weather_reponsitory.dart';
@@ -38,7 +39,6 @@ class WeatherReportViewModel extends ChangeNotifier {
     for (WeatherModel item in listFavorites) {
       if (item.lon.toString() == weatherModel?.lon.toString() &&
           item.lat.toString() == weatherModel?.lat.toString()) {
-        print('giống');
         _isFavoritesWeather = true;
         notifyListeners();
         break;
@@ -66,6 +66,8 @@ class WeatherReportViewModel extends ChangeNotifier {
   ForestWeatherModel? get forestWeatherModel => _forestWeatherModel;
 
   Future<void> setForestWeatherModel(WeatherModel weather) async {
+    _forestWeatherModel = null;
+    notifyListeners();
     ForestWeatherModel? frWeather =
         await _weatherReponsitory.getForestWeatherData(
             weather.lat.toString(), weather.lon.toString(), weather);

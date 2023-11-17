@@ -2,7 +2,9 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'dart:ffi';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:thoitiet_app/core/constants/constants.dart';
+import 'package:thoitiet_app/core/data/geolocator/geolocator_setting.dart';
 import 'package:thoitiet_app/core/data/models/weather.dart';
 import 'package:thoitiet_app/core/data/reponsitories/weather_reponsitory.dart';
 import 'package:thoitiet_app/core/data/sqflite/FavoritesData.dart';
@@ -11,6 +13,7 @@ final weatherProvider = ChangeNotifierProvider<WeatherHomeViewModel>(
     (ref) => WeatherHomeViewModel(ref));
 
 final WeatherReponsitory _weatherReponsitory = WeatherReponsitory();
+final GeolocatorSetting _currentlocation = GeolocatorSetting();
 
 //CALL FOR OBJECT AND DEFINE SOME FUCTION TO HANDLE DATAA
 class WeatherHomeViewModel extends ChangeNotifier {
@@ -25,6 +28,14 @@ class WeatherHomeViewModel extends ChangeNotifier {
   bool get isDefaultData => _isDefaultData;
   List<WeatherModel> _weatherFavories = [];
   List<WeatherModel> get weatherFavories => _weatherFavories;
+
+  //define weather by current location
+  WeatherModel? _currentWeather;
+  WeatherModel? get currentWeather => _currentWeather;
+  void setCurrentWeather(WeatherModel w) {
+    _currentWeather = w;
+    notifyListeners();
+  }
 
   void setIsDefaultData(bool isDefault) {
     _isDefaultData = isDefault;
@@ -74,6 +85,15 @@ class WeatherHomeViewModel extends ChangeNotifier {
     } on Exception {
       rethrow;
     }
+  }
+
+  //FUNCTION GET CURRENT LOCATION
+  Future<void> getCurrentWeatherDevice() async {
+    Position position = await _currentlocation.determinePosition();
+    WeatherModel weather = await _weatherReponsitory.getWeatherData(
+        position.latitude.toString(), position.longitude.toString());
+    setCurrentWeather(weather);
+    //weather by current location
   }
 
   //FUNCTION GET DATA FROM API

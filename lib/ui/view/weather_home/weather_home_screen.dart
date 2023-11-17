@@ -4,9 +4,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thoitiet_app/core/constants/constants.dart';
 import 'package:thoitiet_app/core/data/models/weather.dart';
 import 'package:thoitiet_app/ui/view/news/home_news_weather.dart';
+import 'package:thoitiet_app/ui/widget/card_big_weather.dart';
 import 'package:thoitiet_app/ui/widget/card_weather_3x4.dart';
 import 'package:thoitiet_app/view_models/weather_home/weather_home_model.dart';
 import 'dart:math';
+
+import 'package:thoitiet_app/view_models/weather_report_model/weather_report_model.dart';
 
 bool isLoadingWeather = true;
 bool isLoadingWeatherRecommend = true;
@@ -19,6 +22,9 @@ class WeatherHome extends ConsumerWidget {
     print('home render UI');
     final weatherModel = ref.watch(weatherProvider);
     List<WeatherModel> listWeather = weatherModel.weathers;
+    //current weather in location of device
+    WeatherModel? currentWeather = weatherModel.currentWeather;
+    final reportModel = ref.watch(weatherReportProvider);
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       //render ui no condition
@@ -28,12 +34,14 @@ class WeatherHome extends ConsumerWidget {
       if (weatherModel.isDefaultData) {
         isLoadingWeather = false;
         isLoadingWeatherRecommend = false;
+
         return;
       }
       weatherModel.getDataWeather();
       weatherModel.getDataRecomendWeather();
       //get first data from local
       weatherModel.loadDataLocalToState();
+      weatherModel.getCurrentWeatherDevice();
       weatherModel.setIsDefaultData(true);
     });
     return SafeArea(
@@ -98,9 +106,101 @@ class WeatherHome extends ConsumerWidget {
                               ),
                       ),
                     ),
-                  )
-                  //
-                  ,
+                  ),
+                  //,
+                  const Padding(
+                    padding: EdgeInsets.only(top: 30.0, right: 20),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Thời tiết tại địa điểm của bạn',
+                          style: TextStyle(
+                              fontSize: 17,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.white),
+                        ),
+                      ],
+                    ),
+                  ),
+                  //weather in current location
+                  currentWeather != null
+                      ? GestureDetector(
+                          onTap: () {
+                            reportModel.setWeatherModel(currentWeather!);
+                            Navigator.pushNamed(context, 'detail-weather');
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.only(right: 10, top: 10),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                image: const DecorationImage(
+                                    image: AssetImage(
+                                        'assets/images/banner-card.png'),
+                                    fit: BoxFit.fitWidth),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(10),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          '${currentWeather?.temp} °',
+                                          style: const TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 40,
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: 120,
+                                          child: Text(
+                                            '${currentWeather?.nameLocation} hôm nay ${currentWeather?.descriptionWeather}.',
+                                            style: const TextStyle(
+                                                color: Colors.yellow,
+                                                fontSize: 16),
+                                          ),
+                                        ),
+                                        const SizedBox(height: 10),
+                                        Text(
+                                            'Độ ẩm: ${currentWeather?.clounds}%',
+                                            style: const TextStyle(
+                                                color: Colors.white)),
+                                        Text(
+                                            'Tốc độ gió: ${currentWeather?.speedWind} ms',
+                                            style: const TextStyle(
+                                                color: Colors.white)),
+                                      ],
+                                    ),
+                                    Column(
+                                      children: [
+                                        SizedBox(
+                                          width: 120,
+                                          child: Image.network(
+                                            "https://openweathermap.org/img/wn/${currentWeather?.urlStatusIcon}.png",
+                                            fit: BoxFit.fitWidth,
+                                          ),
+                                        ),
+                                        Text(
+                                            'Cảm giác như : ${currentWeather?.feelLike} °C',
+                                            style:
+                                                TextStyle(color: Colors.white))
+                                      ],
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        )
+                      : const PreLoading(),
                   const Padding(
                     padding: EdgeInsets.only(top: 30.0, right: 20),
                     child: Row(
@@ -114,11 +214,6 @@ class WeatherHome extends ConsumerWidget {
                               fontWeight: FontWeight.bold,
                               color: Colors.white),
                         ),
-                        Text('Xem tất cả',
-                            style: TextStyle(
-                                fontSize: 17,
-                                decoration: TextDecoration.underline,
-                                color: Colors.white70)),
                       ],
                     ),
                   ),
@@ -136,17 +231,17 @@ class WeatherHome extends ConsumerWidget {
                                 itemCount:
                                     weatherModel.weathersRecommend.length,
                                 itemBuilder: (context, index) => CardBigWeather(
-                                    weatherModel.weathersRecommend[index]),
+                                    data:
+                                        weatherModel.weathersRecommend[index]),
                                 scrollDirection: Axis.horizontal,
                               ),
                       ),
                     ),
                   )
-
                   //news
                   ,
                   const Padding(
-                    padding: EdgeInsets.only(top: 70.0, right: 20),
+                    padding: EdgeInsets.only(top: 30.0, right: 20),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -158,11 +253,6 @@ class WeatherHome extends ConsumerWidget {
                               fontWeight: FontWeight.bold,
                               color: Colors.white),
                         ),
-                        Text('Xem tất cả',
-                            style: TextStyle(
-                                fontSize: 17,
-                                decoration: TextDecoration.underline,
-                                color: Colors.white70)),
                       ],
                     ),
                   ),
@@ -205,7 +295,7 @@ class WeatherHome extends ConsumerWidget {
                     padding: const EdgeInsets.all(2.0),
                     child: SizedBox(
                       height: 110,
-                      width: 100,
+                      width: MediaQuery.of(context).size.width * 1 / 4,
                       child: DecoratedBox(
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10)),
@@ -224,10 +314,10 @@ class WeatherHome extends ConsumerWidget {
                 //detail card news
                 Container(
                   padding: EdgeInsets.only(left: 10, right: 10),
-                  child: const SizedBox(
-                    width: 200,
+                  child: SizedBox(
+                    width: (MediaQuery.of(context).size.width * 3 / 4) - 50,
                     height: 80,
-                    child: Column(
+                    child: const Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
@@ -255,97 +345,5 @@ class WeatherHome extends ConsumerWidget {
             ),
           ),
         ));
-  }
-
-//big card
-  Container CardBigWeather(
-    WeatherModel data,
-  ) {
-    return Container(
-      margin: EdgeInsets.only(right: 10),
-      child: AspectRatio(
-        //w/h
-        aspectRatio: 16 / 9,
-        // Hero: lib animation when change screen at this point
-        child: Hero(
-          tag: data.nameLocation.toString() + Random().nextInt(10).toString(),
-          //GestureDetector: define one tap in this component
-          child: GestureDetector(
-            onTap: () {
-              // Navigator.push(context, MaterialPageRoute(builder: (context) => CategoryPage(image: image, title: title, tag: tag,)));
-            },
-            child: Material(
-              color: Colors.blue,
-              borderRadius: BorderRadius.circular(20),
-              child: Container(
-                //background image in component
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    image: const DecorationImage(
-                        image: AssetImage('assets/images/banner-card.png'),
-                        fit: BoxFit.fill)),
-                child: Container(
-                  padding: EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      gradient:
-                          LinearGradient(begin: Alignment.bottomRight, colors: [
-                        Colors.black.withOpacity(.2),
-                        Colors.black.withOpacity(.0),
-                      ])),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      SizedBox(
-                        width: 150,
-                        child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 8.0, bottom: 10),
-                                child: Text(
-                                  "${data.temp}°",
-                                  style: const TextStyle(
-                                      fontSize: 40, color: Colors.white),
-                                ),
-                              ),
-                              Text(
-                                "${data.tempMin}° - ${data.tempMax}°",
-                                style: const TextStyle(
-                                    fontSize: 15, color: Colors.white70),
-                              ),
-                              Text(
-                                data.nameLocation.toString(),
-                                style: const TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w500),
-                              ),
-                            ]),
-                      ),
-                      Column(
-                        children: [
-                          SizedBox(
-                            width: 90,
-                            child: Image.network(
-                                "https://openweathermap.org/img/wn/${data.urlStatusIcon}.png",
-                                fit: BoxFit.fitWidth),
-                          ),
-                          Text(
-                            data.descriptionWeather.toString(),
-                            style: const TextStyle(color: Colors.white),
-                          )
-                        ],
-                      )
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
   }
 }
