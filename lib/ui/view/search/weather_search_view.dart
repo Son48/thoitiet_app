@@ -27,7 +27,7 @@ class WeatherSearch extends ConsumerWidget {
     return SafeArea(
       child: Scaffold(
         body: GestureDetector(
-          onHorizontalDragEnd: (DragEndDetails details){
+          onHorizontalDragEnd: (DragEndDetails details) {
             if (details.primaryVelocity! > 0) {
               // Bạn có thể kiểm tra xem bàn phím có mở hay không
               if (FocusManager.instance.primaryFocus?.hasFocus ?? false) {
@@ -115,7 +115,8 @@ class WeatherSearch extends ConsumerWidget {
                                         weatherSearchModel.searchQuery.isEmpty
                                     ? Container(
                                         alignment: Alignment.topLeft,
-                                        padding: const EdgeInsets.only(left: 10),
+                                        padding:
+                                            const EdgeInsets.only(left: 10),
                                         child: const Text(
                                           "Gần đây",
                                           style: TextStyle(
@@ -127,7 +128,10 @@ class WeatherSearch extends ConsumerWidget {
                                       )
                                     : Container(),
                                 // List view for displaying search results
-                                rs_search.isEmpty &&h_search.isNotEmpty&& weatherSearchModel.searchQuery.isNotEmpty
+                                rs_search.isEmpty &&
+                                        h_search.isNotEmpty &&
+                                        weatherSearchModel
+                                            .searchQuery.isNotEmpty
                                     ? Center(
                                         child: Container(
                                           child: Text(
@@ -146,7 +150,8 @@ class WeatherSearch extends ConsumerWidget {
                                             : h_search.length,
                                         itemBuilder: (context, index) {
                                           return rs_search.isNotEmpty
-                                              ? CardSearch(data: rs_search[index])
+                                              ? CardSearch(
+                                                  data: rs_search[index])
                                               : CardHistory(
                                                   data: h_search[index]);
                                         },
