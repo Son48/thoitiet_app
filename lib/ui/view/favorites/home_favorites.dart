@@ -41,27 +41,17 @@ class FavovitesHome extends ConsumerWidget {
 
     //set the first value
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      print('render');
+      print('render favorites');
       //get setting of thís weather
       if (weatherForestModel.defaultData) {
-        print('render');
         isLoadingWeatherForest = false;
-        //check delete item in drop list
-        if (listFavorites.isNotEmpty &&
-            !listFavorites.contains(weatherFavorite)) {
-          await weatherForestModel.getDataForestWeather(weatherFavorite!);
-        }
         return;
       }
 
       if (listFavorites.isNotEmpty) {
         await weatherForestModel.setFavoriteChosse(listFavorites[0]);
         await handleTimeToNotifi.getListSettingFromLocal(listFavorites[0]);
-
         await weatherForestModel.setDefaultData(true);
-        //call api forest
-        await weatherForestModel
-            .getDataForestWeather(weatherFavorite ?? listFavorites[0]);
       }
     });
     return SafeArea(
