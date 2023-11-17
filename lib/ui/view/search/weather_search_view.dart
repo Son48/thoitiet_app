@@ -28,7 +28,7 @@ class WeatherSearch extends ConsumerWidget {
       child: Scaffold(
         body: GestureDetector(
           onHorizontalDragEnd: (DragEndDetails details) {
-            if (details.primaryVelocity! > 0) {
+            if (details.primaryVelocity! > 0||details.primaryVelocity! < 0) {
               // Bạn có thể kiểm tra xem bàn phím có mở hay không
               if (FocusManager.instance.primaryFocus?.hasFocus ?? false) {
                 // Nếu bàn phím mở, đóng nó
@@ -128,10 +128,7 @@ class WeatherSearch extends ConsumerWidget {
                                       )
                                     : Container(),
                                 // List view for displaying search results
-                                rs_search.isEmpty &&
-                                        h_search.isNotEmpty &&
-                                        weatherSearchModel
-                                            .searchQuery.isNotEmpty
+                                rs_search.isEmpty && h_search.isEmpty||rs_search.isEmpty && h_search.isNotEmpty && weatherSearchModel.searchQuery.isNotEmpty
                                     ? Center(
                                         child: Container(
                                           child: Text(
