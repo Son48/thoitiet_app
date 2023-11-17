@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thoitiet_app/core/constants/constants.dart';
+import 'package:thoitiet_app/ui/widget/card_big_weather.dart';
+import 'package:thoitiet_app/view_models/weather_home/weather_home_model.dart';
 
 import '../../../core/data/models/location.dart';
 import '../../../view_models/weather_search/weather_search_model.dart';
@@ -13,6 +15,7 @@ class WeatherSearch extends ConsumerWidget {
     final weatherSearchModel = ref.watch(weatherSearchProvider);
     List<Location> rs_search = weatherSearchModel.weatherSearch;
     List<Location> h_search = weatherSearchModel.weatherHistory;
+    final weatherModel = ref.watch(weatherProvider);
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       if (weatherSearchModel.defaultData) {
@@ -28,7 +31,7 @@ class WeatherSearch extends ConsumerWidget {
       child: Scaffold(
         body: GestureDetector(
           onHorizontalDragEnd: (DragEndDetails details) {
-            if (details.primaryVelocity! > 0||details.primaryVelocity! < 0) {
+            if (details.primaryVelocity! > 0 || details.primaryVelocity! < 0) {
               // Bạn có thể kiểm tra xem bàn phím có mở hay không
               if (FocusManager.instance.primaryFocus?.hasFocus ?? false) {
                 // Nếu bàn phím mở, đóng nó
@@ -79,7 +82,7 @@ class WeatherSearch extends ConsumerWidget {
                                 filled: true,
                                 fillColor: Colors.white,
                                 border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(30),
+                                  borderRadius: BorderRadius.circular(10),
                                   borderSide: BorderSide.none,
                                 ),
                                 hintText: "Tìm kiếm ....",
@@ -120,28 +123,34 @@ class WeatherSearch extends ConsumerWidget {
                                         child: const Text(
                                           "Gần đây",
                                           style: TextStyle(
-                                            fontSize: 20,
+                                            fontSize: 14,
                                             fontWeight: FontWeight.bold,
-                                            color: Colors.orange,
+                                            color: Colors.white,
                                           ),
                                         ),
                                       )
                                     : Container(),
                                 // List view for displaying search results
-                                rs_search.isEmpty && h_search.isEmpty &&weatherSearchModel.searchQuery.isNotEmpty||rs_search.isEmpty && h_search.isNotEmpty && weatherSearchModel.searchQuery.isNotEmpty
+                                rs_search.isEmpty &&
+                                            h_search.isEmpty &&
+                                            weatherSearchModel
+                                                .searchQuery.isNotEmpty ||
+                                        rs_search.isEmpty &&
+                                            h_search.isNotEmpty &&
+                                            weatherSearchModel
+                                                .searchQuery.isNotEmpty
                                     ? Center(
                                         child: Container(
                                           child: Text(
                                             "Không tìm thấy kết quả cho '${weatherSearchModel.searchQuery}'",
                                             style: const TextStyle(
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.orange,
+                                              fontSize: 14,
+                                              color: Colors.yellow,
                                             ),
                                           ),
                                         ),
-                                      ):
-                                     ListView.builder(
+                                      )
+                                    : ListView.builder(
                                         itemCount: rs_search.isNotEmpty
                                             ? rs_search.length
                                             : h_search.length,
@@ -155,6 +164,47 @@ class WeatherSearch extends ConsumerWidget {
                                         scrollDirection: Axis.vertical,
                                         shrinkWrap: true,
                                       ),
+                                //recommend
+                                const Padding(
+                                  padding: EdgeInsets.only(left: 10),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        'Gợi ý cho bạn',
+                                        style: TextStyle(
+                                            fontSize: 17,
+                                            fontWeight: FontWeight.w600,
+                                            color: Colors.white),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                //slide card
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      top: 10, left: 10, bottom: 20),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(10)),
+                                    child: SizedBox(
+                                      height: 170,
+                                      child: ListView.builder(
+                                        itemCount: weatherModel
+                                            .weathersRecommend.length,
+                                        itemBuilder: (context, index) =>
+                                            CardBigWeather(
+                                                data: weatherModel
+                                                    .weathersRecommend[index]),
+                                        scrollDirection: Axis.horizontal,
+                                      ),
+                                    ),
+                                  ),
+                                )
                               ],
                             ),
                           ),
