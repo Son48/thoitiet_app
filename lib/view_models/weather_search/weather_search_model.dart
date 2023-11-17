@@ -15,7 +15,9 @@ final weatherSearchProvider = ChangeNotifierProvider<WeatherSearchViewModel>(
 class WeatherSearchViewModel extends ChangeNotifier {
   WeatherSearchViewModel(this._reader);
 
+
   final Ref _reader;
+
   // List to store search results
   List<Location> _weatherSearch = [];
   List<Location> get weatherSearch => _weatherSearch;
@@ -51,6 +53,8 @@ class WeatherSearchViewModel extends ChangeNotifier {
     setSearchQuery(query);
     notifyListeners();
   }
+
+
 
   // Method to set the search query and fetch search results
   Future<void> setSearchQuery(String query) async {
@@ -155,4 +159,6 @@ class WeatherSearchViewModel extends ChangeNotifier {
       print("Error deleting data from SQLite: $e");
     }
   }
+
+
 }
