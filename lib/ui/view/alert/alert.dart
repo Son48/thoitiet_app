@@ -281,7 +281,7 @@ Container NewsCardItem(context) {
                   padding: const EdgeInsets.all(2.0),
                   child: SizedBox(
                     height: 110,
-                    width: 100,
+                    width: MediaQuery.of(context).size.width * 1 / 4,
                     child: DecoratedBox(
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10)),
@@ -300,10 +300,10 @@ Container NewsCardItem(context) {
               //detail card news
               Container(
                 padding: EdgeInsets.only(left: 10, right: 10),
-                child: const SizedBox(
-                  width: 210,
+                child: SizedBox(
+                  width: (MediaQuery.of(context).size.width * 3 / 4) - 50,
                   height: 100,
-                  child: Column(
+                  child: const Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
