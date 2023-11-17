@@ -32,7 +32,8 @@ class WeatherReportViewModel extends ChangeNotifier {
   // Call API to get weather data for location
   Future<void> setLocation(Location location) async {
     try {
-      final weatherData = await _weatherReponsitory.getWeatherData(location.lat.toString(), location.lon.toString());
+      final weatherData = await _weatherReponsitory.getWeatherData(
+          location.lat.toString(), location.lon.toString());
       _weatherModel = weatherData;
       notifyListeners();
     } catch (e) {
@@ -40,12 +41,16 @@ class WeatherReportViewModel extends ChangeNotifier {
       print('Error fetching weather data: $e');
     }
   }
+
   ForestWeatherModel? _forestWeatherModel;
 
   ForestWeatherModel? get forestWeatherModel => _forestWeatherModel;
 
-  Future<void> setForestWeatherModel(data) async {
-    _forestWeatherModel = data;
+  Future<void> setForestWeatherModel(WeatherModel weather) async {
+    ForestWeatherModel? frWeather =
+        await _weatherReponsitory.getForestWeatherData(
+            weather.lat.toString(), weather.lon.toString(), weather);
+    _forestWeatherModel = frWeather;
     notifyListeners();
   }
 
@@ -62,11 +67,10 @@ class WeatherReportViewModel extends ChangeNotifier {
 
   Future<void> getDataForestWeather(WeatherModel w) async {
     try {
-      final res = await _weatherReponsitory.getForestWeatherData(
-          w.lat.toString(), w.lon.toString(), w);
+      WeatherModel? res = await _weatherReponsitory.getWeatherData(
+          w.lat.toString(), w.lon.toString());
 
       if (res != null) {
-        print('hahaha' + res.currentWeather!.nameLocation.toString());
         setForestWeatherModel(res);
       }
       notifyListeners();

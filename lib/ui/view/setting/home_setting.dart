@@ -176,7 +176,7 @@ class SettingHome extends ConsumerWidget {
                             Padding(
                               padding: const EdgeInsets.only(top: 20),
                               child: ListView.builder(
-                                scrollDirection: Axis.vertical,
+                                physics: const NeverScrollableScrollPhysics(),
                                 shrinkWrap: true,
                                 itemCount: listAllSettingNoti.length,
                                 itemBuilder: (context, index) =>

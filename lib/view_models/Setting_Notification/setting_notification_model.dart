@@ -183,15 +183,4 @@ class WeatherReportViewModel extends ChangeNotifier {
 
     notifyListeners();
   }
-
-  //handle send notifi
-  Future<void> handleSendNoti() async {
-    List<SettingNotificationModel> listSettingLocal =
-        await SettingNotification().fetchAllSetingFromLocal();
-    for (SettingNotificationModel item in listSettingLocal) {
-      WeatherModel w = await WeatherReponsitory()
-          .getWeatherData(item.lat.toString(), item.lon.toString());
-      print(w.nameLocation.toString());
-    }
-  }
 }
