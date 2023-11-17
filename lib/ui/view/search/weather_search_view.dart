@@ -18,7 +18,6 @@ class WeatherSearch extends ConsumerWidget {
       if (weatherSearchModel.defaultData) {
         return;
       }
-
       weatherSearchModel.setDefaultData(true);
       weatherSearchModel.setSearchQuery('');
       weatherSearchModel.setController('');
@@ -27,121 +26,143 @@ class WeatherSearch extends ConsumerWidget {
 
     return SafeArea(
       child: Scaffold(
-        body: SingleChildScrollView(
-          child: Material(
-            color: Colors.blue,
-            child: Container(
-              decoration: const BoxDecoration(
-                  gradient:
-                  LinearGradient(begin: Alignment.bottomRight, colors: [
-                    colorBackground,
-                    Color.fromRGBO(9, 98, 169, 1),
-                    Color.fromRGBO(9, 100, 169, 1),
-                    Color.fromRGBO(9, 98, 140, 1)
-                  ])),
-              child: Column(
-                children: [
-                  Row(
-                    children: [
-                      IconButton(
-                        icon: Icon(Icons.arrow_back, color: Colors.black),
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                      ),
-                      Expanded(
-                        child: Padding(
-                          padding: EdgeInsets.all(8),
-                          child: TextField(
-                            controller: weatherSearchModel.getController,
-                            onChanged: (newText) =>
-                                weatherSearchModel.handleSearch(newText),
-                            decoration: InputDecoration(
-                              filled: true,
-                              fillColor: Colors.white,
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(30),
-                                borderSide: BorderSide.none,
+        body: GestureDetector(
+          onHorizontalDragEnd: (DragEndDetails details) {
+            if (details.primaryVelocity! > 0||details.primaryVelocity! < 0) {
+              // Bạn có thể kiểm tra xem bàn phím có mở hay không
+              if (FocusManager.instance.primaryFocus?.hasFocus ?? false) {
+                // Nếu bàn phím mở, đóng nó
+                FocusManager.instance.primaryFocus?.unfocus();
+                // Kiểm tra xem đã thoát khỏi màn hình tìm kiếm hay chưa
+                if (Navigator.canPop(context)) {
+                  // Nếu đã thoát khỏi màn hình tìm kiếm, xóa nội dung trên search
+                  weatherSearchModel.setSearchQuery('');
+                  weatherSearchModel.setController('');
+                }
+              } else {
+                // Nếu bàn phím không mở, thoát khỏi màn hình tìm kiếm
+                Navigator.pop(context);
+              }
+            }
+          },
+          child: SingleChildScrollView(
+            child: Material(
+              color: Colors.blue,
+              child: Container(
+                decoration: const BoxDecoration(
+                    gradient:
+                        LinearGradient(begin: Alignment.bottomRight, colors: [
+                  colorBackground,
+                  Color.fromRGBO(9, 98, 169, 1),
+                  Color.fromRGBO(9, 100, 169, 1),
+                  Color.fromRGBO(9, 98, 140, 1)
+                ])),
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        IconButton(
+                          icon: Icon(Icons.arrow_back, color: Colors.white),
+                          onPressed: () {
+                            weatherSearchModel.setController('');
+                            Navigator.pop(context);
+                          },
+                        ),
+                        Expanded(
+                          child: Padding(
+                            padding: EdgeInsets.all(8),
+                            child: TextField(
+                              controller: weatherSearchModel.getController,
+                              onChanged: (newText) =>
+                                  weatherSearchModel.handleSearch(newText),
+                              decoration: InputDecoration(
+                                filled: true,
+                                fillColor: Colors.white,
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(30),
+                                  borderSide: BorderSide.none,
+                                ),
+                                hintText: "Tìm kiếm ....",
+                                prefixIcon: const Icon(Icons.search),
+                                prefixIconColor: Colors.black,
+                                contentPadding: const EdgeInsets.symmetric(
+                                    horizontal: 16.0, vertical: 12.0),
                               ),
-                              hintText: "Search weather....",
-                              prefixIcon: const Icon(Icons.search),
-                              prefixIconColor: Colors.black,
-                              contentPadding: const EdgeInsets.symmetric(
-                                  horizontal: 16.0, vertical: 12.0),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    Container(
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.height,
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 10),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: SizedBox(
+                            height: 170,
+                            child: Column(
+                              children: [
+                                // Display "Gần đây" if the recent search results are empty
+                                rs_search.isEmpty &&
+                                        h_search.isNotEmpty &&
+                                        weatherSearchModel.searchQuery.isEmpty
+                                    ? Container(
+                                        alignment: Alignment.topLeft,
+                                        padding:
+                                            const EdgeInsets.only(left: 10),
+                                        child: const Text(
+                                          "Gần đây",
+                                          style: TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.orange,
+                                          ),
+                                        ),
+                                      )
+                                    : Container(),
+                                // List view for displaying search results
+                                rs_search.isEmpty && h_search.isEmpty &&weatherSearchModel.searchQuery.isNotEmpty||rs_search.isEmpty && h_search.isNotEmpty && weatherSearchModel.searchQuery.isNotEmpty
+                                    ? Center(
+                                        child: Container(
+                                          child: Text(
+                                            "Không tìm thấy kết quả cho '${weatherSearchModel.searchQuery}'",
+                                            style: const TextStyle(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.orange,
+                                            ),
+                                          ),
+                                        ),
+                                      ):
+                                     ListView.builder(
+                                        itemCount: rs_search.isNotEmpty
+                                            ? rs_search.length
+                                            : h_search.length,
+                                        itemBuilder: (context, index) {
+                                          return rs_search.isNotEmpty
+                                              ? CardSearch(
+                                                  data: rs_search[index])
+                                              : CardHistory(
+                                                  data: h_search[index]);
+                                        },
+                                        scrollDirection: Axis.vertical,
+                                        shrinkWrap: true,
+                                      ),
+                              ],
                             ),
                           ),
                         ),
                       ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height,
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 10),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: SizedBox(
-                          height: 170,
-                          child: Column(
-                            children: [
-                              // Display custom message when search results are empty
-                              rs_search.isEmpty && h_search.isEmpty
-                                  ? Container(
-                                alignment: Alignment.center,
-                                padding: const EdgeInsets.only(top: 20),
-                                child: Text(
-                                  weatherSearchModel.searchQuery.isNotEmpty
-                                      ? "Khzông tìm thấy kết quả cho '${weatherSearchModel.searchQuery}'"
-                                      : '',
-                                  style: const TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                              )
-                                  : Container(),
-                              // Display "Gần đây" if the recent search results are empty
-                              rs_search.isEmpty && h_search.isNotEmpty
-                                  ? Container(
-                                alignment: Alignment.topLeft,
-                                padding: const EdgeInsets.only(left: 10),
-                                child: const Text(
-                                  "Gần đây",
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                              )
-                                  : Container(),
-                              // List view for displaying search results
-                              ListView.builder(
-                                itemCount: rs_search.isNotEmpty
-                                    ? rs_search.length
-                                    : h_search.length,
-                                itemBuilder: (context, index) {
-                                  return rs_search.isNotEmpty
-                                      ? CardSearch(data: rs_search[index])
-                                      : CardHistory(data: h_search[index]);
-                                },
-                                scrollDirection: Axis.vertical,
-                                shrinkWrap: true,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),

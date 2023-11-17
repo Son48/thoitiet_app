@@ -11,35 +11,41 @@ final weatherSearchProvider = ChangeNotifierProvider<WeatherSearchViewModel>(
   (ref) => WeatherSearchViewModel(ref),
 );
 
-
 class WeatherSearchViewModel extends ChangeNotifier {
   WeatherSearchViewModel(this._reader);
 
   final Ref _reader;
+
   // List to store search results
   List<Location> _weatherSearch = [];
+
   List<Location> get weatherSearch => _weatherSearch;
 
   // List to store unique history items
   List<Location> _weatherHistory = [];
+
   List<Location> get weatherHistory => _weatherHistory;
 
   // Boolean to track whether default data should be used
   bool _defaultData = false;
+
   bool get defaultData => _defaultData;
 
   // TextEditingController for the search input
   TextEditingController _searchController = TextEditingController();
+
   TextEditingController get getController => _searchController;
 
   // String to store the search query
   String _searchQuery = '';
+
   String get searchQuery => _searchQuery;
 
   // Method to set the default data flag
   Future<void> setDefaultData(bool isDefault) async {
     _defaultData = isDefault;
   }
+
   // Method to set the search input controller
   Future<void> setController(String searchController) async {
     _searchController.text = searchController;
@@ -106,7 +112,8 @@ class WeatherSearchViewModel extends ChangeNotifier {
   // Method to fetch all search history from SQLite
   Future<List<Location>> getAllSearchFromSQL() async {
     try {
-      List<Location> historyWeather = await SearchData().fetchAllSearchFromLocal();
+      List<Location> historyWeather =
+          await SearchData().fetchAllSearchFromLocal();
       return historyWeather;
     } catch (e) {
       return [];
@@ -145,10 +152,12 @@ class WeatherSearchViewModel extends ChangeNotifier {
   Future<void> deleteFavoriteFromSQL(Location history) async {
     try {
       print('Xóa khỏi local');
-      await SearchData().deleteTable(history.lon.toString(), history.lat.toString());
+      await SearchData()
+          .deleteTable(history.lon.toString(), history.lat.toString());
 
       // Xóa các thành phần có cùng nameLocation
-      _weatherHistory.removeWhere((location) => location.nameLocation == history.nameLocation);
+      _weatherHistory.removeWhere(
+          (location) => location.nameLocation == history.nameLocation);
 
       notifyListeners();
     } catch (e) {
