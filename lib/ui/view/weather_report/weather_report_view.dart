@@ -157,7 +157,7 @@ class WeatherReportView extends ConsumerWidget {
                             )),
                       ),
                       Padding(
-                        padding: EdgeInsets.only(bottom: 10),
+                        padding: EdgeInsets.only(bottom: 10, left: 10),
                         child: SizedBox(
                           width: MediaQuery.of(context).size.width,
                           child: Row(
