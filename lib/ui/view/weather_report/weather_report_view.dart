@@ -25,7 +25,6 @@ class WeatherReportView extends ConsumerWidget {
     bool isFavovite = reportModel.isFavoritesWeather;
     final handleTimeToNotifi = ref.watch(weatherFavoritesProvider);
     final listFavorites = ref.watch(weatherProvider);
-
     ForestWeatherModel? forestWeatherModel = reportModel.forestWeatherModel;
     void addFavorites() async {
       await reportModel.setDefaultData(false);
@@ -40,11 +39,10 @@ class WeatherReportView extends ConsumerWidget {
       await reportModel.getDataForestWeather(weatherModel!);
       await reportModel.setDefaultData(true);
       await reportModel.setFavoriteWeather();
-
       await handleTimeToNotifi.getListSettingFromLocal(weatherModel);
     });
     return SafeArea(
-      child: !reportModel.defaultData
+      child: forestWeatherModel == null
           ? PreLoading()
           : Scaffold(
               body: Container(
@@ -652,11 +650,14 @@ class WeatherReportView extends ConsumerWidget {
                               ),
                             ),
                           ),
-                          ColumnChart(
-                            chartData1: forestWeatherModel!
-                                .getChartData1(forestWeatherModel),
-                            chartData2: forestWeatherModel
-                                .getChartData2(forestWeatherModel),
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 20),
+                            child: ColumnChart(
+                              chartData1: forestWeatherModel!
+                                  .getChartData1(forestWeatherModel),
+                              chartData2: forestWeatherModel
+                                  .getChartData2(forestWeatherModel),
+                            ),
                           ),
                         ],
                       ),

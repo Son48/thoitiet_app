@@ -9,6 +9,7 @@ import 'package:thoitiet_app/ui/view/news/home_news_weather.dart';
 import 'package:thoitiet_app/ui/view/news/news_weater.dart';
 import 'package:thoitiet_app/ui/view/search/weather_search_view.dart';
 import 'package:thoitiet_app/ui/view/setting/home_setting.dart';
+import 'package:thoitiet_app/ui/view/splash/splash.dart';
 import 'package:thoitiet_app/ui/view/weather_home/weather_home_screen.dart';
 import 'package:thoitiet_app/ui/widget/bottom_bar.dart';
 import 'package:thoitiet_app/ui/view/alert/alert.dart';
@@ -55,13 +56,6 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-  final Map<int, Widget> routes = {
-    0: WeatherHome(),
-    1: NewsHome(),
-    2: FavovitesHome(),
-    3: AlertView(),
-    4: SettingHome(),
-  };
   @override
   Widget build(BuildContext context) {
     return ProviderScope(
@@ -75,11 +69,7 @@ class MyApp extends StatelessWidget {
           "detail-weather": (context) => WeatherReportView(),
           "search": (context) => WeatherSearch(),
         },
-        home: SafeArea(
-          child: Scaffold(
-            bottomNavigationBar: BottomBar(routes: routes),
-          ),
-        ),
+        home: const Splash(),
       ),
     );
   }

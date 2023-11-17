@@ -8,6 +8,8 @@ import 'package:thoitiet_app/ui/widget/card_weather_3x4.dart';
 import 'package:thoitiet_app/view_models/weather_home/weather_home_model.dart';
 import 'dart:math';
 
+import 'package:thoitiet_app/view_models/weather_report_model/weather_report_model.dart';
+
 bool isLoadingWeather = true;
 bool isLoadingWeatherRecommend = true;
 final counterProvider = StateProvider<int>((ref) => 0);
@@ -19,6 +21,9 @@ class WeatherHome extends ConsumerWidget {
     print('home render UI');
     final weatherModel = ref.watch(weatherProvider);
     List<WeatherModel> listWeather = weatherModel.weathers;
+    //current weather in location of device
+    WeatherModel? currentWeather = weatherModel.currentWeather;
+    final reportModel = ref.watch(weatherReportProvider);
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       //render ui no condition
@@ -28,12 +33,14 @@ class WeatherHome extends ConsumerWidget {
       if (weatherModel.isDefaultData) {
         isLoadingWeather = false;
         isLoadingWeatherRecommend = false;
+
         return;
       }
       weatherModel.getDataWeather();
       weatherModel.getDataRecomendWeather();
       //get first data from local
       weatherModel.loadDataLocalToState();
+      weatherModel.getCurrentWeatherDevice();
       weatherModel.setIsDefaultData(true);
     });
     return SafeArea(
@@ -98,9 +105,97 @@ class WeatherHome extends ConsumerWidget {
                               ),
                       ),
                     ),
-                  )
-                  //
-                  ,
+                  ),
+                  //,
+                  const Padding(
+                    padding: EdgeInsets.only(top: 30.0, right: 20),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Thời tiết tại địa điểm của bạn',
+                          style: TextStyle(
+                              fontSize: 17,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.white),
+                        ),
+                      ],
+                    ),
+                  ),
+                  //weather in current location
+                  currentWeather != null
+                      ? GestureDetector(
+                          onTap: () {
+                            reportModel.setWeatherModel(currentWeather!);
+                            Navigator.pushNamed(context, 'detail-weather');
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.only(right: 10, top: 10),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  color: Colors.blue),
+                              child: Padding(
+                                padding: const EdgeInsets.all(10),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          '${currentWeather?.temp} °',
+                                          style: const TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 40,
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: 120,
+                                          child: Text(
+                                            '${currentWeather?.nameLocation} hôm nay ${currentWeather?.descriptionWeather}.',
+                                            style: const TextStyle(
+                                                color: Colors.yellow,
+                                                fontSize: 16),
+                                          ),
+                                        ),
+                                        const SizedBox(height: 10),
+                                        Text(
+                                            'Độ ẩm: ${currentWeather?.clounds}%',
+                                            style: const TextStyle(
+                                                color: Colors.white)),
+                                        Text(
+                                            'Tốc độ gió: ${currentWeather?.speedWind} ms',
+                                            style: const TextStyle(
+                                                color: Colors.white)),
+                                      ],
+                                    ),
+                                    Column(
+                                      children: [
+                                        SizedBox(
+                                          width: 90,
+                                          child: Image.network(
+                                            "https://openweathermap.org/img/wn/${currentWeather?.urlStatusIcon}.png",
+                                            fit: BoxFit.fitWidth,
+                                          ),
+                                        ),
+                                        Text(
+                                            'Cảm giác như : ${currentWeather?.feelLike} °C',
+                                            style:
+                                                TextStyle(color: Colors.white))
+                                      ],
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        )
+                      : const PreLoading(),
                   const Padding(
                     padding: EdgeInsets.only(top: 30.0, right: 20),
                     child: Row(
