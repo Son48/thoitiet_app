@@ -128,7 +128,7 @@ class WeatherSearch extends ConsumerWidget {
                                       )
                                     : Container(),
                                 // List view for displaying search results
-                                rs_search.isEmpty && h_search.isEmpty||rs_search.isEmpty && h_search.isNotEmpty && weatherSearchModel.searchQuery.isNotEmpty
+                                rs_search.isEmpty && h_search.isEmpty &&weatherSearchModel.searchQuery.isNotEmpty||rs_search.isEmpty && h_search.isNotEmpty && weatherSearchModel.searchQuery.isNotEmpty
                                     ? Center(
                                         child: Container(
                                           child: Text(
@@ -140,8 +140,8 @@ class WeatherSearch extends ConsumerWidget {
                                             ),
                                           ),
                                         ),
-                                      )
-                                    : ListView.builder(
+                                      ):
+                                     ListView.builder(
                                         itemCount: rs_search.isNotEmpty
                                             ? rs_search.length
                                             : h_search.length,
