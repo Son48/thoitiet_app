@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thoitiet_app/core/constants/constants.dart';
 import 'package:thoitiet_app/core/data/models/weather.dart';
 import 'package:thoitiet_app/ui/view/news/home_news_weather.dart';
+import 'package:thoitiet_app/ui/widget/card_big_weather.dart';
 import 'package:thoitiet_app/ui/widget/card_weather_3x4.dart';
 import 'package:thoitiet_app/view_models/weather_home/weather_home_model.dart';
 import 'dart:math';
@@ -134,8 +135,12 @@ class WeatherHome extends ConsumerWidget {
                             padding: const EdgeInsets.only(right: 10, top: 10),
                             child: Container(
                               decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  color: Colors.blue),
+                                image: const DecorationImage(
+                                    image: AssetImage(
+                                        'assets/images/banner-card.png'),
+                                    fit: BoxFit.fitWidth),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
                               child: Padding(
                                 padding: const EdgeInsets.all(10),
                                 child: Row(
@@ -177,7 +182,7 @@ class WeatherHome extends ConsumerWidget {
                                     Column(
                                       children: [
                                         SizedBox(
-                                          width: 90,
+                                          width: 120,
                                           child: Image.network(
                                             "https://openweathermap.org/img/wn/${currentWeather?.urlStatusIcon}.png",
                                             fit: BoxFit.fitWidth,
@@ -209,11 +214,6 @@ class WeatherHome extends ConsumerWidget {
                               fontWeight: FontWeight.bold,
                               color: Colors.white),
                         ),
-                        Text('Xem tất cả',
-                            style: TextStyle(
-                                fontSize: 17,
-                                decoration: TextDecoration.underline,
-                                color: Colors.white70)),
                       ],
                     ),
                   ),
@@ -231,17 +231,17 @@ class WeatherHome extends ConsumerWidget {
                                 itemCount:
                                     weatherModel.weathersRecommend.length,
                                 itemBuilder: (context, index) => CardBigWeather(
-                                    weatherModel.weathersRecommend[index]),
+                                    data:
+                                        weatherModel.weathersRecommend[index]),
                                 scrollDirection: Axis.horizontal,
                               ),
                       ),
                     ),
                   )
-
                   //news
                   ,
                   const Padding(
-                    padding: EdgeInsets.only(top: 70.0, right: 20),
+                    padding: EdgeInsets.only(top: 30.0, right: 20),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -253,11 +253,6 @@ class WeatherHome extends ConsumerWidget {
                               fontWeight: FontWeight.bold,
                               color: Colors.white),
                         ),
-                        Text('Xem tất cả',
-                            style: TextStyle(
-                                fontSize: 17,
-                                decoration: TextDecoration.underline,
-                                color: Colors.white70)),
                       ],
                     ),
                   ),
@@ -350,97 +345,5 @@ class WeatherHome extends ConsumerWidget {
             ),
           ),
         ));
-  }
-
-//big card
-  Container CardBigWeather(
-    WeatherModel data,
-  ) {
-    return Container(
-      margin: EdgeInsets.only(right: 10),
-      child: AspectRatio(
-        //w/h
-        aspectRatio: 16 / 9,
-        // Hero: lib animation when change screen at this point
-        child: Hero(
-          tag: data.nameLocation.toString() + Random().nextInt(10).toString(),
-          //GestureDetector: define one tap in this component
-          child: GestureDetector(
-            onTap: () {
-              // Navigator.push(context, MaterialPageRoute(builder: (context) => CategoryPage(image: image, title: title, tag: tag,)));
-            },
-            child: Material(
-              color: Colors.blue,
-              borderRadius: BorderRadius.circular(20),
-              child: Container(
-                //background image in component
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    image: const DecorationImage(
-                        image: AssetImage('assets/images/banner-card.png'),
-                        fit: BoxFit.fill)),
-                child: Container(
-                  padding: EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      gradient:
-                          LinearGradient(begin: Alignment.bottomRight, colors: [
-                        Colors.black.withOpacity(.2),
-                        Colors.black.withOpacity(.0),
-                      ])),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      SizedBox(
-                        width: 150,
-                        child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 8.0, bottom: 10),
-                                child: Text(
-                                  "${data.temp}°",
-                                  style: const TextStyle(
-                                      fontSize: 40, color: Colors.white),
-                                ),
-                              ),
-                              Text(
-                                "${data.tempMin}° - ${data.tempMax}°",
-                                style: const TextStyle(
-                                    fontSize: 15, color: Colors.white70),
-                              ),
-                              Text(
-                                data.nameLocation.toString(),
-                                style: const TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w500),
-                              ),
-                            ]),
-                      ),
-                      Column(
-                        children: [
-                          SizedBox(
-                            width: 90,
-                            child: Image.network(
-                                "https://openweathermap.org/img/wn/${data.urlStatusIcon}.png",
-                                fit: BoxFit.fitWidth),
-                          ),
-                          Text(
-                            data.descriptionWeather.toString(),
-                            style: const TextStyle(color: Colors.white),
-                          )
-                        ],
-                      )
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
   }
 }
