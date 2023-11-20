@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thoitiet_app/core/data/models/setting_notifi.dart';
 import 'package:thoitiet_app/ui/widget/card_report.dart';
 import 'package:thoitiet_app/ui/widget/pre_loading.dart';
 import 'package:thoitiet_app/ui/widget/transparent_button.dart';
@@ -25,11 +26,26 @@ class WeatherReportView extends ConsumerWidget {
     bool isFavovite = reportModel.isFavoritesWeather;
     final handleTimeToNotifi = ref.watch(weatherFavoritesProvider);
     final listFavorites = ref.watch(weatherProvider);
+    List<SettingNotificationModel> listSettingLocal =
+        reportModel.listNotiOfWeather;
     ForestWeatherModel? forestWeatherModel = reportModel.forestWeatherModel;
     void addFavorites() async {
-      await reportModel.setDefaultData(false);
       listFavorites.weatherFavories.add(weatherModel!);
       listFavorites.insertFavoriteFromSQL(weatherModel);
+      reportModel.setStateFavoriteWeather(true);
+    }
+
+    void removeWeatherInFavorites(WeatherModel data) async {
+      reportModel.setStateFavoriteWeather(false);
+      print('remove');
+      for (WeatherModel item in listFavorites.weatherFavories) {
+        if (item.lat.toString() == data.lat.toString() &&
+            item.lon.toString() == data.lon.toString()) {
+          listFavorites.weatherFavories.remove(item);
+          listFavorites.deleteFavoriteFromSQL(item);
+          break;
+        }
+      }
     }
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
@@ -37,12 +53,13 @@ class WeatherReportView extends ConsumerWidget {
         return;
       }
       await reportModel.getDataForestWeather(weatherModel!);
-      await reportModel.setDefaultData(true);
       await reportModel.setFavoriteWeather();
       await handleTimeToNotifi.getListSettingFromLocal(weatherModel);
+      await reportModel.setListNotiOfWeather(weatherModel);
+      await reportModel.setDefaultData(true);
     });
     return SafeArea(
-      child: forestWeatherModel == null
+      child: !reportModel.defaultData
           ? PreLoading()
           : Scaffold(
               body: Container(
@@ -125,7 +142,13 @@ class WeatherReportView extends ConsumerWidget {
                         child: Row(
                           children: [
                             isFavovite
-                                ? Icon(Icons.favorite, color: Colors.yellow)
+                                ? IconButton(
+                                    icon: const Icon(Icons.favorite,
+                                        color: Colors.yellow),
+                                    onPressed: () {
+                                      removeWeatherInFavorites(weatherModel);
+                                    },
+                                  )
                                 : IconButton(
                                     icon: const Icon(
                                       Icons.favorite_border_outlined,
@@ -142,7 +165,7 @@ class WeatherReportView extends ConsumerWidget {
                               isFavovite
                                   ? 'Đã có trong danh mục yêu thích !'
                                   : 'Thêm vào danh mục yêu thích ',
-                              style: TextStyle(color: Colors.yellow),
+                              style: const TextStyle(color: Colors.yellow),
                             )
                           ],
                         ),
@@ -163,18 +186,95 @@ class WeatherReportView extends ConsumerWidget {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              const Icon(
-                                Icons.timer_outlined,
-                                color: Colors.white,
-                                size: 20,
+                              GestureDetector(
+                                onTap: () => showDialog<String>(
+                                  context: context,
+                                  builder: (BuildContext context) =>
+                                      AlertDialog(
+                                    title: Text(
+                                        'Các thiết lập thông báo tại ${weatherModel.nameLocation}'),
+                                    content: SizedBox(
+                                      width: MediaQuery.of(context).size.width -
+                                          20,
+                                      height: 200,
+                                      child: ListView.builder(
+                                        itemCount: listSettingLocal.length,
+                                        itemBuilder: (context, index) =>
+                                            Padding(
+                                          padding: const EdgeInsets.only(
+                                              bottom: 5, left: 5),
+                                          child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Text(
+                                                    'Vào lúc:  ${listSettingLocal[index].hour} giờ, ${listSettingLocal[index].minute} phút'),
+                                                IconButton(
+                                                    onPressed: () {
+                                                      reportModel
+                                                          .setDefaultData(
+                                                              false);
+                                                      handleTimeToNotifi
+                                                          .deleteSettingFromSQL(
+                                                              listSettingLocal[
+                                                                      index]
+                                                                  .lon
+                                                                  .toString(),
+                                                              listSettingLocal[
+                                                                      index]
+                                                                  .lat
+                                                                  .toString(),
+                                                              listSettingLocal[
+                                                                      index]
+                                                                  .hour
+                                                                  .toString(),
+                                                              listSettingLocal[
+                                                                      index]
+                                                                  .minute
+                                                                  .toString());
+                                                      Navigator.pop(
+                                                          context, 'Cancel');
+                                                    },
+                                                    icon: const Icon(
+                                                      Icons.delete_forever,
+                                                      color: Colors.red,
+                                                    ))
+                                              ]),
+                                        ),
+                                      ),
+                                    ),
+                                    actions: <Widget>[
+                                      TextButton(
+                                        onPressed: () =>
+                                            Navigator.pop(context, 'Cancel'),
+                                        child: const Text('Đóng'),
+                                      ),
+                                      TextButton(
+                                        onPressed: () =>
+                                            Navigator.pop(context, 'OK'),
+                                        child: const Text('OK'),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                child: Row(
+                                  children: [
+                                    const Icon(
+                                      Icons.timer_outlined,
+                                      color: Colors.white,
+                                      size: 20,
+                                    ),
+                                    SizedBox(
+                                        width: 60,
+                                        child: Text(
+                                          handleTimeToNotifi.errorTime,
+                                          style: const TextStyle(
+                                              color: Colors.yellow),
+                                        )),
+                                  ],
+                                ),
                               ),
-                              SizedBox(
-                                  width: 60,
-                                  child: Text(
-                                    handleTimeToNotifi.errorTime,
-                                    style:
-                                        const TextStyle(color: Colors.yellow),
-                                  )),
                               Row(
                                 children: [
                                   Row(
@@ -272,8 +372,11 @@ class WeatherReportView extends ConsumerWidget {
                                   Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: GestureDetector(
-                                      onTap: () => handleTimeToNotifi
-                                          .handleTimeNoti(weatherModel),
+                                      onTap: () => {
+                                        handleTimeToNotifi
+                                            .handleTimeNoti(weatherModel),
+                                        reportModel.setDefaultData(false)
+                                      },
                                       child: const Row(
                                         children: [
                                           Text(

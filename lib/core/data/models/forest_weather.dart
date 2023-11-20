@@ -79,7 +79,7 @@ class ForestWeatherModel {
       return model.daily.map((daily) {
         return ForeCastData(
           day: daily.day.toString(),
-          forecast:"0",
+          forecast: "0",
         );
       }).toList();
     } else {

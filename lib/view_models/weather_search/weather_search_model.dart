@@ -105,7 +105,8 @@ class WeatherSearchViewModel extends ChangeNotifier {
       return [];
     }
     List<Location> searchResult = [];
-    for (Location location in Constants.listLocation) {
+    final listLocation = await Constants.convert();
+    for (Location location in listLocation) {
       if (location.nameLocation!
           .toLowerCase()
           .contains(_searchQuery.toLowerCase())) {
@@ -170,6 +171,7 @@ class WeatherSearchViewModel extends ChangeNotifier {
       print("Error deleting data from SQLite: $e");
     }
   }
+
   void handleHorizontalSwipe(DragEndDetails? details, BuildContext context) {
     if (details!.primaryVelocity! > 0 || details!.primaryVelocity! < 0) {
       if (FocusManager.instance.primaryFocus?.hasFocus ?? false) {
@@ -183,6 +185,4 @@ class WeatherSearchViewModel extends ChangeNotifier {
       }
     }
   }
-
-
 }
