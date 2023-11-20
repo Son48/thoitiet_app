@@ -19,10 +19,9 @@ class ForestWeatherModel {
       Map<String, dynamic> json, WeatherModel w) async {
     List<WeatherModel> arr_daily = [];
     List<WeatherModel> arr_hourly = [];
-    w.rain = json['current']['rain'].toString();
     w.uvi = json['current']['uvi'].toString();
     w.visibility = json['current']['visibility'].toString();
-
+    w.rain = json['daily'][0]['rain'] != null ? json['daily'][0]['rain'].toString() : '0';
     for (dynamic item in json['daily']) {
       WeatherModel wd = WeatherModel(
           nameLocation: w.nameLocation,
@@ -31,6 +30,7 @@ class ForestWeatherModel {
           tempMin: (item['temp']['min']).toString(),
           tempMax: (item['temp']['max']).toString(),
           clounds: item['clouds'].toString(),
+          rain: item['rain'] != null ? item['rain'].toString() : '0',
           day: await convertDaysToDateTime(item['dt'], 0),
           descriptionWeather: (item['weather'][0]['description']).toString(),
           speedWind: (item['wind_speed']).toString(),
@@ -79,7 +79,7 @@ class ForestWeatherModel {
       return model.daily.map((daily) {
         return ForeCastData(
           day: daily.day.toString(),
-          forecast:"0",
+          forecast:daily.rain.toString(),
         );
       }).toList();
     } else {

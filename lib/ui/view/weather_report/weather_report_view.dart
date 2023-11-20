@@ -549,7 +549,7 @@ class WeatherReportView extends ConsumerWidget {
                                                 height: 10,
                                               ),
                                               Text(
-                                                '${forestWeatherModel?.currentWeather != null ? forestWeatherModel?.currentWeather?.rain.toString() : 'Không có'}',
+                                                '${forestWeatherModel.currentWeather?.rain.toString()}',
                                                 style: TextStyle(
                                                     color: Colors.white70,
                                                     fontWeight:
@@ -605,13 +605,25 @@ class WeatherReportView extends ConsumerWidget {
                                 ),
                               ),
                               Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
                                 children: [
+                                  const Padding(
+                                    padding: EdgeInsets.only(right: 20,left: 20,top: 50),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text('Ngày',style: TextStyle(color: Colors.yellow)),
+                                        const SizedBox(width: 5),
+                                        Text("Thời tiết",style: TextStyle(color: Colors.yellow)),
+                                        const SizedBox(width: 20), //
+                                        Text("Max°C",style: TextStyle(color: Colors.yellow),),
+                                        Text("Min°C",style: TextStyle(color: Colors.yellow)),
+                                      ],
+                                    ),
+                                  ),
                                   SizedBox(
                                     height: 500,
                                     child: Padding(
-                                      padding: const EdgeInsets.only(top: 30),
+                                      padding: const EdgeInsets.only(top: 8),
                                       child: ListView.builder(
                                         physics:
                                             const NeverScrollableScrollPhysics(),

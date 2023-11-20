@@ -21,7 +21,6 @@ class WeatherSearch extends ConsumerWidget {
       weatherSearchModel.setDefaultData(true);
       weatherSearchModel.setSearchQuery('');
       weatherSearchModel.setController('');
-      weatherSearchModel.setAnnounceResults('');
       weatherSearchModel.getAllSearchFromSQLAndSetState();
     });
 
@@ -49,7 +48,6 @@ class WeatherSearch extends ConsumerWidget {
                           icon: Icon(Icons.arrow_back, color: Colors.white),
                           onPressed: () {
                             weatherSearchModel.setController('');
-                            weatherSearchModel.setAnnounceResults('');
                             weatherSearchModel.setSearchQuery('');
                             Navigator.pop(context);
                           },
@@ -118,7 +116,7 @@ class WeatherSearch extends ConsumerWidget {
                                     ? Center(
                                         child: Container(
                                           child: Text(
-                                            "'${weatherSearchModel.setAnnounceResults("Không tìm thấy kết quả cho từ khóa:")}' '${weatherSearchModel.searchQuery}'",
+                                            "Không tìm thấy kết quả: '${weatherSearchModel.searchQuery}'",
                                             style: const TextStyle(
                                               fontSize: 20,
                                               fontWeight: FontWeight.bold,
