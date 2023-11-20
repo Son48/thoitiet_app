@@ -66,8 +66,6 @@ class WeatherReportViewModel extends ChangeNotifier {
   ForestWeatherModel? get forestWeatherModel => _forestWeatherModel;
 
   Future<void> setForestWeatherModel(WeatherModel weather) async {
-    _forestWeatherModel = null;
-    notifyListeners();
     ForestWeatherModel? frWeather =
         await _weatherReponsitory.getForestWeatherData(
             weather.lat.toString(), weather.lon.toString(), weather);
@@ -88,6 +86,8 @@ class WeatherReportViewModel extends ChangeNotifier {
 
   Future<void> getDataForestWeather(WeatherModel w) async {
     try {
+      _forestWeatherModel = null;
+      notifyListeners();
       WeatherModel? res = await _weatherReponsitory.getWeatherData(
           w.lat.toString(), w.lon.toString());
 
