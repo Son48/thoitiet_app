@@ -30,7 +30,8 @@ class WeatherSearch extends ConsumerWidget {
     return SafeArea(
       child: Scaffold(
         body: GestureDetector(
-          onHorizontalDragEnd: (details) => weatherSearchModel.handleHorizontalSwipe(details, context),
+          onHorizontalDragEnd: (details) =>
+              weatherSearchModel.handleHorizontalSwipe(details, context),
           child: SingleChildScrollView(
             child: Material(
               color: Colors.blue,
@@ -127,6 +128,7 @@ class WeatherSearch extends ConsumerWidget {
                                         child: Container(
                                           child: Text(
                                             "Không tìm thấy kết quả: '${weatherSearchModel.searchQuery}'",
+
                                             style: const TextStyle(
                                               fontSize: 14,
                                               color: Colors.yellow,

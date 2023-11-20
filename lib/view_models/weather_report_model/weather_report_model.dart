@@ -3,9 +3,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thoitiet_app/core/constants/constants.dart';
 import 'package:thoitiet_app/core/data/geolocator/geolocator_setting.dart';
 import 'package:thoitiet_app/core/data/models/forest_weather.dart';
+import 'package:thoitiet_app/core/data/models/setting_notifi.dart';
 import 'package:thoitiet_app/core/data/models/weather.dart';
 import 'package:thoitiet_app/core/data/reponsitories/weather_reponsitory.dart';
 import 'package:thoitiet_app/core/data/sqflite/FavoritesData.dart';
+import 'package:thoitiet_app/core/data/sqflite/SettingNotification.dart';
 
 import '../../core/data/models/location.dart';
 
@@ -22,6 +24,21 @@ class WeatherReportViewModel extends ChangeNotifier {
   WeatherModel? _weatherModel;
 
   WeatherModel? get weatherModel => _weatherModel;
+  bool _defautDataFavorite = false;
+  bool get defaultDataFavorite => _defautDataFavorite;
+  void setDefaultDataFavorite(bool df) {
+    _defautDataFavorite = df;
+    notifyListeners();
+  }
+
+  List<SettingNotificationModel> _listNotiOfWeather = [];
+  List<SettingNotificationModel> get listNotiOfWeather => _listNotiOfWeather;
+  Future<void> setListNotiOfWeather(WeatherModel w) async {
+    List<SettingNotificationModel> listSettingLocal =
+        await SettingNotification().getSetingFromLocal(w);
+    _listNotiOfWeather = listSettingLocal;
+    notifyListeners();
+  }
 
   Future<void> setWeatherModel(WeatherModel data) async {
     setForestWeatherModel(data);
@@ -40,12 +57,18 @@ class WeatherReportViewModel extends ChangeNotifier {
       if (item.lon.toString() == weatherModel?.lon.toString() &&
           item.lat.toString() == weatherModel?.lat.toString()) {
         _isFavoritesWeather = true;
-        notifyListeners();
         break;
       } else {
         _isFavoritesWeather = false;
       }
     }
+    //end of set data in _isFavoritesWeather
+    notifyListeners();
+  }
+
+  void setStateFavoriteWeather(bool status) {
+    _isFavoritesWeather = status;
+    notifyListeners();
   }
 
   // Call API to get weather data for location
@@ -70,7 +93,6 @@ class WeatherReportViewModel extends ChangeNotifier {
         await _weatherReponsitory.getForestWeatherData(
             weather.lat.toString(), weather.lon.toString(), weather);
     _forestWeatherModel = frWeather;
-    notifyListeners();
   }
 
   //variable to change notifi in the first render
@@ -86,15 +108,12 @@ class WeatherReportViewModel extends ChangeNotifier {
 
   Future<void> getDataForestWeather(WeatherModel w) async {
     try {
-      _forestWeatherModel = null;
-      notifyListeners();
       WeatherModel? res = await _weatherReponsitory.getWeatherData(
           w.lat.toString(), w.lon.toString());
 
       if (res != null) {
         setForestWeatherModel(res);
       }
-      notifyListeners();
     } on Exception {
       rethrow;
     }

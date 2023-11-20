@@ -74,7 +74,9 @@ class WeatherHomeViewModel extends ChangeNotifier {
   Future<void> getDataWeather() async {
     try {
       weathers.clear();
-      for (var location in Constants.listLocation) {
+      weathersRecommend.clear();
+      final listLocation = await Constants.convert();
+      for (var location in listLocation) {
         final res = await _weatherReponsitory.getWeatherData(
             location.lat.toString(), location.lon.toString());
         if (res != null) {
@@ -100,7 +102,8 @@ class WeatherHomeViewModel extends ChangeNotifier {
   Future<void> getDataRecomendWeather() async {
     try {
       weathersRecommend.clear();
-      for (var location in Constants.listFavorites) {
+      final listLocation = await Constants.convert();
+      for (var location in listLocation) {
         final res = await _weatherReponsitory.getWeatherData(
             location.lat.toString(), location.lon.toString());
         if (res != null) {
