@@ -56,7 +56,9 @@ class NewsWeather extends StatelessWidget {
                               Icons.search,
                               color: Colors.white,
                             ),
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.pushNamed(context, "search");
+                            },
                           ),
                         ],
                       ),
