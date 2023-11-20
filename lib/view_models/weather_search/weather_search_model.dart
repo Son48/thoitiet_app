@@ -31,14 +31,20 @@ class WeatherSearchViewModel extends ChangeNotifier {
 
   bool get defaultData => _defaultData;
 
+  String _announceResults = '';
+  String get announceResults => _announceResults;
+
+  Future<void> setAnnounceResults(String announceResults) async {
+    _announceResults = announceResults;
+    notifyListeners();
+  }
+
   // TextEditingController for the search input
   TextEditingController _searchController = TextEditingController();
-
   TextEditingController get getController => _searchController;
 
   // String to store the search query
   String _searchQuery = '';
-
   String get searchQuery => _searchQuery;
 
   // Method to set the default data flag
@@ -164,4 +170,19 @@ class WeatherSearchViewModel extends ChangeNotifier {
       print("Error deleting data from SQLite: $e");
     }
   }
+  void handleHorizontalSwipe(DragEndDetails? details, BuildContext context) {
+    if (details!.primaryVelocity! > 0 || details!.primaryVelocity! < 0) {
+      if (FocusManager.instance.primaryFocus?.hasFocus ?? false) {
+        FocusManager.instance.primaryFocus?.unfocus();
+        if (Navigator.canPop(context)) {
+          setSearchQuery('');
+          setController('');
+        } else {
+          Navigator.pop(context);
+        }
+      }
+    }
+  }
+
+
 }
