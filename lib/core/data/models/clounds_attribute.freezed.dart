@@ -21,7 +21,7 @@ CloundModel _$CloundModelFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$CloundModel {
   @JsonKey(name: 'all')
-  String? get clounds => throw _privateConstructorUsedError;
+  int? get clounds => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -35,7 +35,7 @@ abstract class $CloundModelCopyWith<$Res> {
           CloundModel value, $Res Function(CloundModel) then) =
       _$CloundModelCopyWithImpl<$Res, CloundModel>;
   @useResult
-  $Res call({@JsonKey(name: 'all') String? clounds});
+  $Res call({@JsonKey(name: 'all') int? clounds});
 }
 
 /// @nodoc
@@ -57,7 +57,7 @@ class _$CloundModelCopyWithImpl<$Res, $Val extends CloundModel>
       clounds: freezed == clounds
           ? _value.clounds
           : clounds // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as int?,
     ) as $Val);
   }
 }
@@ -70,7 +70,7 @@ abstract class _$$CloundModelImplCopyWith<$Res>
       __$$CloundModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({@JsonKey(name: 'all') String? clounds});
+  $Res call({@JsonKey(name: 'all') int? clounds});
 }
 
 /// @nodoc
@@ -90,7 +90,7 @@ class __$$CloundModelImplCopyWithImpl<$Res>
       clounds: freezed == clounds
           ? _value.clounds
           : clounds // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as int?,
     ));
   }
 }
@@ -105,7 +105,7 @@ class _$CloundModelImpl with DiagnosticableTreeMixin implements _CloundModel {
 
   @override
   @JsonKey(name: 'all')
-  final String? clounds;
+  final int? clounds;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -147,7 +147,7 @@ class _$CloundModelImpl with DiagnosticableTreeMixin implements _CloundModel {
 }
 
 abstract class _CloundModel implements CloundModel {
-  factory _CloundModel({@JsonKey(name: 'all') final String? clounds}) =
+  factory _CloundModel({@JsonKey(name: 'all') final int? clounds}) =
       _$CloundModelImpl;
 
   factory _CloundModel.fromJson(Map<String, dynamic> json) =
@@ -155,7 +155,7 @@ abstract class _CloundModel implements CloundModel {
 
   @override
   @JsonKey(name: 'all')
-  String? get clounds;
+  int? get clounds;
   @override
   @JsonKey(ignore: true)
   _$$CloundModelImplCopyWith<_$CloundModelImpl> get copyWith =>

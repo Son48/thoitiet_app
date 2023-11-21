@@ -88,7 +88,7 @@ class CardWeather extends ConsumerWidget {
                               SizedBox(
                                 child: Column(
                                   children: [
-                                    Text('${data.clounds}%',
+                                    Text('${data.clounds?.clounds}%',
                                         style: const TextStyle(
                                             color: Colors.white70)),
                                     IconButton(

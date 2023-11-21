@@ -8,8 +8,8 @@ part of 'weather.dart';
 
 _$WeatherModelImpl _$$WeatherModelImplFromJson(Map<String, dynamic> json) =>
     _$WeatherModelImpl(
-      lon: json['lon'] as String,
-      lat: json['lat'] as String,
+      lon: json['lon'] as String?,
+      lat: json['lat'] as String?,
       day: json['day'] as String?,
       hour: json['hour'] as String?,
       listStatusWeather: (json['weather'] as List<dynamic>?)

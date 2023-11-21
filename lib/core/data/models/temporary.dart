@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:flutter/foundation.dart';
 
@@ -7,10 +9,10 @@ part 'temporary.g.dart';
 @freezed
 class TemporaryModel with _$TemporaryModel {
   factory TemporaryModel({
-    @JsonKey(name: 'temp') String? temp,
-    @JsonKey(name: 'feels_like') String? feelsLike,
-    @JsonKey(name: 'temp_min') String? tempMin,
-    @JsonKey(name: 'temp_max') String? temmMax,
+    @JsonKey(name: 'temp') double? temp,
+    @JsonKey(name: 'feels_like') double? feelsLike,
+    @JsonKey(name: 'temp_min') double? tempMin,
+    @JsonKey(name: 'temp_max') double? temmMax,
   }) = _TemporaryModel;
   factory TemporaryModel.fromJson(Map<String, Object?> json) =>
       _$TemporaryModelFromJson(json);

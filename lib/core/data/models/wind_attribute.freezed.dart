@@ -21,11 +21,11 @@ WindModel _$WindModelFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$WindModel {
   @JsonKey(name: 'speed')
-  String? get speed => throw _privateConstructorUsedError;
+  double? get speed => throw _privateConstructorUsedError;
   @JsonKey(name: 'deg')
-  String? get deg => throw _privateConstructorUsedError;
+  double? get deg => throw _privateConstructorUsedError;
   @JsonKey(name: 'gust')
-  String? get gust => throw _privateConstructorUsedError;
+  double? get gust => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -39,9 +39,9 @@ abstract class $WindModelCopyWith<$Res> {
       _$WindModelCopyWithImpl<$Res, WindModel>;
   @useResult
   $Res call(
-      {@JsonKey(name: 'speed') String? speed,
-      @JsonKey(name: 'deg') String? deg,
-      @JsonKey(name: 'gust') String? gust});
+      {@JsonKey(name: 'speed') double? speed,
+      @JsonKey(name: 'deg') double? deg,
+      @JsonKey(name: 'gust') double? gust});
 }
 
 /// @nodoc
@@ -65,15 +65,15 @@ class _$WindModelCopyWithImpl<$Res, $Val extends WindModel>
       speed: freezed == speed
           ? _value.speed
           : speed // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as double?,
       deg: freezed == deg
           ? _value.deg
           : deg // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as double?,
       gust: freezed == gust
           ? _value.gust
           : gust // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as double?,
     ) as $Val);
   }
 }
@@ -87,9 +87,9 @@ abstract class _$$WindModelImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {@JsonKey(name: 'speed') String? speed,
-      @JsonKey(name: 'deg') String? deg,
-      @JsonKey(name: 'gust') String? gust});
+      {@JsonKey(name: 'speed') double? speed,
+      @JsonKey(name: 'deg') double? deg,
+      @JsonKey(name: 'gust') double? gust});
 }
 
 /// @nodoc
@@ -111,15 +111,15 @@ class __$$WindModelImplCopyWithImpl<$Res>
       speed: freezed == speed
           ? _value.speed
           : speed // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as double?,
       deg: freezed == deg
           ? _value.deg
           : deg // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as double?,
       gust: freezed == gust
           ? _value.gust
           : gust // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as double?,
     ));
   }
 }
@@ -137,13 +137,13 @@ class _$WindModelImpl with DiagnosticableTreeMixin implements _WindModel {
 
   @override
   @JsonKey(name: 'speed')
-  final String? speed;
+  final double? speed;
   @override
   @JsonKey(name: 'deg')
-  final String? deg;
+  final double? deg;
   @override
   @JsonKey(name: 'gust')
-  final String? gust;
+  final double? gust;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -190,22 +190,22 @@ class _$WindModelImpl with DiagnosticableTreeMixin implements _WindModel {
 
 abstract class _WindModel implements WindModel {
   factory _WindModel(
-      {@JsonKey(name: 'speed') final String? speed,
-      @JsonKey(name: 'deg') final String? deg,
-      @JsonKey(name: 'gust') final String? gust}) = _$WindModelImpl;
+      {@JsonKey(name: 'speed') final double? speed,
+      @JsonKey(name: 'deg') final double? deg,
+      @JsonKey(name: 'gust') final double? gust}) = _$WindModelImpl;
 
   factory _WindModel.fromJson(Map<String, dynamic> json) =
       _$WindModelImpl.fromJson;
 
   @override
   @JsonKey(name: 'speed')
-  String? get speed;
+  double? get speed;
   @override
   @JsonKey(name: 'deg')
-  String? get deg;
+  double? get deg;
   @override
   @JsonKey(name: 'gust')
-  String? get gust;
+  double? get gust;
   @override
   @JsonKey(ignore: true)
   _$$WindModelImplCopyWith<_$WindModelImpl> get copyWith =>

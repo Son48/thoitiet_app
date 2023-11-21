@@ -8,7 +8,7 @@ part of 'clounds_attribute.dart';
 
 _$CloundModelImpl _$$CloundModelImplFromJson(Map<String, dynamic> json) =>
     _$CloundModelImpl(
-      clounds: json['all'] as String?,
+      clounds: json['all'] as int?,
     );
 
 Map<String, dynamic> _$$CloundModelImplToJson(_$CloundModelImpl instance) =>

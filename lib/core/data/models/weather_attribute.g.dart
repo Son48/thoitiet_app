@@ -9,7 +9,7 @@ part of 'weather_attribute.dart';
 _$WeatherAttributeModelImpl _$$WeatherAttributeModelImplFromJson(
         Map<String, dynamic> json) =>
     _$WeatherAttributeModelImpl(
-      idWeatherAttribute: json['id'] as String?,
+      idWeatherAttribute: json['id'] as int?,
       mainWeatherAttribute: json['main'] as String?,
       desWeatherAttribute: json['description'] as String?,
       urlStatusIcon: json['icon'] as String?,

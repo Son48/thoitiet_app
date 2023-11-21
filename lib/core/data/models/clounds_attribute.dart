@@ -7,7 +7,7 @@ part 'clounds_attribute.g.dart';
 @freezed
 class CloundModel with _$CloundModel {
   factory CloundModel({
-    @JsonKey(name: 'all') String? clounds,
+    @JsonKey(name: 'all') int? clounds,
   }) = _CloundModel;
   factory CloundModel.fromJson(Map<String, Object?> json) =>
       _$CloundModelFromJson(json);

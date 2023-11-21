@@ -7,9 +7,9 @@ part 'wind_attribute.g.dart';
 @freezed
 class WindModel with _$WindModel {
   factory WindModel({
-    @JsonKey(name: 'speed') String? speed,
-    @JsonKey(name: 'deg') String? deg,
-    @JsonKey(name: 'gust') String? gust,
+    @JsonKey(name: 'speed') double? speed,
+    @JsonKey(name: 'deg') double? deg,
+    @JsonKey(name: 'gust') double? gust,
   }) = _WindModel;
   factory WindModel.fromJson(Map<String, Object?> json) =>
       _$WindModelFromJson(json);

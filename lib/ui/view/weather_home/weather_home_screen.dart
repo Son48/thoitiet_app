@@ -170,7 +170,7 @@ class WeatherHome extends ConsumerWidget {
                                         ),
                                         const SizedBox(height: 10),
                                         Text(
-                                            'Độ ẩm: ${currentWeather.clounds}%',
+                                            'Độ ẩm: ${currentWeather.clounds?.clounds}%',
                                             style: const TextStyle(
                                                 color: Colors.white)),
                                         Text(

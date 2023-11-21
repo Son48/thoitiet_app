@@ -20,8 +20,8 @@ WeatherModel _$WeatherModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$WeatherModel {
-  String get lon => throw _privateConstructorUsedError;
-  String get lat => throw _privateConstructorUsedError;
+  String? get lon => throw _privateConstructorUsedError;
+  String? get lat => throw _privateConstructorUsedError;
   String? get day => throw _privateConstructorUsedError;
   String? get hour => throw _privateConstructorUsedError;
   @JsonKey(name: 'weather')
@@ -53,8 +53,8 @@ abstract class $WeatherModelCopyWith<$Res> {
       _$WeatherModelCopyWithImpl<$Res, WeatherModel>;
   @useResult
   $Res call(
-      {String lon,
-      String lat,
+      {String? lon,
+      String? lat,
       String? day,
       String? hour,
       @JsonKey(name: 'weather') List<WeatherAttributeModel>? listStatusWeather,
@@ -84,8 +84,8 @@ class _$WeatherModelCopyWithImpl<$Res, $Val extends WeatherModel>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? lon = null,
-    Object? lat = null,
+    Object? lon = freezed,
+    Object? lat = freezed,
     Object? day = freezed,
     Object? hour = freezed,
     Object? listStatusWeather = freezed,
@@ -97,14 +97,14 @@ class _$WeatherModelCopyWithImpl<$Res, $Val extends WeatherModel>
     Object? rain = freezed,
   }) {
     return _then(_value.copyWith(
-      lon: null == lon
+      lon: freezed == lon
           ? _value.lon
           : lon // ignore: cast_nullable_to_non_nullable
-              as String,
-      lat: null == lat
+              as String?,
+      lat: freezed == lat
           ? _value.lat
           : lat // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       day: freezed == day
           ? _value.day
           : day // ignore: cast_nullable_to_non_nullable
@@ -202,8 +202,8 @@ abstract class _$$WeatherModelImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String lon,
-      String lat,
+      {String? lon,
+      String? lat,
       String? day,
       String? hour,
       @JsonKey(name: 'weather') List<WeatherAttributeModel>? listStatusWeather,
@@ -235,8 +235,8 @@ class __$$WeatherModelImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? lon = null,
-    Object? lat = null,
+    Object? lon = freezed,
+    Object? lat = freezed,
     Object? day = freezed,
     Object? hour = freezed,
     Object? listStatusWeather = freezed,
@@ -248,14 +248,14 @@ class __$$WeatherModelImplCopyWithImpl<$Res>
     Object? rain = freezed,
   }) {
     return _then(_$WeatherModelImpl(
-      lon: null == lon
+      lon: freezed == lon
           ? _value.lon
           : lon // ignore: cast_nullable_to_non_nullable
-              as String,
-      lat: null == lat
+              as String?,
+      lat: freezed == lat
           ? _value.lat
           : lat // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       day: freezed == day
           ? _value.day
           : day // ignore: cast_nullable_to_non_nullable
@@ -300,8 +300,8 @@ class __$$WeatherModelImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$WeatherModelImpl with DiagnosticableTreeMixin implements _WeatherModel {
   _$WeatherModelImpl(
-      {required this.lon,
-      required this.lat,
+      {this.lon,
+      this.lat,
       this.day,
       this.hour,
       @JsonKey(name: 'weather')
@@ -318,9 +318,9 @@ class _$WeatherModelImpl with DiagnosticableTreeMixin implements _WeatherModel {
       _$$WeatherModelImplFromJson(json);
 
   @override
-  final String lon;
+  final String? lon;
   @override
-  final String lat;
+  final String? lat;
   @override
   final String? day;
   @override
@@ -432,8 +432,8 @@ class _$WeatherModelImpl with DiagnosticableTreeMixin implements _WeatherModel {
 
 abstract class _WeatherModel implements WeatherModel {
   factory _WeatherModel(
-      {required final String lon,
-      required final String lat,
+      {final String? lon,
+      final String? lat,
       final String? day,
       final String? hour,
       @JsonKey(name: 'weather')
@@ -449,9 +449,9 @@ abstract class _WeatherModel implements WeatherModel {
       _$WeatherModelImpl.fromJson;
 
   @override
-  String get lon;
+  String? get lon;
   @override
-  String get lat;
+  String? get lat;
   @override
   String? get day;
   @override

@@ -8,10 +8,10 @@ part of 'temporary.dart';
 
 _$TemporaryModelImpl _$$TemporaryModelImplFromJson(Map<String, dynamic> json) =>
     _$TemporaryModelImpl(
-      temp: json['temp'] as String?,
-      feelsLike: json['feels_like'] as String?,
-      tempMin: json['temp_min'] as String?,
-      temmMax: json['temp_max'] as String?,
+      temp: (json['temp'] as num?)?.toDouble(),
+      feelsLike: (json['feels_like'] as num?)?.toDouble(),
+      tempMin: (json['temp_min'] as num?)?.toDouble(),
+      temmMax: (json['temp_max'] as num?)?.toDouble(),
     );
 
 Map<String, dynamic> _$$TemporaryModelImplToJson(

@@ -21,13 +21,13 @@ TemporaryModel _$TemporaryModelFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$TemporaryModel {
   @JsonKey(name: 'temp')
-  String? get temp => throw _privateConstructorUsedError;
+  double? get temp => throw _privateConstructorUsedError;
   @JsonKey(name: 'feels_like')
-  String? get feelsLike => throw _privateConstructorUsedError;
+  double? get feelsLike => throw _privateConstructorUsedError;
   @JsonKey(name: 'temp_min')
-  String? get tempMin => throw _privateConstructorUsedError;
+  double? get tempMin => throw _privateConstructorUsedError;
   @JsonKey(name: 'temp_max')
-  String? get temmMax => throw _privateConstructorUsedError;
+  double? get temmMax => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -42,10 +42,10 @@ abstract class $TemporaryModelCopyWith<$Res> {
       _$TemporaryModelCopyWithImpl<$Res, TemporaryModel>;
   @useResult
   $Res call(
-      {@JsonKey(name: 'temp') String? temp,
-      @JsonKey(name: 'feels_like') String? feelsLike,
-      @JsonKey(name: 'temp_min') String? tempMin,
-      @JsonKey(name: 'temp_max') String? temmMax});
+      {@JsonKey(name: 'temp') double? temp,
+      @JsonKey(name: 'feels_like') double? feelsLike,
+      @JsonKey(name: 'temp_min') double? tempMin,
+      @JsonKey(name: 'temp_max') double? temmMax});
 }
 
 /// @nodoc
@@ -70,19 +70,19 @@ class _$TemporaryModelCopyWithImpl<$Res, $Val extends TemporaryModel>
       temp: freezed == temp
           ? _value.temp
           : temp // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as double?,
       feelsLike: freezed == feelsLike
           ? _value.feelsLike
           : feelsLike // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as double?,
       tempMin: freezed == tempMin
           ? _value.tempMin
           : tempMin // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as double?,
       temmMax: freezed == temmMax
           ? _value.temmMax
           : temmMax // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as double?,
     ) as $Val);
   }
 }
@@ -96,10 +96,10 @@ abstract class _$$TemporaryModelImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {@JsonKey(name: 'temp') String? temp,
-      @JsonKey(name: 'feels_like') String? feelsLike,
-      @JsonKey(name: 'temp_min') String? tempMin,
-      @JsonKey(name: 'temp_max') String? temmMax});
+      {@JsonKey(name: 'temp') double? temp,
+      @JsonKey(name: 'feels_like') double? feelsLike,
+      @JsonKey(name: 'temp_min') double? tempMin,
+      @JsonKey(name: 'temp_max') double? temmMax});
 }
 
 /// @nodoc
@@ -122,19 +122,19 @@ class __$$TemporaryModelImplCopyWithImpl<$Res>
       temp: freezed == temp
           ? _value.temp
           : temp // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as double?,
       feelsLike: freezed == feelsLike
           ? _value.feelsLike
           : feelsLike // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as double?,
       tempMin: freezed == tempMin
           ? _value.tempMin
           : tempMin // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as double?,
       temmMax: freezed == temmMax
           ? _value.temmMax
           : temmMax // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as double?,
     ));
   }
 }
@@ -155,16 +155,16 @@ class _$TemporaryModelImpl
 
   @override
   @JsonKey(name: 'temp')
-  final String? temp;
+  final double? temp;
   @override
   @JsonKey(name: 'feels_like')
-  final String? feelsLike;
+  final double? feelsLike;
   @override
   @JsonKey(name: 'temp_min')
-  final String? tempMin;
+  final double? tempMin;
   @override
   @JsonKey(name: 'temp_max')
-  final String? temmMax;
+  final double? temmMax;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -216,26 +216,26 @@ class _$TemporaryModelImpl
 
 abstract class _TemporaryModel implements TemporaryModel {
   factory _TemporaryModel(
-      {@JsonKey(name: 'temp') final String? temp,
-      @JsonKey(name: 'feels_like') final String? feelsLike,
-      @JsonKey(name: 'temp_min') final String? tempMin,
-      @JsonKey(name: 'temp_max') final String? temmMax}) = _$TemporaryModelImpl;
+      {@JsonKey(name: 'temp') final double? temp,
+      @JsonKey(name: 'feels_like') final double? feelsLike,
+      @JsonKey(name: 'temp_min') final double? tempMin,
+      @JsonKey(name: 'temp_max') final double? temmMax}) = _$TemporaryModelImpl;
 
   factory _TemporaryModel.fromJson(Map<String, dynamic> json) =
       _$TemporaryModelImpl.fromJson;
 
   @override
   @JsonKey(name: 'temp')
-  String? get temp;
+  double? get temp;
   @override
   @JsonKey(name: 'feels_like')
-  String? get feelsLike;
+  double? get feelsLike;
   @override
   @JsonKey(name: 'temp_min')
-  String? get tempMin;
+  double? get tempMin;
   @override
   @JsonKey(name: 'temp_max')
-  String? get temmMax;
+  double? get temmMax;
   @override
   @JsonKey(ignore: true)
   _$$TemporaryModelImplCopyWith<_$TemporaryModelImpl> get copyWith =>

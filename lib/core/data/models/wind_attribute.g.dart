@@ -8,9 +8,9 @@ part of 'wind_attribute.dart';
 
 _$WindModelImpl _$$WindModelImplFromJson(Map<String, dynamic> json) =>
     _$WindModelImpl(
-      speed: json['speed'] as String?,
-      deg: json['deg'] as String?,
-      gust: json['gust'] as String?,
+      speed: (json['speed'] as num?)?.toDouble(),
+      deg: (json['deg'] as num?)?.toDouble(),
+      gust: (json['gust'] as num?)?.toDouble(),
     );
 
 Map<String, dynamic> _$$WindModelImplToJson(_$WindModelImpl instance) =>

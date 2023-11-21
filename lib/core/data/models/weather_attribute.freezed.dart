@@ -22,7 +22,7 @@ WeatherAttributeModel _$WeatherAttributeModelFromJson(
 /// @nodoc
 mixin _$WeatherAttributeModel {
   @JsonKey(name: 'id')
-  String? get idWeatherAttribute => throw _privateConstructorUsedError;
+  int? get idWeatherAttribute => throw _privateConstructorUsedError;
   @JsonKey(name: 'main')
   String? get mainWeatherAttribute => throw _privateConstructorUsedError;
   @JsonKey(name: 'description')
@@ -43,7 +43,7 @@ abstract class $WeatherAttributeModelCopyWith<$Res> {
       _$WeatherAttributeModelCopyWithImpl<$Res, WeatherAttributeModel>;
   @useResult
   $Res call(
-      {@JsonKey(name: 'id') String? idWeatherAttribute,
+      {@JsonKey(name: 'id') int? idWeatherAttribute,
       @JsonKey(name: 'main') String? mainWeatherAttribute,
       @JsonKey(name: 'description') String? desWeatherAttribute,
       @JsonKey(name: 'icon') String? urlStatusIcon});
@@ -72,7 +72,7 @@ class _$WeatherAttributeModelCopyWithImpl<$Res,
       idWeatherAttribute: freezed == idWeatherAttribute
           ? _value.idWeatherAttribute
           : idWeatherAttribute // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as int?,
       mainWeatherAttribute: freezed == mainWeatherAttribute
           ? _value.mainWeatherAttribute
           : mainWeatherAttribute // ignore: cast_nullable_to_non_nullable
@@ -99,7 +99,7 @@ abstract class _$$WeatherAttributeModelImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {@JsonKey(name: 'id') String? idWeatherAttribute,
+      {@JsonKey(name: 'id') int? idWeatherAttribute,
       @JsonKey(name: 'main') String? mainWeatherAttribute,
       @JsonKey(name: 'description') String? desWeatherAttribute,
       @JsonKey(name: 'icon') String? urlStatusIcon});
@@ -126,7 +126,7 @@ class __$$WeatherAttributeModelImplCopyWithImpl<$Res>
       idWeatherAttribute: freezed == idWeatherAttribute
           ? _value.idWeatherAttribute
           : idWeatherAttribute // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as int?,
       mainWeatherAttribute: freezed == mainWeatherAttribute
           ? _value.mainWeatherAttribute
           : mainWeatherAttribute // ignore: cast_nullable_to_non_nullable
@@ -159,7 +159,7 @@ class _$WeatherAttributeModelImpl
 
   @override
   @JsonKey(name: 'id')
-  final String? idWeatherAttribute;
+  final int? idWeatherAttribute;
   @override
   @JsonKey(name: 'main')
   final String? mainWeatherAttribute;
@@ -223,7 +223,7 @@ class _$WeatherAttributeModelImpl
 
 abstract class _WeatherAttributeModel implements WeatherAttributeModel {
   factory _WeatherAttributeModel(
-          {@JsonKey(name: 'id') final String? idWeatherAttribute,
+          {@JsonKey(name: 'id') final int? idWeatherAttribute,
           @JsonKey(name: 'main') final String? mainWeatherAttribute,
           @JsonKey(name: 'description') final String? desWeatherAttribute,
           @JsonKey(name: 'icon') final String? urlStatusIcon}) =
@@ -234,7 +234,7 @@ abstract class _WeatherAttributeModel implements WeatherAttributeModel {
 
   @override
   @JsonKey(name: 'id')
-  String? get idWeatherAttribute;
+  int? get idWeatherAttribute;
   @override
   @JsonKey(name: 'main')
   String? get mainWeatherAttribute;

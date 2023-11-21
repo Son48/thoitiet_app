@@ -11,8 +11,8 @@ part 'weather.g.dart';
 @freezed
 class WeatherModel with _$WeatherModel {
   factory WeatherModel({
-    required String lon,
-    required String lat,
+    String? lon,
+    String? lat,
     String? day,
     String? hour,
     @JsonKey(name: 'weather') List<WeatherAttributeModel>? listStatusWeather,
@@ -21,7 +21,7 @@ class WeatherModel with _$WeatherModel {
     @JsonKey(name: 'clouds') CloundModel? clounds,
     @JsonKey(name: 'wind') WindModel? winds,
     @JsonKey(name: 'sun') SunModel? sun,
-    // @JsonKey(name: 'rain') String? rain,
+    @JsonKey(name: 'rain') String? rain,
   }) = _WeatherModel;
   factory WeatherModel.fromJson(Map<String, Object?> json) =>
       _$WeatherModelFromJson(json);

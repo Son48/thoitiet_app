@@ -7,7 +7,7 @@ part 'weather_attribute.g.dart';
 @freezed
 class WeatherAttributeModel with _$WeatherAttributeModel {
   factory WeatherAttributeModel({
-    @JsonKey(name: 'id') String? idWeatherAttribute,
+    @JsonKey(name: 'id') int? idWeatherAttribute,
     @JsonKey(name: 'main') String? mainWeatherAttribute,
     @JsonKey(name: 'description') String? desWeatherAttribute,
     @JsonKey(name: 'icon') String? urlStatusIcon,
