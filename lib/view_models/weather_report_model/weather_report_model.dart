@@ -10,6 +10,7 @@ import 'package:thoitiet_app/core/data/sqflite/FavoritesData.dart';
 import 'package:thoitiet_app/core/data/sqflite/SettingNotification.dart';
 
 import '../../core/data/models/location.dart';
+import '../../ui/widget/column_chart.dart';
 
 final weatherReportProvider = ChangeNotifierProvider<WeatherReportViewModel>(
     (ref) => WeatherReportViewModel(ref));
@@ -106,16 +107,41 @@ class WeatherReportViewModel extends ChangeNotifier {
 
   // FUNCTION GET API FOREST WEATHER
 
-  Future<void> getDataForestWeather(WeatherModel w) async {
-    try {
-      WeatherModel? res = await _weatherReponsitory.getWeatherData(
-          w.coord!.lat.toString(), w.coord!.lon.toString());
+  // Future<void> getDataForestWeather(WeatherModel w) async {
+  //   try {
+  //     WeatherModel? res = await _weatherReponsitory.getWeatherData(
+  //         w.coord!.lat.toString(), w.coord!.lon.toString());
+  //
+  //     if (res != null) {
+  //       setForestWeatherModel(res);
+  //     }
+  //   } on Exception {
+  //     rethrow;
+  //   }
+  // }
+  List<ForeCastData>? getChartData1(ForestWeatherModel? model) {
+    if (model != null) {
+      return model.daily?.map((daily) {
+        return ForeCastData(
+          day: daily.day.toString(),
+          forecast: daily.temp!.tempDay.toString(),
+        );
+      }).toList();
+    } else {
+      return [];
+    }
+  }
 
-      if (res != null) {
-        setForestWeatherModel(res);
-      }
-    } on Exception {
-      rethrow;
+  List<ForeCastData>? getChartData2(ForestWeatherModel? model) {
+    if (model != null) {
+      return model.daily?.map((daily) {
+        return ForeCastData(
+          day: daily.day.toString(),
+          forecast:daily.rain.toString(),
+        );
+      }).toList();
+    } else {
+      return [];
     }
   }
 }

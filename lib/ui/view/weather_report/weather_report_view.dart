@@ -654,7 +654,7 @@ class WeatherReportView extends ConsumerWidget {
                                                 height: 10,
                                               ),
                                               Text(
-                                                '${weatherModel.rain.toString()}',
+                                                  forestWeatherModel!.daily![0]?.rain?.toString() ?? '0',
                                                 style: TextStyle(
                                                     color: Colors.white70,
                                                     fontWeight:
@@ -764,32 +764,32 @@ class WeatherReportView extends ConsumerWidget {
                       const SizedBox(
                         height: 20,
                       ),
-                      // Column(
-                      //   children: [
-                      //     Align(
-                      //       alignment: Alignment.topLeft,
-                      //       child: Padding(
-                      //         padding:
-                      //             const EdgeInsets.only(bottom: 10, left: 10),
-                      //         child: Text(
-                      //           "Khả năng nhiệt độ và lượng mưa ${forestWeatherModel?.currentWeather?.nameLocation.toString()} ",
-                      //           textAlign: TextAlign.start,
-                      //           style: const TextStyle(
-                      //               color: Colors.white, fontSize: 15),
-                      //         ),
-                      //       ),
-                      //     ),
-                      //     Padding(
-                      //       padding: const EdgeInsets.only(bottom: 20),
-                      //       child: ColumnChart(
-                      //         chartData1: forestWeatherModel!
-                      //             .getChartData1(forestWeatherModel),
-                      //         chartData2: forestWeatherModel
-                      //             .getChartData2(forestWeatherModel),
-                      //       ),
-                      //     ),
-                      //   ],
-                      // ),
+                      Column(
+                        children: [
+                          Align(
+                            alignment: Alignment.topLeft,
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.only(bottom: 10, left: 10),
+                              child: Text(
+                                "Khả năng nhiệt độ và lượng mưa ${weatherModel.nameLocation.toString()} ",
+                                textAlign: TextAlign.start,
+                                style: const TextStyle(
+                                    color: Colors.white, fontSize: 15),
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 20),
+                            child: ColumnChart(
+                              chartData1: reportModel
+                                  .getChartData1(forestWeatherModel)??[],
+                              chartData2: reportModel
+                                  .getChartData2(forestWeatherModel)??[],
+                            ),
+                          ),
+                        ],
+                      ),
                     ],
                   ),
                 ),

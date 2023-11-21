@@ -95,103 +95,107 @@ class WeatherSearch extends ConsumerWidget {
                           ),
                           child: SizedBox(
                             height: 170,
-                            child: Column(
-                              children: [
-                                // Display "Gần đây" if the recent search results are empty
-                                rs_search.isEmpty &&
-                                        h_search.isNotEmpty &&
-                                        weatherSearchModel.searchQuery.isEmpty
-                                    ? Container(
-                                        alignment: Alignment.topLeft,
-                                        padding:
-                                            const EdgeInsets.only(left: 10),
-                                        child: const Text(
-                                          "Gần đây",
-                                          style: TextStyle(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.white,
-                                          ),
-                                        ),
-                                      )
-                                    : Container(),
-                                // List view for displaying search results
-                                rs_search.isEmpty &&
-                                            h_search.isEmpty &&
-                                            weatherSearchModel
-                                                .searchQuery.isNotEmpty ||
-                                        rs_search.isEmpty &&
-                                            h_search.isNotEmpty &&
-                                            weatherSearchModel
-                                                .searchQuery.isNotEmpty
-                                    ? Center(
-                                        child: Container(
-                                          child: Text(
-                                            "Không tìm thấy kết quả: '${weatherSearchModel.searchQuery}'",
-
-                                            style: const TextStyle(
+                            child: SingleChildScrollView(
+                              physics: AlwaysScrollableScrollPhysics(),
+                              child: Column(
+                                children: [
+                                  // Display "Gần đây" if the recent search results are empty
+                                  rs_search.isEmpty &&
+                                          h_search.isNotEmpty &&
+                                          weatherSearchModel.searchQuery.isEmpty
+                                      ? Container(
+                                          alignment: Alignment.topLeft,
+                                          padding:
+                                              const EdgeInsets.only(left: 10),
+                                          child: const Text(
+                                            "Gần đây",
+                                            style: TextStyle(
                                               fontSize: 14,
-                                              color: Colors.yellow,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white,
                                             ),
                                           ),
+                                        )
+                                      : Container(),
+                                  // List view for displaying search results
+                                  rs_search.isEmpty &&
+                                              h_search.isEmpty &&
+                                              weatherSearchModel
+                                                  .searchQuery.isNotEmpty ||
+                                          rs_search.isEmpty &&
+                                              h_search.isNotEmpty &&
+                                              weatherSearchModel
+                                                  .searchQuery.isNotEmpty
+                                      ? Center(
+                                          child: Container(
+                                            child: Text(
+                                              "Không tìm thấy kết quả: '${weatherSearchModel.searchQuery}'",
+
+                                              style: const TextStyle(
+                                                fontSize: 14,
+                                                color: Colors.yellow,
+                                              ),
+                                            ),
+                                          ),
+                                        )
+                                      : ListView.builder(
+                                          itemCount: rs_search.isNotEmpty
+                                              ? rs_search.length
+                                              : h_search.length,
+                                          itemBuilder: (context, index) {
+                                            return rs_search.isNotEmpty
+                                                ? CardSearch(
+                                                    data: rs_search[index])
+                                                : CardHistory(
+                                                    data: h_search[index]);
+                                          },
+                                          scrollDirection: Axis.vertical,
+                                    physics: NeverScrollableScrollPhysics(),
+                                          shrinkWrap: true,
                                         ),
-                                      )
-                                    : ListView.builder(
-                                        itemCount: rs_search.isNotEmpty
-                                            ? rs_search.length
-                                            : h_search.length,
-                                        itemBuilder: (context, index) {
-                                          return rs_search.isNotEmpty
-                                              ? CardSearch(
-                                                  data: rs_search[index])
-                                              : CardHistory(
-                                                  data: h_search[index]);
-                                        },
-                                        scrollDirection: Axis.vertical,
-                                        shrinkWrap: true,
-                                      ),
-                                //recommend
-                                const Padding(
-                                  padding: EdgeInsets.only(left: 10),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        'Gợi ý cho bạn',
-                                        style: TextStyle(
-                                            fontSize: 17,
-                                            fontWeight: FontWeight.w600,
-                                            color: Colors.white),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                //slide card
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      top: 10, left: 10, bottom: 20),
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(10)),
-                                    child: SizedBox(
-                                      height: 170,
-                                      child: ListView.builder(
-                                        itemCount: weatherModel
-                                            .weathersRecommend.length,
-                                        itemBuilder: (context, index) =>
-                                            CardBigWeather(
-                                                data: weatherModel
-                                                    .weathersRecommend[index]),
-                                        scrollDirection: Axis.horizontal,
-                                      ),
+                                  //recommend
+                                  const Padding(
+                                    padding: EdgeInsets.only(left: 10),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          'Gợi ý cho bạn',
+                                          style: TextStyle(
+                                              fontSize: 17,
+                                              fontWeight: FontWeight.w600,
+                                              color: Colors.white),
+                                        ),
+                                      ],
                                     ),
                                   ),
-                                )
-                              ],
+                                  //slide card
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        top: 10, left: 10, bottom: 20),
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(10)),
+                                      child: SizedBox(
+                                        height: 170,
+                                        child: ListView.builder(
+                                          itemCount: weatherModel
+                                              .weathersRecommend.length,
+                                          itemBuilder: (context, index) =>
+                                              CardBigWeather(
+                                                  data: weatherModel
+                                                      .weathersRecommend[index]),
+                                          scrollDirection: Axis.horizontal,
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
                             ),
                           ),
                         ),

@@ -4,6 +4,8 @@ import 'package:thoitiet_app/core/data/models/forest_weather/forest_weather.dart
 import 'package:thoitiet_app/core/data/models/weather/weather.dart';
 import 'package:thoitiet_app/core/data/reponsitories/weather_reponsitory.dart';
 
+import '../../ui/widget/column_chart.dart';
+
 final weatherForestAndFavoriteProvider =
     ChangeNotifierProvider<WeatherForestViewModel>(
         (ref) => WeatherForestViewModel(ref));
@@ -19,9 +21,11 @@ class WeatherForestViewModel extends ChangeNotifier {
 
   //data detail forest
   ForestWeatherModel? get forestWeatherModel => _forestWeatherModel;
-  Future<void> setForestWeatherModel(data) async {
-    _forestWeatherModel = data;
-    notifyListeners();
+  Future<void> setForestWeatherModel(WeatherModel weather) async {
+    ForestWeatherModel? frWeather =
+    await _weatherReponsitory.getForestWeatherData(
+        weather.coord!.lat.toString(), weather.coord!.lon.toString());
+    _forestWeatherModel = frWeather;
   }
 
   //variable to change notifi in the first render
@@ -58,4 +62,30 @@ class WeatherForestViewModel extends ChangeNotifier {
   //     rethrow;
   //   }
   // }
+
+  List<ForeCastData>? getChartData1(ForestWeatherModel? model) {
+    if (model != null) {
+      return model.daily?.map((daily) {
+        return ForeCastData(
+          day: daily.day.toString(),
+          forecast: daily.temp!.tempDay.toString(),
+        );
+      }).toList();
+    } else {
+      return [];
+    }
+  }
+
+  List<ForeCastData>? getChartData2(ForestWeatherModel? model) {
+    if (model != null) {
+      return model.daily?.map((daily) {
+        return ForeCastData(
+          day: daily.day.toString(),
+          forecast:daily.rain.toString(),
+        );
+      }).toList();
+    } else {
+      return [];
+    }
+  }
 }

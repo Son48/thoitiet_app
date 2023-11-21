@@ -35,6 +35,7 @@ class FavovitesHome extends ConsumerWidget {
     //detail data detail forest
     ForestWeatherModel? forestWeatherModel =
         weatherForestModel.forestWeatherModel;
+
     Future<void> refreshPage() async {
       print('reload');
       await weatherForestModel.setDefaultData(false);
@@ -606,7 +607,7 @@ class FavovitesHome extends ConsumerWidget {
                                             padding: EdgeInsets.only(
                                                 left: 4, top: 2),
                                             child: Text(
-                                              'Lượng mưa: ${weatherFavorite.rain != null ? weatherFavorite.rain.toString() : 'Không có'}',
+                                              'Lượng mưa: ${forestWeatherModel!.daily![0]?.rain?.toString() ?? '0'}',
                                               style: TextStyle(
                                                   color: Colors.white70),
                                             ),
@@ -657,32 +658,32 @@ class FavovitesHome extends ConsumerWidget {
                                           ),
                                         ),
                                       ),
-                                      // Column(
-                                      //   children: [
-                                      //     Align(
-                                      //       alignment: Alignment.topLeft,
-                                      //       child: Padding(
-                                      //         padding: EdgeInsets.all(0),
-                                      //         child: Text(
-                                      //           "Nhiệt độ và lượng mưa ${forestWeatherModel.currentWeather?.nameLocation.toString()} những ngày tới",
-                                      //           textAlign: TextAlign.start,
-                                      //           style: TextStyle(
-                                      //               fontWeight: FontWeight.bold,
-                                      //               color: Colors.white,
-                                      //               fontSize: 13),
-                                      //         ),
-                                      //       ),
-                                      //     ),
-                                      //     ColumnChart(
-                                      //       chartData1: forestWeatherModel
-                                      //           .getChartData1(
-                                      //               forestWeatherModel),
-                                      //       chartData2: forestWeatherModel
-                                      //           .getChartData2(
-                                      //               forestWeatherModel),
-                                      //     ),
-                                      //   ],
-                                      // ),
+                                      Column(
+                                        children: [
+                                          Align(
+                                            alignment: Alignment.topLeft,
+                                            child: Padding(
+                                              padding: EdgeInsets.all(0),
+                                              child: Text(
+                                                "Nhiệt độ và lượng mưa ${weatherFavorite.nameLocation.toString()} những ngày tới",
+                                                textAlign: TextAlign.start,
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.white,
+                                                    fontSize: 13),
+                                              ),
+                                            ),
+                                          ),
+                                          ColumnChart(
+                                            chartData1: weatherForestModel
+                                                .getChartData1(
+                                                    forestWeatherModel)??[],
+                                            chartData2: weatherForestModel
+                                                .getChartData2(
+                                                    forestWeatherModel)??[],
+                                          ),
+                                        ],
+                                      ),
 
                                       //end
                                     ])
