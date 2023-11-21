@@ -428,7 +428,7 @@ class FavovitesHome extends ConsumerWidget {
                                                           .spaceAround,
                                                   children: [
                                                     Text(
-                                                      "Thời tiết ${forestWeatherModel!.currentWeather!.nameLocation} ",
+                                                      "Thời tiết ${weatherFavorite!.nameLocation} ",
                                                       style: const TextStyle(
                                                           color: Colors.white,
                                                           fontSize: 18,
@@ -440,7 +440,7 @@ class FavovitesHome extends ConsumerWidget {
                                                           const EdgeInsets.only(
                                                               bottom: 10),
                                                       child: Text(
-                                                          "ngày${forestWeatherModel.currentWeather?.day.toString()}",
+                                                          "ngày${weatherFavorite.day.toString()}",
                                                           style:
                                                               const TextStyle(
                                                             color:
@@ -453,15 +453,15 @@ class FavovitesHome extends ConsumerWidget {
                                                           )),
                                                     ),
                                                     Text(
-                                                      "${forestWeatherModel.currentWeather!.tempMin!.toString()} °C • ${forestWeatherModel.currentWeather!.tempMax!.toString()} °C",
+                                                      "${weatherFavorite.temporary?.tempMin.toString()} °C • ${weatherFavorite.temporary?.temmMax.toString()} °C",
                                                       style: const TextStyle(
                                                           color: Colors.white70,
                                                           fontSize: 13),
                                                     ),
                                                     Text(
-                                                      forestWeatherModel
-                                                          .currentWeather!
-                                                          .descriptionWeather!
+                                                      weatherFavorite
+                                                          .listStatusWeather![0]
+                                                          .desWeatherAttribute
                                                           .toString(),
                                                       style: const TextStyle(
                                                           color: Colors.white70,
@@ -471,7 +471,7 @@ class FavovitesHome extends ConsumerWidget {
                                                       height: 10,
                                                     ),
                                                     Text(
-                                                      "${forestWeatherModel.currentWeather!.temp!.toString()} °C",
+                                                      "${weatherFavorite.temporary?.temp.toString()} °C",
                                                       style: const TextStyle(
                                                         color: Colors.white,
                                                         fontSize: 35,
@@ -483,7 +483,7 @@ class FavovitesHome extends ConsumerWidget {
                                               SizedBox(
                                                 height: 80,
                                                 child: Image.network(
-                                                    "https://openweathermap.org/img/wn/${forestWeatherModel.currentWeather?.urlStatusIcon.toString()}.png",
+                                                    "https://openweathermap.org/img/wn/${weatherFavorite.listStatusWeather?[0].urlStatusIcon.toString()}.png",
                                                     fit: BoxFit.fitHeight),
                                               ),
                                             ],
@@ -527,11 +527,11 @@ class FavovitesHome extends ConsumerWidget {
                                               height: 120,
                                               child: ListView.builder(
                                                 itemCount: forestWeatherModel
-                                                    .hourly.length,
+                                                    .hourly?.length,
                                                 itemBuilder: (context, index) =>
                                                     itemForestCardWeather(
                                                         forestWeatherModel
-                                                            .hourly[index]),
+                                                            .hourly![index]),
                                                 scrollDirection:
                                                     Axis.horizontal,
                                               ),
@@ -559,7 +559,7 @@ class FavovitesHome extends ConsumerWidget {
                                             padding: const EdgeInsets.only(
                                                 left: 4, top: 2),
                                             child: Text(
-                                              'Độ ẩm trong không khí đạt đến: ${forestWeatherModel.currentWeather?.clounds.toString()}%',
+                                              'Độ ẩm trong không khí đạt đến: ${weatherFavorite.clounds.toString()}%',
                                               style: const TextStyle(
                                                   color: Colors.white70),
                                             ),
@@ -568,7 +568,7 @@ class FavovitesHome extends ConsumerWidget {
                                             padding: EdgeInsets.only(
                                                 left: 4, top: 2),
                                             child: Text(
-                                              'Cảm giác như: ${forestWeatherModel.currentWeather?.feelLike.toString()}°',
+                                              'Cảm giác như: ${weatherFavorite.temporary?.feelsLike.toString()}°',
                                               style: TextStyle(
                                                   color: Colors.white70),
                                             ),
@@ -577,7 +577,7 @@ class FavovitesHome extends ConsumerWidget {
                                             padding: EdgeInsets.only(
                                                 left: 4, top: 2),
                                             child: Text(
-                                              'Tốc độ gió: ${forestWeatherModel.currentWeather?.speedWind.toString()}m/s',
+                                              'Tốc độ gió: ${weatherFavorite.winds?.speed.toString()}m/s',
                                               style: TextStyle(
                                                   color: Colors.white70),
                                             ),
@@ -586,7 +586,7 @@ class FavovitesHome extends ConsumerWidget {
                                             padding: EdgeInsets.only(
                                                 top: 2, left: 4),
                                             child: Text(
-                                              'Chỉ số UV hiện tại: ${forestWeatherModel.currentWeather?.uvi.toString()} UV',
+                                              'Chỉ số UV hiện tại: ${forestWeatherModel.moreAttribute?.uvi.toString()} UV',
                                               style: TextStyle(
                                                   color: Colors.white70),
                                             ),
@@ -595,7 +595,7 @@ class FavovitesHome extends ConsumerWidget {
                                             padding: EdgeInsets.only(
                                                 left: 4, top: 2),
                                             child: Text(
-                                              'Tầm nhìn xa trung bình:  ${forestWeatherModel.currentWeather?.visibility.toString()} m',
+                                              'Tầm nhìn xa trung bình:  ${forestWeatherModel.moreAttribute?.visibility.toString()} m',
                                               style: TextStyle(
                                                   color: Colors.white70),
                                             ),
@@ -604,7 +604,7 @@ class FavovitesHome extends ConsumerWidget {
                                             padding: EdgeInsets.only(
                                                 left: 4, top: 2),
                                             child: Text(
-                                              'Lượng mưa: ${forestWeatherModel.currentWeather != null ? forestWeatherModel.currentWeather?.rain.toString() : 'Không có'}',
+                                              'Lượng mưa: ${weatherFavorite.rain != null ? weatherFavorite.rain.toString() : 'Không có'}',
                                               style: TextStyle(
                                                   color: Colors.white70),
                                             ),
@@ -645,42 +645,42 @@ class FavovitesHome extends ConsumerWidget {
                                             height: 250,
                                             child: ListView.builder(
                                               itemCount: forestWeatherModel
-                                                  .daily.length,
+                                                  .daily?.length,
                                               itemBuilder: (context, index) =>
                                                   itemForestDailyWeather(
                                                       forestWeatherModel
-                                                          .daily[index]),
+                                                          .daily![index]),
                                               scrollDirection: Axis.horizontal,
                                             ),
                                           ),
                                         ),
                                       ),
-                                      Column(
-                                        children: [
-                                          Align(
-                                            alignment: Alignment.topLeft,
-                                            child: Padding(
-                                              padding: EdgeInsets.all(0),
-                                              child: Text(
-                                                "Nhiệt độ và lượng mưa ${forestWeatherModel.currentWeather?.nameLocation.toString()} những ngày tới",
-                                                textAlign: TextAlign.start,
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Colors.white,
-                                                    fontSize: 13),
-                                              ),
-                                            ),
-                                          ),
-                                          ColumnChart(
-                                            chartData1: forestWeatherModel
-                                                .getChartData1(
-                                                    forestWeatherModel),
-                                            chartData2: forestWeatherModel
-                                                .getChartData2(
-                                                    forestWeatherModel),
-                                          ),
-                                        ],
-                                      ),
+                                      // Column(
+                                      //   children: [
+                                      //     Align(
+                                      //       alignment: Alignment.topLeft,
+                                      //       child: Padding(
+                                      //         padding: EdgeInsets.all(0),
+                                      //         child: Text(
+                                      //           "Nhiệt độ và lượng mưa ${forestWeatherModel.currentWeather?.nameLocation.toString()} những ngày tới",
+                                      //           textAlign: TextAlign.start,
+                                      //           style: TextStyle(
+                                      //               fontWeight: FontWeight.bold,
+                                      //               color: Colors.white,
+                                      //               fontSize: 13),
+                                      //         ),
+                                      //       ),
+                                      //     ),
+                                      //     ColumnChart(
+                                      //       chartData1: forestWeatherModel
+                                      //           .getChartData1(
+                                      //               forestWeatherModel),
+                                      //       chartData2: forestWeatherModel
+                                      //           .getChartData2(
+                                      //               forestWeatherModel),
+                                      //     ),
+                                      //   ],
+                                      // ),
 
                                       //end
                                     ])
@@ -730,25 +730,25 @@ class FavovitesHome extends ConsumerWidget {
             SizedBox(
               height: 80,
               child: Image.network(
-                  "https://openweathermap.org/img/wn/${daily.urlStatusIcon}.png",
+                  "https://openweathermap.org/img/wn/${daily.listStatusWeather?[0].urlStatusIcon}.png",
                   fit: BoxFit.fitHeight),
             ),
             Text(
-              daily.descriptionWeather.toString(),
+              daily.listStatusWeather![0].desWeatherAttribute.toString(),
               style: TextStyle(color: Colors.white),
             ),
-            Text('${daily.tempMin} - ${daily.tempMax} °C',
+            Text('${daily.temporary?.tempMin} - ${daily.temporary?.temmMax} °C',
                 style: TextStyle(color: Colors.white, fontSize: 12)),
             Text(
               'Độ ẩm: ${daily.clounds}%',
               style: TextStyle(color: Colors.white),
             ),
             Text(
-              'Mặt trời mọc: ${daily.sunrise}',
+              'Mặt trời mọc: ${daily.sun?.sunRise}',
               style: TextStyle(color: Colors.white70, fontSize: 11),
             ),
             Text(
-              'mặt trời lặn: ${daily.sunset}',
+              'mặt trời lặn: ${daily.sun?.sunSet}',
               style: TextStyle(color: Colors.white70, fontSize: 11),
             )
           ],
@@ -761,13 +761,13 @@ class FavovitesHome extends ConsumerWidget {
     return Column(
       children: [
         Text(
-          " ${hourly.temp.toString()} °C",
+          " ${hourly.temporary?.temp.toString()} °C",
           style: const TextStyle(color: Colors.white, fontSize: 15),
         ),
         SizedBox(
           height: 80,
           child: Image.network(
-              "https://openweathermap.org/img/wn/${hourly.urlStatusIcon}.png",
+              "https://openweathermap.org/img/wn/${hourly.listStatusWeather![0].urlStatusIcon}.png",
               fit: BoxFit.fitWidth),
         ),
         Text(

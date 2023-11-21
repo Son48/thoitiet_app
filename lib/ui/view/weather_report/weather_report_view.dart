@@ -652,7 +652,7 @@ class WeatherReportView extends ConsumerWidget {
                                                 height: 10,
                                               ),
                                               Text(
-                                                '${forestWeatherModel.currentWeather?.rain.toString()}',
+                                                '${forestWeatherModel?.currentWeather?.rain.toString()}',
                                                 style: TextStyle(
                                                     color: Colors.white70,
                                                     fontWeight:
@@ -710,16 +710,28 @@ class WeatherReportView extends ConsumerWidget {
                               Column(
                                 children: [
                                   const Padding(
-                                    padding: EdgeInsets.only(right: 20,left: 20,top: 50),
+                                    padding: EdgeInsets.only(
+                                        right: 20, left: 20, top: 50),
                                     child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Text('Ngày',style: TextStyle(color: Colors.yellow)),
+                                        Text('Ngày',
+                                            style: TextStyle(
+                                                color: Colors.yellow)),
                                         const SizedBox(width: 5),
-                                        Text("Thời tiết",style: TextStyle(color: Colors.yellow)),
+                                        Text("Thời tiết",
+                                            style: TextStyle(
+                                                color: Colors.yellow)),
                                         const SizedBox(width: 20), //
-                                        Text("Max°C",style: TextStyle(color: Colors.yellow),),
-                                        Text("Min°C",style: TextStyle(color: Colors.yellow)),
+                                        Text(
+                                          "Max°C",
+                                          style:
+                                              TextStyle(color: Colors.yellow),
+                                        ),
+                                        Text("Min°C",
+                                            style: TextStyle(
+                                                color: Colors.yellow)),
                                       ],
                                     ),
                                   ),

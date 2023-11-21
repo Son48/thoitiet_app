@@ -108,7 +108,7 @@ class NotificationService {
       id: DateTime.now().second + Random().nextInt(100),
       title: 'Thông báo thời tiết định kì.',
       body:
-          'Nhiệt độ tại ${w.nameLocation.toString()} ngay lúc này là: ${w.temp}°C, ${w.descriptionWeather}.',
+          'Nhiệt độ tại ${w.nameLocation.toString()} ngay lúc này là: ${w.temporary.toString()}°C, ${w.listStatusWeather?[0].desWeatherAttribute}.',
     );
     //save notification in db
     DateTime date = DateTime.now();
@@ -117,10 +117,10 @@ class NotificationService {
         lat,
         date.hour.toString(),
         date.year.toString(),
-        'Nhiệt độ tại ${w.nameLocation.toString()} ngay lúc này là: ${w.temp}°C, ${w.descriptionWeather}.',
+        'Nhiệt độ tại ${w.nameLocation.toString()} ngay lúc này là: ${w.temporary?.temp.toString()}°C, ${w.listStatusWeather?[0].desWeatherAttribute}.',
         date.minute.toString(),
         w.nameLocation.toString(),
         date.toString(),
-        w.urlStatusIcon.toString());
+        w.listStatusWeather![0].urlStatusIcon.toString());
   }
 }

@@ -14,9 +14,9 @@ class WeatherReponsitory {
       response =
           await dio.get(ApiEndPointConstants.weatherInLocation(lat, lon));
       if (response.statusCode == 200) {
-        return WeatherModel.fromJson(jsonDecode(response.toString()), lat, lon);
+        return WeatherModel.fromJson(jsonDecode(response.toString()));
       }
-      return WeatherModel.fromJson(jsonDecode(response.toString()), lat, lon);
+      return WeatherModel.fromJson(jsonDecode(response.toString()));
     } on Exception {
       rethrow;
     }
@@ -28,7 +28,7 @@ class WeatherReponsitory {
     try {
       response = await dio.get(ApiEndPointConstants.forestInLocation(lat, lon));
       if (response.statusCode == 200) {
-        return ForestWeatherModel.fromJson(jsonDecode(response.toString()), w);
+        return ForestWeatherModel.fromJson(jsonDecode(response.toString()));
       }
     } on Exception {
       rethrow;
