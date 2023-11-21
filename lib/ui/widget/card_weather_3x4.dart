@@ -135,11 +135,12 @@ class CardWeather extends ConsumerWidget {
                                 height: 80,
                                 width: 80,
                                 child: Image.network(
-                                    "https://openweathermap.org/img/wn/${data.urlStatusIcon}.png",
+                                    "https://openweathermap.org/img/wn/${data.listStatusWeather![0].urlStatusIcon}.png",
                                     fit: BoxFit.fitWidth),
                               ),
                               Text(
-                                data.descriptionWeather.toString(),
+                                data.listStatusWeather![0].desWeatherAttribute
+                                    .toString(),
                                 textAlign: TextAlign.center,
                                 style: const TextStyle(color: Colors.white),
                               ),
@@ -147,7 +148,7 @@ class CardWeather extends ConsumerWidget {
                           ),
                         ),
                         Text(
-                          '${data.tempMin}° - ${data.tempMax}°',
+                          '${data.temporary?.tempMin}° - ${data.temporary?.temmMax}°',
                           style: const TextStyle(
                             color: Colors.white70,
                           ),

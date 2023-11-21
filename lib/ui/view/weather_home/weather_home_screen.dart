@@ -153,7 +153,7 @@ class WeatherHome extends ConsumerWidget {
                                           CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          '${currentWeather?.temp} °',
+                                          '${currentWeather.temporary?.temp} °',
                                           style: const TextStyle(
                                             color: Colors.white,
                                             fontSize: 40,
@@ -162,7 +162,7 @@ class WeatherHome extends ConsumerWidget {
                                         SizedBox(
                                           width: 120,
                                           child: Text(
-                                            '${currentWeather?.nameLocation} hôm nay ${currentWeather?.descriptionWeather}.',
+                                            '${currentWeather.nameLocation} hôm nay ${currentWeather.listStatusWeather![0].desWeatherAttribute}.',
                                             style: const TextStyle(
                                                 color: Colors.yellow,
                                                 fontSize: 16),
@@ -170,11 +170,11 @@ class WeatherHome extends ConsumerWidget {
                                         ),
                                         const SizedBox(height: 10),
                                         Text(
-                                            'Độ ẩm: ${currentWeather?.clounds}%',
+                                            'Độ ẩm: ${currentWeather.clounds}%',
                                             style: const TextStyle(
                                                 color: Colors.white)),
                                         Text(
-                                            'Tốc độ gió: ${currentWeather?.speedWind} ms',
+                                            'Tốc độ gió: ${currentWeather.winds?.speed} ms',
                                             style: const TextStyle(
                                                 color: Colors.white)),
                                       ],
@@ -184,12 +184,12 @@ class WeatherHome extends ConsumerWidget {
                                         SizedBox(
                                           width: 120,
                                           child: Image.network(
-                                            "https://openweathermap.org/img/wn/${currentWeather?.urlStatusIcon}.png",
+                                            "https://openweathermap.org/img/wn/${currentWeather.listStatusWeather![0].urlStatusIcon}.png",
                                             fit: BoxFit.fitWidth,
                                           ),
                                         ),
                                         Text(
-                                            'Cảm giác như : ${currentWeather?.feelLike} °C',
+                                            'Cảm giác như : ${currentWeather.temporary?.feelsLike} °C',
                                             style:
                                                 TextStyle(color: Colors.white))
                                       ],

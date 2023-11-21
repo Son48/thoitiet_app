@@ -108,13 +108,16 @@ class WeatherReportView extends ConsumerWidget {
                         height: 150,
                         child: CardReport(
                           tag: weatherModel.nameLocation.toString(),
-                          temp: weatherModel.temp.toString(),
-                          tempmin: weatherModel.tempMin.toString(),
-                          tempmax: weatherModel.tempMax.toString(),
+                          temp: weatherModel.temporary!.temp.toString(),
+                          tempmin: weatherModel.temporary!.tempMin.toString(),
+                          tempmax: weatherModel.temporary!.temmMax.toString(),
                           nameLocation: weatherModel.nameLocation.toString(),
-                          urlStatusIcon: weatherModel.urlStatusIcon.toString(),
-                          descriptionWeather:
-                              weatherModel.descriptionWeather.toString(),
+                          urlStatusIcon: weatherModel
+                              .listStatusWeather![0].urlStatusIcon
+                              .toString(),
+                          descriptionWeather: weatherModel
+                              .listStatusWeather![0].desWeatherAttribute
+                              .toString(),
                         ),
                       ),
                       const SizedBox(
@@ -413,10 +416,10 @@ class WeatherReportView extends ConsumerWidget {
                           child: SizedBox(
                             height: 120,
                             child: ListView.builder(
-                              itemCount: forestWeatherModel?.hourly.length,
+                              itemCount: forestWeatherModel?.hourly?.length,
                               itemBuilder: (context, index) =>
                                   HourlyForecastItem(
-                                hourly: forestWeatherModel!.hourly[index],
+                                hourly: forestWeatherModel!.hourly![index],
                               ),
                               scrollDirection: Axis.horizontal,
                             ),
@@ -476,7 +479,7 @@ class WeatherReportView extends ConsumerWidget {
                                                 height: 10,
                                               ),
                                               Text(
-                                                ' ${forestWeatherModel?.currentWeather?.clounds.toString()}%',
+                                                ' ${weatherModel.clounds?.clounds.toString()}%',
                                                 style: const TextStyle(
                                                     color: Colors.white70,
                                                     fontWeight:
@@ -509,7 +512,7 @@ class WeatherReportView extends ConsumerWidget {
                                                 height: 10,
                                               ),
                                               Text(
-                                                ' ${forestWeatherModel?.currentWeather?.feelLike.toString()}°',
+                                                ' ${weatherModel.temporary?.feelsLike.toString()}°',
                                                 style: const TextStyle(
                                                     color: Colors.white70,
                                                     fontWeight:
@@ -542,7 +545,7 @@ class WeatherReportView extends ConsumerWidget {
                                                 height: 10,
                                               ),
                                               Text(
-                                                '${forestWeatherModel?.currentWeather?.speedWind.toString()}m/s',
+                                                '${weatherModel.winds?.speed.toString()}m/s',
                                                 style: const TextStyle(
                                                     color: Colors.white70,
                                                     fontWeight:
@@ -587,7 +590,7 @@ class WeatherReportView extends ConsumerWidget {
                                                 height: 10,
                                               ),
                                               Text(
-                                                '${forestWeatherModel?.currentWeather?.uvi.toString()} UV',
+                                                '${forestWeatherModel?.moreAttribute?.uvi.toString()} UV',
                                                 style: TextStyle(
                                                     color: Colors.white70,
                                                     fontWeight:
@@ -619,7 +622,7 @@ class WeatherReportView extends ConsumerWidget {
                                                 height: 10,
                                               ),
                                               Text(
-                                                '${forestWeatherModel?.currentWeather?.visibility.toString()} m',
+                                                '${forestWeatherModel?.moreAttribute?.visibility.toString()} m',
                                                 style: TextStyle(
                                                     color: Colors.white70,
                                                     fontWeight:
@@ -652,7 +655,7 @@ class WeatherReportView extends ConsumerWidget {
                                                 height: 10,
                                               ),
                                               Text(
-                                                '${forestWeatherModel?.currentWeather?.rain.toString()}',
+                                                '${weatherModel.rain.toString()}',
                                                 style: TextStyle(
                                                     color: Colors.white70,
                                                     fontWeight:
@@ -743,11 +746,11 @@ class WeatherReportView extends ConsumerWidget {
                                         physics:
                                             const NeverScrollableScrollPhysics(),
                                         itemCount:
-                                            forestWeatherModel?.daily.length,
+                                            forestWeatherModel?.daily?.length,
                                         itemBuilder: (context, index) =>
                                             WeatherForecastItem(
                                           daily:
-                                              forestWeatherModel!.daily[index],
+                                              forestWeatherModel!.daily![index],
                                         ),
                                         scrollDirection: Axis.vertical,
                                       ),
@@ -762,32 +765,32 @@ class WeatherReportView extends ConsumerWidget {
                       const SizedBox(
                         height: 20,
                       ),
-                      Column(
-                        children: [
-                          Align(
-                            alignment: Alignment.topLeft,
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.only(bottom: 10, left: 10),
-                              child: Text(
-                                "Khả năng nhiệt độ và lượng mưa ${forestWeatherModel?.currentWeather?.nameLocation.toString()} ",
-                                textAlign: TextAlign.start,
-                                style: const TextStyle(
-                                    color: Colors.white, fontSize: 15),
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(bottom: 20),
-                            child: ColumnChart(
-                              chartData1: forestWeatherModel!
-                                  .getChartData1(forestWeatherModel),
-                              chartData2: forestWeatherModel
-                                  .getChartData2(forestWeatherModel),
-                            ),
-                          ),
-                        ],
-                      ),
+                      // Column(
+                      //   children: [
+                      //     Align(
+                      //       alignment: Alignment.topLeft,
+                      //       child: Padding(
+                      //         padding:
+                      //             const EdgeInsets.only(bottom: 10, left: 10),
+                      //         child: Text(
+                      //           "Khả năng nhiệt độ và lượng mưa ${forestWeatherModel?.currentWeather?.nameLocation.toString()} ",
+                      //           textAlign: TextAlign.start,
+                      //           style: const TextStyle(
+                      //               color: Colors.white, fontSize: 15),
+                      //         ),
+                      //       ),
+                      //     ),
+                      //     Padding(
+                      //       padding: const EdgeInsets.only(bottom: 20),
+                      //       child: ColumnChart(
+                      //         chartData1: forestWeatherModel!
+                      //             .getChartData1(forestWeatherModel),
+                      //         chartData2: forestWeatherModel
+                      //             .getChartData2(forestWeatherModel),
+                      //       ),
+                      //     ),
+                      //   ],
+                      // ),
                     ],
                   ),
                 ),

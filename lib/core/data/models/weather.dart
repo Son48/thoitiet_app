@@ -21,7 +21,7 @@ class WeatherModel with _$WeatherModel {
     @JsonKey(name: 'clouds') CloundModel? clounds,
     @JsonKey(name: 'wind') WindModel? winds,
     @JsonKey(name: 'sun') SunModel? sun,
-    @JsonKey(name: 'rain') String? rain,
+    // @JsonKey(name: 'rain') String? rain,
   }) = _WeatherModel;
   factory WeatherModel.fromJson(Map<String, Object?> json) =>
       _$WeatherModelFromJson(json);

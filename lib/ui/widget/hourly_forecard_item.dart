@@ -23,11 +23,14 @@ class HourlyForecastItem extends StatelessWidget {
         child: Column(
           children: [
             Text(
-              "${hourly.temp.toString()} °C",
-              style: TextStyle(fontSize: 16, color: Colors.white, fontWeight: FontWeight.bold),
+              "${hourly.temporary?.temp.toString()} °C",
+              style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold),
             ),
             Image.network(
-              "https://openweathermap.org/img/wn/${hourly.urlStatusIcon}.png", // Sử dụng imageUrl để tải hình ảnh từ một URL
+              "https://openweathermap.org/img/wn/${hourly.listStatusWeather![0].urlStatusIcon}.png", // Sử dụng imageUrl để tải hình ảnh từ một URL
               fit: BoxFit.fitWidth,
             ),
             Text(

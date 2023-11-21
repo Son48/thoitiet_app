@@ -60,13 +60,13 @@ class CardBigWeather extends ConsumerWidget {
                                 padding:
                                     const EdgeInsets.only(top: 8.0, bottom: 10),
                                 child: Text(
-                                  "${data.temp}°",
+                                  "${data.temporary?.temp}°",
                                   style: const TextStyle(
                                       fontSize: 40, color: Colors.white),
                                 ),
                               ),
                               Text(
-                                "${data.tempMin}° - ${data.tempMax}°",
+                                "${data.temporary?.tempMin}° - ${data.temporary?.temmMax}°",
                                 style: const TextStyle(
                                     fontSize: 15, color: Colors.white70),
                               ),
@@ -84,11 +84,12 @@ class CardBigWeather extends ConsumerWidget {
                           SizedBox(
                             width: 90,
                             child: Image.network(
-                                "https://openweathermap.org/img/wn/${data.urlStatusIcon}.png",
+                                "https://openweathermap.org/img/wn/${data.listStatusWeather![0].urlStatusIcon}.png",
                                 fit: BoxFit.fitWidth),
                           ),
                           Text(
-                            data.descriptionWeather.toString(),
+                            data.listStatusWeather![0].desWeatherAttribute
+                                .toString(),
                             style: const TextStyle(color: Colors.white),
                           )
                         ],

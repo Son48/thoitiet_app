@@ -50,7 +50,6 @@ class WeatherForestViewModel extends ChangeNotifier {
           w.lat.toString(), w.lon.toString(), w);
 
       if (res != null) {
-        print('hahaha' + res.currentWeather!.nameLocation.toString());
         setForestWeatherModel(res);
       }
       notifyListeners();
