@@ -59,7 +59,7 @@ class SettingNotification {
     if (database != null) {
       final settingLocal = await database.rawQuery(
           "SELECT * FROM $tableName WHERE lon = ? AND lat = ?",
-          [w.lon.toString(), w.lat.toString()]);
+          [w.coord!.lon.toString(), w.coord!.lat.toString()]);
       List<SettingNotificationModel> listSetting = settingLocal
           .map((setting) => SettingNotificationModel.mapSQLtoModel(setting))
           .toList();

@@ -8,8 +8,6 @@ part of 'weather.dart';
 
 _$WeatherModelImpl _$$WeatherModelImplFromJson(Map<String, dynamic> json) =>
     _$WeatherModelImpl(
-      lon: json['lon'] as String?,
-      lat: json['lat'] as String?,
       day: json['day'] as String?,
       hour: json['hour'] as String?,
       listStatusWeather: (json['weather'] as List<dynamic>?)
@@ -30,12 +28,13 @@ _$WeatherModelImpl _$$WeatherModelImplFromJson(Map<String, dynamic> json) =>
           ? null
           : SunModel.fromJson(json['sun'] as Map<String, dynamic>),
       rain: json['rain'] as String?,
+      coord: json['coord'] == null
+          ? null
+          : CoordModel.fromJson(json['coord'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$$WeatherModelImplToJson(_$WeatherModelImpl instance) =>
     <String, dynamic>{
-      'lon': instance.lon,
-      'lat': instance.lat,
       'day': instance.day,
       'hour': instance.hour,
       'weather': instance.listStatusWeather,
@@ -45,4 +44,5 @@ Map<String, dynamic> _$$WeatherModelImplToJson(_$WeatherModelImpl instance) =>
       'wind': instance.winds,
       'sun': instance.sun,
       'rain': instance.rain,
+      'coord': instance.coord,
     };

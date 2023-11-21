@@ -109,8 +109,8 @@ class WeatherReportViewModel extends ChangeNotifier {
   Future<int> insertSetiingToSQL(
       WeatherModel favorite, String hour, String minute) async {
     var w = await SettingNotification().insertTable(
-        favorite.lon.toString(),
-        favorite.lat.toString(),
+        favorite.coord!.lon.toString(),
+        favorite.coord!.lat.toString(),
         hour,
         minute,
         favorite.nameLocation.toString());
@@ -122,8 +122,8 @@ class WeatherReportViewModel extends ChangeNotifier {
     //   scheduledTimeMinute: 01,
     // );
     SettingNotificationModel setting = SettingNotificationModel(
-        lon: favorite.lon.toString(),
-        lat: favorite.lat.toString(),
+        lon: favorite.coord!.lon.toString(),
+        lat: favorite.coord!.lat.toString(),
         hour: hour,
         minute: minute,
         nameLocation: favorite.nameLocation.toString());

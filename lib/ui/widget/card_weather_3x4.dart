@@ -21,8 +21,8 @@ class CardWeather extends ConsumerWidget {
     void removeWeatherInFavorites(WeatherModel data) {
       print('remove');
       for (WeatherModel item in listFavorites) {
-        if (item.lat.toString() == data.lat.toString() &&
-            item.lon.toString() == data.lon.toString()) {
+        if (item.coord?.lat.toString() == data.coord?.lat.toString() &&
+            item.coord?.lon.toString() == data.coord?.lon.toString()) {
           listFavorites.remove(item);
           weatherModel.deleteFavoriteFromSQL(item);
           break;
@@ -31,7 +31,7 @@ class CardWeather extends ConsumerWidget {
     }
 
     for (WeatherModel item in listFavorites) {
-      if (item.lat.toString() == data.lat.toString()) {
+      if (item.coord?.lat.toString() == data.coord?.lat.toString()) {
         favorite = true;
       }
     }

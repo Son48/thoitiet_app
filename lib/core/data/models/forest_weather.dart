@@ -1,3 +1,4 @@
+import 'package:thoitiet_app/core/data/models/current_weather.dart';
 import 'package:thoitiet_app/core/data/models/more_attribute.dart';
 import 'package:thoitiet_app/core/data/models/rain.dart';
 import 'package:thoitiet_app/core/data/models/weather.dart';
@@ -12,7 +13,7 @@ class ForestWeatherModel with _$ForestWeatherModel {
   factory ForestWeatherModel({
     @JsonKey(name: 'daily') List<WeatherModel>? daily,
     @JsonKey(name: 'hourly') List<WeatherModel>? hourly,
-    @JsonKey(name: 'current') MoreAttributeModel? moreAttribute,
+    @JsonKey(name: 'current') CurrentWeather? currentWeather,
   }) = _ForestWeatherModel;
   factory ForestWeatherModel.fromJson(Map<String, Object?> json) =>
       _$ForestWeatherModelFromJson(json);

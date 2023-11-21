@@ -39,8 +39,8 @@ class WeatherReportView extends ConsumerWidget {
       reportModel.setStateFavoriteWeather(false);
       print('remove');
       for (WeatherModel item in listFavorites.weatherFavories) {
-        if (item.lat.toString() == data.lat.toString() &&
-            item.lon.toString() == data.lon.toString()) {
+        if (item.coord!.lat.toString() == data.coord!.lat.toString() &&
+            item.coord!.lon.toString() == data.coord!.lon.toString()) {
           listFavorites.weatherFavories.remove(item);
           listFavorites.deleteFavoriteFromSQL(item);
           break;
@@ -479,7 +479,7 @@ class WeatherReportView extends ConsumerWidget {
                                                 height: 10,
                                               ),
                                               Text(
-                                                ' ${weatherModel.clounds?.clounds.toString()}%',
+                                                ' ${forestWeatherModel?.currentWeather!.clouds.toString()}%',
                                                 style: const TextStyle(
                                                     color: Colors.white70,
                                                     fontWeight:
@@ -512,7 +512,7 @@ class WeatherReportView extends ConsumerWidget {
                                                 height: 10,
                                               ),
                                               Text(
-                                                ' ${weatherModel.temporary?.feelsLike.toString()}°',
+                                                ' ${forestWeatherModel?.currentWeather!.feels_like.toString()}°',
                                                 style: const TextStyle(
                                                     color: Colors.white70,
                                                     fontWeight:
@@ -545,7 +545,7 @@ class WeatherReportView extends ConsumerWidget {
                                                 height: 10,
                                               ),
                                               Text(
-                                                '${weatherModel.winds?.speed.toString()}m/s',
+                                                '${forestWeatherModel?.currentWeather!.wind_speed.toString()}m/s',
                                                 style: const TextStyle(
                                                     color: Colors.white70,
                                                     fontWeight:
@@ -590,7 +590,7 @@ class WeatherReportView extends ConsumerWidget {
                                                 height: 10,
                                               ),
                                               Text(
-                                                '${forestWeatherModel?.moreAttribute?.uvi.toString()} UV',
+                                                '${forestWeatherModel?.currentWeather!.uvi.toString()} UV',
                                                 style: TextStyle(
                                                     color: Colors.white70,
                                                     fontWeight:
@@ -622,7 +622,7 @@ class WeatherReportView extends ConsumerWidget {
                                                 height: 10,
                                               ),
                                               Text(
-                                                '${forestWeatherModel?.moreAttribute?.visibility.toString()} m',
+                                                '${forestWeatherModel?.currentWeather!.visibility.toString()} m',
                                                 style: TextStyle(
                                                     color: Colors.white70,
                                                     fontWeight:

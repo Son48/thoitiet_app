@@ -39,7 +39,7 @@ class FavoritesData {
           .toList();
       for (WeatherModel item in draft) {
         final res = await _weatherReponsitory.getWeatherData(
-            item.lat.toString(), item.lon.toString());
+            item.coord!.lat.toString(), item.coord!.lon.toString());
         localListFavorites.add(res);
       }
       return localListFavorites;

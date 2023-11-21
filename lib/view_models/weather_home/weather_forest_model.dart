@@ -47,7 +47,7 @@ class WeatherForestViewModel extends ChangeNotifier {
   Future<void> getDataForestWeather(WeatherModel w) async {
     try {
       final res = await _weatherReponsitory.getForestWeatherData(
-          w.lat.toString(), w.lon.toString(), w);
+          w.coord!.lat.toString(), w.coord!.lon.toString(), w);
 
       if (res != null) {
         setForestWeatherModel(res);

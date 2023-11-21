@@ -586,7 +586,7 @@ class FavovitesHome extends ConsumerWidget {
                                             padding: EdgeInsets.only(
                                                 top: 2, left: 4),
                                             child: Text(
-                                              'Chỉ số UV hiện tại: ${forestWeatherModel.moreAttribute?.uvi.toString()} UV',
+                                              'Chỉ số UV hiện tại: ${forestWeatherModel?.currentWeather!.uvi.toString()} UV',
                                               style: TextStyle(
                                                   color: Colors.white70),
                                             ),
@@ -595,7 +595,7 @@ class FavovitesHome extends ConsumerWidget {
                                             padding: EdgeInsets.only(
                                                 left: 4, top: 2),
                                             child: Text(
-                                              'Tầm nhìn xa trung bình:  ${forestWeatherModel.moreAttribute?.visibility.toString()} m',
+                                              'Tầm nhìn xa trung bình:  ${forestWeatherModel?.currentWeather!.visibility.toString()} m',
                                               style: TextStyle(
                                                   color: Colors.white70),
                                             ),

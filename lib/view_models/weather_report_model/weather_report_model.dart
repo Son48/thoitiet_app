@@ -54,8 +54,8 @@ class WeatherReportViewModel extends ChangeNotifier {
     List<WeatherModel> listFavorites =
         await FavoritesData().fetchAllFavoritesFromLocal();
     for (WeatherModel item in listFavorites) {
-      if (item.lon.toString() == weatherModel?.lon.toString() &&
-          item.lat.toString() == weatherModel?.lat.toString()) {
+      if (item.coord!.lon.toString() == weatherModel?.coord!.lon.toString() &&
+          item.coord!.lat.toString() == weatherModel?.coord!.lat.toString()) {
         _isFavoritesWeather = true;
         break;
       } else {
@@ -91,7 +91,7 @@ class WeatherReportViewModel extends ChangeNotifier {
   Future<void> setForestWeatherModel(WeatherModel weather) async {
     ForestWeatherModel? frWeather =
         await _weatherReponsitory.getForestWeatherData(
-            weather.lat.toString(), weather.lon.toString(), weather);
+            weather.coord!.lat.toString(), weather.coord!.toString(), weather);
     _forestWeatherModel = frWeather;
   }
 
@@ -109,7 +109,7 @@ class WeatherReportViewModel extends ChangeNotifier {
   Future<void> getDataForestWeather(WeatherModel w) async {
     try {
       WeatherModel? res = await _weatherReponsitory.getWeatherData(
-          w.lat.toString(), w.lon.toString());
+          w.coord!.lat.toString(), w.coord!.lon.toString());
 
       if (res != null) {
         setForestWeatherModel(res);

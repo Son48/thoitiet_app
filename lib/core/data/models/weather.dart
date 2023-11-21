@@ -1,6 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:flutter/foundation.dart';
 import 'package:thoitiet_app/core/data/models/clounds_attribute.dart';
+import 'package:thoitiet_app/core/data/models/coord_attribute.dart';
 import 'package:thoitiet_app/core/data/models/sun_status_attribute.dart';
 import 'package:thoitiet_app/core/data/models/temporary.dart';
 import 'package:thoitiet_app/core/data/models/weather_attribute.dart';
@@ -11,8 +12,6 @@ part 'weather.g.dart';
 @freezed
 class WeatherModel with _$WeatherModel {
   factory WeatherModel({
-    String? lon,
-    String? lat,
     String? day,
     String? hour,
     @JsonKey(name: 'weather') List<WeatherAttributeModel>? listStatusWeather,
@@ -22,11 +21,12 @@ class WeatherModel with _$WeatherModel {
     @JsonKey(name: 'wind') WindModel? winds,
     @JsonKey(name: 'sun') SunModel? sun,
     @JsonKey(name: 'rain') String? rain,
+    @JsonKey(name: 'coord') CoordModel? coord,
   }) = _WeatherModel;
   factory WeatherModel.fromJson(Map<String, Object?> json) =>
       _$WeatherModelFromJson(json);
   factory WeatherModel.mapSQLtoModel(Map<String, dynamic> map) =>
-      WeatherModel(lat: map['lat'].toString(), lon: map['lon'].toString());
+      WeatherModel(coord: CoordModel(lat: map['lat'], lon: map['lon']));
 
   // static Future<String> convertDaysToDateTime(int days, int choose) async {
   //   final dt = DateTime.fromMillisecondsSinceEpoch(days * 1000);

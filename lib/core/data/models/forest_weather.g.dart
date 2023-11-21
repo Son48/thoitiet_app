@@ -15,10 +15,9 @@ _$ForestWeatherModelImpl _$$ForestWeatherModelImplFromJson(
       hourly: (json['hourly'] as List<dynamic>?)
           ?.map((e) => WeatherModel.fromJson(e as Map<String, dynamic>))
           .toList(),
-      moreAttribute: json['current'] == null
+      currentWeather: json['current'] == null
           ? null
-          : MoreAttributeModel.fromJson(
-              json['current'] as Map<String, dynamic>),
+          : CurrentWeather.fromJson(json['current'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$$ForestWeatherModelImplToJson(
@@ -26,5 +25,5 @@ Map<String, dynamic> _$$ForestWeatherModelImplToJson(
     <String, dynamic>{
       'daily': instance.daily,
       'hourly': instance.hourly,
-      'current': instance.moreAttribute,
+      'current': instance.currentWeather,
     };

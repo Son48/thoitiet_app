@@ -137,8 +137,8 @@ class WeatherHomeViewModel extends ChangeNotifier {
   }
 
   Future<void> insertFavoriteFromSQL(WeatherModel favorite) async {
-    var w = await FavoritesData()
-        .insertTable(favorite.lon.toString(), favorite.lat.toString());
+    var w = await FavoritesData().insertTable(
+        favorite.coord!.lon.toString(), favorite.coord!.lat.toString());
     if (w == 1) {
       print('THEM THANH CONG');
     }
@@ -147,8 +147,8 @@ class WeatherHomeViewModel extends ChangeNotifier {
 
   Future<void> deleteFavoriteFromSQL(WeatherModel favorite) async {
     print('remove in local');
-    var w = await FavoritesData()
-        .deleteTable(favorite.lon.toString(), favorite.lat.toString());
+    var w = await FavoritesData().deleteTable(
+        favorite.coord!.lon.toString(), favorite.coord!.lat.toString());
     print(w);
     notifyListeners();
   }

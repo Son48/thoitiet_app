@@ -25,7 +25,7 @@ mixin _$ForestWeatherModel {
   @JsonKey(name: 'hourly')
   List<WeatherModel>? get hourly => throw _privateConstructorUsedError;
   @JsonKey(name: 'current')
-  MoreAttributeModel? get moreAttribute => throw _privateConstructorUsedError;
+  CurrentWeather? get currentWeather => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -42,9 +42,9 @@ abstract class $ForestWeatherModelCopyWith<$Res> {
   $Res call(
       {@JsonKey(name: 'daily') List<WeatherModel>? daily,
       @JsonKey(name: 'hourly') List<WeatherModel>? hourly,
-      @JsonKey(name: 'current') MoreAttributeModel? moreAttribute});
+      @JsonKey(name: 'current') CurrentWeather? currentWeather});
 
-  $MoreAttributeModelCopyWith<$Res>? get moreAttribute;
+  $CurrentWeatherCopyWith<$Res>? get currentWeather;
 }
 
 /// @nodoc
@@ -62,7 +62,7 @@ class _$ForestWeatherModelCopyWithImpl<$Res, $Val extends ForestWeatherModel>
   $Res call({
     Object? daily = freezed,
     Object? hourly = freezed,
-    Object? moreAttribute = freezed,
+    Object? currentWeather = freezed,
   }) {
     return _then(_value.copyWith(
       daily: freezed == daily
@@ -73,22 +73,22 @@ class _$ForestWeatherModelCopyWithImpl<$Res, $Val extends ForestWeatherModel>
           ? _value.hourly
           : hourly // ignore: cast_nullable_to_non_nullable
               as List<WeatherModel>?,
-      moreAttribute: freezed == moreAttribute
-          ? _value.moreAttribute
-          : moreAttribute // ignore: cast_nullable_to_non_nullable
-              as MoreAttributeModel?,
+      currentWeather: freezed == currentWeather
+          ? _value.currentWeather
+          : currentWeather // ignore: cast_nullable_to_non_nullable
+              as CurrentWeather?,
     ) as $Val);
   }
 
   @override
   @pragma('vm:prefer-inline')
-  $MoreAttributeModelCopyWith<$Res>? get moreAttribute {
-    if (_value.moreAttribute == null) {
+  $CurrentWeatherCopyWith<$Res>? get currentWeather {
+    if (_value.currentWeather == null) {
       return null;
     }
 
-    return $MoreAttributeModelCopyWith<$Res>(_value.moreAttribute!, (value) {
-      return _then(_value.copyWith(moreAttribute: value) as $Val);
+    return $CurrentWeatherCopyWith<$Res>(_value.currentWeather!, (value) {
+      return _then(_value.copyWith(currentWeather: value) as $Val);
     });
   }
 }
@@ -104,10 +104,10 @@ abstract class _$$ForestWeatherModelImplCopyWith<$Res>
   $Res call(
       {@JsonKey(name: 'daily') List<WeatherModel>? daily,
       @JsonKey(name: 'hourly') List<WeatherModel>? hourly,
-      @JsonKey(name: 'current') MoreAttributeModel? moreAttribute});
+      @JsonKey(name: 'current') CurrentWeather? currentWeather});
 
   @override
-  $MoreAttributeModelCopyWith<$Res>? get moreAttribute;
+  $CurrentWeatherCopyWith<$Res>? get currentWeather;
 }
 
 /// @nodoc
@@ -123,7 +123,7 @@ class __$$ForestWeatherModelImplCopyWithImpl<$Res>
   $Res call({
     Object? daily = freezed,
     Object? hourly = freezed,
-    Object? moreAttribute = freezed,
+    Object? currentWeather = freezed,
   }) {
     return _then(_$ForestWeatherModelImpl(
       daily: freezed == daily
@@ -134,10 +134,10 @@ class __$$ForestWeatherModelImplCopyWithImpl<$Res>
           ? _value._hourly
           : hourly // ignore: cast_nullable_to_non_nullable
               as List<WeatherModel>?,
-      moreAttribute: freezed == moreAttribute
-          ? _value.moreAttribute
-          : moreAttribute // ignore: cast_nullable_to_non_nullable
-              as MoreAttributeModel?,
+      currentWeather: freezed == currentWeather
+          ? _value.currentWeather
+          : currentWeather // ignore: cast_nullable_to_non_nullable
+              as CurrentWeather?,
     ));
   }
 }
@@ -150,7 +150,7 @@ class _$ForestWeatherModelImpl
   _$ForestWeatherModelImpl(
       {@JsonKey(name: 'daily') final List<WeatherModel>? daily,
       @JsonKey(name: 'hourly') final List<WeatherModel>? hourly,
-      @JsonKey(name: 'current') this.moreAttribute})
+      @JsonKey(name: 'current') this.currentWeather})
       : _daily = daily,
         _hourly = hourly;
 
@@ -181,11 +181,11 @@ class _$ForestWeatherModelImpl
 
   @override
   @JsonKey(name: 'current')
-  final MoreAttributeModel? moreAttribute;
+  final CurrentWeather? currentWeather;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'ForestWeatherModel(daily: $daily, hourly: $hourly, moreAttribute: $moreAttribute)';
+    return 'ForestWeatherModel(daily: $daily, hourly: $hourly, currentWeather: $currentWeather)';
   }
 
   @override
@@ -195,7 +195,7 @@ class _$ForestWeatherModelImpl
       ..add(DiagnosticsProperty('type', 'ForestWeatherModel'))
       ..add(DiagnosticsProperty('daily', daily))
       ..add(DiagnosticsProperty('hourly', hourly))
-      ..add(DiagnosticsProperty('moreAttribute', moreAttribute));
+      ..add(DiagnosticsProperty('currentWeather', currentWeather));
   }
 
   @override
@@ -205,8 +205,8 @@ class _$ForestWeatherModelImpl
             other is _$ForestWeatherModelImpl &&
             const DeepCollectionEquality().equals(other._daily, _daily) &&
             const DeepCollectionEquality().equals(other._hourly, _hourly) &&
-            (identical(other.moreAttribute, moreAttribute) ||
-                other.moreAttribute == moreAttribute));
+            (identical(other.currentWeather, currentWeather) ||
+                other.currentWeather == currentWeather));
   }
 
   @JsonKey(ignore: true)
@@ -215,7 +215,7 @@ class _$ForestWeatherModelImpl
       runtimeType,
       const DeepCollectionEquality().hash(_daily),
       const DeepCollectionEquality().hash(_hourly),
-      moreAttribute);
+      currentWeather);
 
   @JsonKey(ignore: true)
   @override
@@ -236,7 +236,7 @@ abstract class _ForestWeatherModel implements ForestWeatherModel {
   factory _ForestWeatherModel(
           {@JsonKey(name: 'daily') final List<WeatherModel>? daily,
           @JsonKey(name: 'hourly') final List<WeatherModel>? hourly,
-          @JsonKey(name: 'current') final MoreAttributeModel? moreAttribute}) =
+          @JsonKey(name: 'current') final CurrentWeather? currentWeather}) =
       _$ForestWeatherModelImpl;
 
   factory _ForestWeatherModel.fromJson(Map<String, dynamic> json) =
@@ -250,7 +250,7 @@ abstract class _ForestWeatherModel implements ForestWeatherModel {
   List<WeatherModel>? get hourly;
   @override
   @JsonKey(name: 'current')
-  MoreAttributeModel? get moreAttribute;
+  CurrentWeather? get currentWeather;
   @override
   @JsonKey(ignore: true)
   _$$ForestWeatherModelImplCopyWith<_$ForestWeatherModelImpl> get copyWith =>
