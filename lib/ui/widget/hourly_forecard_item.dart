@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
-
-import '../../core/data/models/weather.dart';
+import 'package:thoitiet_app/core/data/models/weather_hourly/weather_hourly.dart';
 
 class HourlyForecastItem extends StatelessWidget {
   const HourlyForecastItem({
     Key? key,
     required this.hourly, // Thay thế Image bằng String
   });
-  final WeatherModel hourly;
+  final WeatherHourlyModel hourly;
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +22,7 @@ class HourlyForecastItem extends StatelessWidget {
         child: Column(
           children: [
             Text(
-              "${hourly.temporary?.temp.toString()} °C",
+              "${hourly.temp?.toString()} °C",
               style: TextStyle(
                   fontSize: 16,
                   color: Colors.white,

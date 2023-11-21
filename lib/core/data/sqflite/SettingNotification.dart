@@ -1,6 +1,6 @@
 import 'package:sqflite/sqflite.dart';
 import 'package:thoitiet_app/core/data/models/setting_notifi.dart';
-import 'package:thoitiet_app/core/data/models/weather.dart';
+import 'package:thoitiet_app/core/data/models/weather/weather.dart';
 import 'package:thoitiet_app/core/data/reponsitories/weather_reponsitory.dart';
 import 'package:thoitiet_app/core/data/sqflite/db.dart';
 

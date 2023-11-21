@@ -1,6 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:flutter/foundation.dart';
-import 'package:thoitiet_app/core/data/models/weather_attribute.dart';
+import 'package:thoitiet_app/core/data/models/weather_attribute/weather_attribute.dart';
 
 part 'current_weather.freezed.dart';
 part 'current_weather.g.dart';

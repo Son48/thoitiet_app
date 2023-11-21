@@ -4,7 +4,7 @@ import 'package:thoitiet_app/core/constants/constants.dart';
 import 'package:thoitiet_app/core/data/models/Notification.dart';
 import 'dart:math';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:thoitiet_app/core/data/models/weather.dart';
+import 'package:thoitiet_app/core/data/models/weather/weather.dart';
 
 import 'package:thoitiet_app/view_models/Alert/NotificationModel.dart';
 import 'package:thoitiet_app/view_models/weather_home/weather_home_model.dart';

@@ -21,9 +21,9 @@ ForestWeatherModel _$ForestWeatherModelFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$ForestWeatherModel {
   @JsonKey(name: 'daily')
-  List<WeatherModel>? get daily => throw _privateConstructorUsedError;
+  List<WeatherDailyModel>? get daily => throw _privateConstructorUsedError;
   @JsonKey(name: 'hourly')
-  List<WeatherModel>? get hourly => throw _privateConstructorUsedError;
+  List<WeatherHourlyModel>? get hourly => throw _privateConstructorUsedError;
   @JsonKey(name: 'current')
   CurrentWeather? get currentWeather => throw _privateConstructorUsedError;
 
@@ -40,8 +40,8 @@ abstract class $ForestWeatherModelCopyWith<$Res> {
       _$ForestWeatherModelCopyWithImpl<$Res, ForestWeatherModel>;
   @useResult
   $Res call(
-      {@JsonKey(name: 'daily') List<WeatherModel>? daily,
-      @JsonKey(name: 'hourly') List<WeatherModel>? hourly,
+      {@JsonKey(name: 'daily') List<WeatherDailyModel>? daily,
+      @JsonKey(name: 'hourly') List<WeatherHourlyModel>? hourly,
       @JsonKey(name: 'current') CurrentWeather? currentWeather});
 
   $CurrentWeatherCopyWith<$Res>? get currentWeather;
@@ -68,11 +68,11 @@ class _$ForestWeatherModelCopyWithImpl<$Res, $Val extends ForestWeatherModel>
       daily: freezed == daily
           ? _value.daily
           : daily // ignore: cast_nullable_to_non_nullable
-              as List<WeatherModel>?,
+              as List<WeatherDailyModel>?,
       hourly: freezed == hourly
           ? _value.hourly
           : hourly // ignore: cast_nullable_to_non_nullable
-              as List<WeatherModel>?,
+              as List<WeatherHourlyModel>?,
       currentWeather: freezed == currentWeather
           ? _value.currentWeather
           : currentWeather // ignore: cast_nullable_to_non_nullable
@@ -102,8 +102,8 @@ abstract class _$$ForestWeatherModelImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {@JsonKey(name: 'daily') List<WeatherModel>? daily,
-      @JsonKey(name: 'hourly') List<WeatherModel>? hourly,
+      {@JsonKey(name: 'daily') List<WeatherDailyModel>? daily,
+      @JsonKey(name: 'hourly') List<WeatherHourlyModel>? hourly,
       @JsonKey(name: 'current') CurrentWeather? currentWeather});
 
   @override
@@ -129,11 +129,11 @@ class __$$ForestWeatherModelImplCopyWithImpl<$Res>
       daily: freezed == daily
           ? _value._daily
           : daily // ignore: cast_nullable_to_non_nullable
-              as List<WeatherModel>?,
+              as List<WeatherDailyModel>?,
       hourly: freezed == hourly
           ? _value._hourly
           : hourly // ignore: cast_nullable_to_non_nullable
-              as List<WeatherModel>?,
+              as List<WeatherHourlyModel>?,
       currentWeather: freezed == currentWeather
           ? _value.currentWeather
           : currentWeather // ignore: cast_nullable_to_non_nullable
@@ -148,8 +148,8 @@ class _$ForestWeatherModelImpl
     with DiagnosticableTreeMixin
     implements _ForestWeatherModel {
   _$ForestWeatherModelImpl(
-      {@JsonKey(name: 'daily') final List<WeatherModel>? daily,
-      @JsonKey(name: 'hourly') final List<WeatherModel>? hourly,
+      {@JsonKey(name: 'daily') final List<WeatherDailyModel>? daily,
+      @JsonKey(name: 'hourly') final List<WeatherHourlyModel>? hourly,
       @JsonKey(name: 'current') this.currentWeather})
       : _daily = daily,
         _hourly = hourly;
@@ -157,10 +157,10 @@ class _$ForestWeatherModelImpl
   factory _$ForestWeatherModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$ForestWeatherModelImplFromJson(json);
 
-  final List<WeatherModel>? _daily;
+  final List<WeatherDailyModel>? _daily;
   @override
   @JsonKey(name: 'daily')
-  List<WeatherModel>? get daily {
+  List<WeatherDailyModel>? get daily {
     final value = _daily;
     if (value == null) return null;
     if (_daily is EqualUnmodifiableListView) return _daily;
@@ -168,10 +168,10 @@ class _$ForestWeatherModelImpl
     return EqualUnmodifiableListView(value);
   }
 
-  final List<WeatherModel>? _hourly;
+  final List<WeatherHourlyModel>? _hourly;
   @override
   @JsonKey(name: 'hourly')
-  List<WeatherModel>? get hourly {
+  List<WeatherHourlyModel>? get hourly {
     final value = _hourly;
     if (value == null) return null;
     if (_hourly is EqualUnmodifiableListView) return _hourly;
@@ -234,8 +234,8 @@ class _$ForestWeatherModelImpl
 
 abstract class _ForestWeatherModel implements ForestWeatherModel {
   factory _ForestWeatherModel(
-          {@JsonKey(name: 'daily') final List<WeatherModel>? daily,
-          @JsonKey(name: 'hourly') final List<WeatherModel>? hourly,
+          {@JsonKey(name: 'daily') final List<WeatherDailyModel>? daily,
+          @JsonKey(name: 'hourly') final List<WeatherHourlyModel>? hourly,
           @JsonKey(name: 'current') final CurrentWeather? currentWeather}) =
       _$ForestWeatherModelImpl;
 
@@ -244,10 +244,10 @@ abstract class _ForestWeatherModel implements ForestWeatherModel {
 
   @override
   @JsonKey(name: 'daily')
-  List<WeatherModel>? get daily;
+  List<WeatherDailyModel>? get daily;
   @override
   @JsonKey(name: 'hourly')
-  List<WeatherModel>? get hourly;
+  List<WeatherHourlyModel>? get hourly;
   @override
   @JsonKey(name: 'current')
   CurrentWeather? get currentWeather;

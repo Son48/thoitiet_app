@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thoitiet_app/core/constants/constants.dart';
-import 'package:thoitiet_app/core/data/models/forest_weather.dart';
+import 'package:thoitiet_app/core/data/models/forest_weather/forest_weather.dart';
 import 'package:thoitiet_app/core/data/models/setting_notifi.dart';
-import 'package:thoitiet_app/core/data/models/weather.dart';
+import 'package:thoitiet_app/core/data/models/weather/weather.dart';
+import 'package:thoitiet_app/core/data/models/weather_daily/weather_daily.dart';
+import 'package:thoitiet_app/core/data/models/weather_hourly/weather_hourly.dart';
 import 'package:thoitiet_app/ui/view/news/home_news_weather.dart';
 
 import 'package:thoitiet_app/ui/widget/card_weather_3x4.dart';
@@ -707,7 +709,7 @@ class FavovitesHome extends ConsumerWidget {
     );
   }
 
-  Padding itemForestDailyWeather(WeatherModel daily) {
+  Padding itemForestDailyWeather(WeatherDailyModel daily) {
     return Padding(
       padding: const EdgeInsets.all(10.0),
       child: SizedBox(
@@ -737,18 +739,18 @@ class FavovitesHome extends ConsumerWidget {
               daily.listStatusWeather![0].desWeatherAttribute.toString(),
               style: TextStyle(color: Colors.white),
             ),
-            Text('${daily.temporary?.tempMin} - ${daily.temporary?.temmMax} °C',
+            Text('${daily.temp?.tempMin} - ${daily.temp?.tempMax} °C',
                 style: TextStyle(color: Colors.white, fontSize: 12)),
             Text(
               'Độ ẩm: ${daily.clounds}%',
               style: TextStyle(color: Colors.white),
             ),
             Text(
-              'Mặt trời mọc: ${daily.sun?.sunRise}',
+              'Mặt trời mọc: ${daily.sunrise}',
               style: TextStyle(color: Colors.white70, fontSize: 11),
             ),
             Text(
-              'mặt trời lặn: ${daily.sun?.sunSet}',
+              'mặt trời lặn: ${daily.sunset}',
               style: TextStyle(color: Colors.white70, fontSize: 11),
             )
           ],
@@ -757,11 +759,11 @@ class FavovitesHome extends ConsumerWidget {
     );
   }
 
-  Column itemForestCardWeather(WeatherModel hourly) {
+  Column itemForestCardWeather(WeatherHourlyModel hourly) {
     return Column(
       children: [
         Text(
-          " ${hourly.temporary?.temp.toString()} °C",
+          " ${hourly.temp?.toString()} °C",
           style: const TextStyle(color: Colors.white, fontSize: 15),
         ),
         SizedBox(

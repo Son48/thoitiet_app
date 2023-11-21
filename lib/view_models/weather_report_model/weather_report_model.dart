@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thoitiet_app/core/constants/constants.dart';
 import 'package:thoitiet_app/core/data/geolocator/geolocator_setting.dart';
-import 'package:thoitiet_app/core/data/models/forest_weather.dart';
+import 'package:thoitiet_app/core/data/models/forest_weather/forest_weather.dart';
 import 'package:thoitiet_app/core/data/models/setting_notifi.dart';
-import 'package:thoitiet_app/core/data/models/weather.dart';
+import 'package:thoitiet_app/core/data/models/weather/weather.dart';
 import 'package:thoitiet_app/core/data/reponsitories/weather_reponsitory.dart';
 import 'package:thoitiet_app/core/data/sqflite/FavoritesData.dart';
 import 'package:thoitiet_app/core/data/sqflite/SettingNotification.dart';
@@ -91,7 +91,7 @@ class WeatherReportViewModel extends ChangeNotifier {
   Future<void> setForestWeatherModel(WeatherModel weather) async {
     ForestWeatherModel? frWeather =
         await _weatherReponsitory.getForestWeatherData(
-            weather.coord!.lat.toString(), weather.coord!.toString(), weather);
+            weather.coord!.lat.toString(), weather.coord!.lon.toString());
     _forestWeatherModel = frWeather;
   }
 

@@ -2,9 +2,8 @@ import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thoitiet_app/core/data/models/forest_weather.dart';
 import 'package:thoitiet_app/core/data/models/setting_notifi.dart';
-import 'package:thoitiet_app/core/data/models/weather.dart';
+import 'package:thoitiet_app/core/data/models/weather/weather.dart';
 import 'package:thoitiet_app/core/data/notificatons/notification_services.dart';
 import 'package:thoitiet_app/core/data/reponsitories/weather_reponsitory.dart';
 import 'package:thoitiet_app/core/data/sqflite/SettingNotification.dart';

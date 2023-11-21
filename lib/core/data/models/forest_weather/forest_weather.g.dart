@@ -10,10 +10,10 @@ _$ForestWeatherModelImpl _$$ForestWeatherModelImplFromJson(
         Map<String, dynamic> json) =>
     _$ForestWeatherModelImpl(
       daily: (json['daily'] as List<dynamic>?)
-          ?.map((e) => WeatherModel.fromJson(e as Map<String, dynamic>))
+          ?.map((e) => WeatherDailyModel.fromJson(e as Map<String, dynamic>))
           .toList(),
       hourly: (json['hourly'] as List<dynamic>?)
-          ?.map((e) => WeatherModel.fromJson(e as Map<String, dynamic>))
+          ?.map((e) => WeatherHourlyModel.fromJson(e as Map<String, dynamic>))
           .toList(),
       currentWeather: json['current'] == null
           ? null

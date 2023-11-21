@@ -5,7 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:thoitiet_app/core/constants/constants.dart';
 import 'package:thoitiet_app/core/data/geolocator/geolocator_setting.dart';
-import 'package:thoitiet_app/core/data/models/weather.dart';
+import 'package:thoitiet_app/core/data/models/weather/weather.dart';
 import 'package:thoitiet_app/core/data/reponsitories/weather_reponsitory.dart';
 import 'package:thoitiet_app/core/data/sqflite/FavoritesData.dart';
 

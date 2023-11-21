@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thoitiet_app/core/data/models/forest_weather/forest_weather.dart';
 import 'package:thoitiet_app/core/data/models/setting_notifi.dart';
+import 'package:thoitiet_app/core/data/models/weather/weather.dart';
 import 'package:thoitiet_app/ui/widget/card_report.dart';
 import 'package:thoitiet_app/ui/widget/pre_loading.dart';
 import 'package:thoitiet_app/ui/widget/transparent_button.dart';
@@ -9,9 +11,6 @@ import 'package:thoitiet_app/view_models/Setting_Notification/setting_notificati
 import 'package:thoitiet_app/view_models/weather_home/weather_home_model.dart';
 import 'package:thoitiet_app/view_models/weather_report_model/weather_report_model.dart';
 import 'package:thoitiet_app/core/constants/constants.dart';
-
-import '../../../core/data/models/forest_weather.dart';
-import '../../../core/data/models/weather.dart';
 import '../../widget/column_chart.dart';
 import '../../widget/hourly_forecard_item.dart';
 import '../../widget/weather_forecast_item.dart';
@@ -52,7 +51,7 @@ class WeatherReportView extends ConsumerWidget {
       if (reportModel.defaultData) {
         return;
       }
-      await reportModel.getDataForestWeather(weatherModel!);
+      await reportModel.setForestWeatherModel(weatherModel!);
       await reportModel.setFavoriteWeather();
       await handleTimeToNotifi.getListSettingFromLocal(weatherModel);
       await reportModel.setListNotiOfWeather(weatherModel);

@@ -1,9 +1,8 @@
-import 'package:thoitiet_app/core/data/models/current_weather.dart';
-import 'package:thoitiet_app/core/data/models/more_attribute.dart';
-import 'package:thoitiet_app/core/data/models/rain.dart';
-import 'package:thoitiet_app/core/data/models/weather.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:flutter/foundation.dart';
+import 'package:thoitiet_app/core/data/models/current_weather/current_weather.dart';
+import 'package:thoitiet_app/core/data/models/weather_daily/weather_daily.dart';
+import 'package:thoitiet_app/core/data/models/weather_hourly/weather_hourly.dart';
 
 part 'forest_weather.freezed.dart';
 part 'forest_weather.g.dart';
@@ -11,8 +10,8 @@ part 'forest_weather.g.dart';
 @freezed
 class ForestWeatherModel with _$ForestWeatherModel {
   factory ForestWeatherModel({
-    @JsonKey(name: 'daily') List<WeatherModel>? daily,
-    @JsonKey(name: 'hourly') List<WeatherModel>? hourly,
+    @JsonKey(name: 'daily') List<WeatherDailyModel>? daily,
+    @JsonKey(name: 'hourly') List<WeatherHourlyModel>? hourly,
     @JsonKey(name: 'current') CurrentWeather? currentWeather,
   }) = _ForestWeatherModel;
   factory ForestWeatherModel.fromJson(Map<String, Object?> json) =>

@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-
-import '../../core/data/models/weather.dart';
+import 'package:thoitiet_app/core/data/models/weather_daily/weather_daily.dart';
 
 class WeatherForecastItem extends StatelessWidget {
-  final WeatherModel daily;
+  final WeatherDailyModel daily;
 
   const WeatherForecastItem({
     Key? key,
@@ -39,14 +38,14 @@ class WeatherForecastItem extends StatelessWidget {
             const SizedBox(
                 width: 20), // Khoảng cách giữa Image và Text nhiệt độ
             Text(
-              '${daily.temporary?.temmMax.toString()} °C',
+              '${daily.temp?.tempDay.toString()} °C',
               style: const TextStyle(
                 fontSize: 13,
                 color: Colors.white,
               ),
             ),
             Text(
-              '${daily.temporary?.tempMin.toString()} °C',
+              '${daily.temp?.tempMin.toString()} °C',
               style: const TextStyle(fontSize: 10, color: Color(0xFFE3E2E2)),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,

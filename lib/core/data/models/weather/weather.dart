@@ -1,11 +1,11 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:flutter/foundation.dart';
-import 'package:thoitiet_app/core/data/models/clounds_attribute.dart';
-import 'package:thoitiet_app/core/data/models/coord_attribute.dart';
-import 'package:thoitiet_app/core/data/models/sun_status_attribute.dart';
-import 'package:thoitiet_app/core/data/models/temporary.dart';
-import 'package:thoitiet_app/core/data/models/weather_attribute.dart';
-import 'package:thoitiet_app/core/data/models/wind_attribute.dart';
+import 'package:thoitiet_app/core/data/models/clounds_attribute/clounds_attribute.dart';
+import 'package:thoitiet_app/core/data/models/coord_attribute/coord_attribute.dart';
+import 'package:thoitiet_app/core/data/models/sun_status_attribute/sun_status_attribute.dart';
+import 'package:thoitiet_app/core/data/models/temporary/temporary.dart';
+import 'package:thoitiet_app/core/data/models/weather_attribute/weather_attribute.dart';
+import 'package:thoitiet_app/core/data/models/wind_attribute/wind_attribute.dart';
 part 'weather.freezed.dart';
 part 'weather.g.dart';
 

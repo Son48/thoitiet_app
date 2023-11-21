@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thoitiet_app/core/data/models/forest_weather.dart';
-import 'package:thoitiet_app/core/data/models/weather.dart';
+import 'package:thoitiet_app/core/data/models/forest_weather/forest_weather.dart';
+import 'package:thoitiet_app/core/data/models/weather/weather.dart';
 import 'package:thoitiet_app/core/data/reponsitories/weather_reponsitory.dart';
 
 final weatherForestAndFavoriteProvider =
@@ -37,24 +37,25 @@ class WeatherForestViewModel extends ChangeNotifier {
   Future<void> setFavoriteChosse(WeatherModel w) async {
     _favoriteChosse = w;
     print(_favoriteChosse?.nameLocation.toString());
-    getDataForestWeather(w);
+    // getDataForestWeather(w);
+    await setForestWeatherModel(w);
     notifyListeners();
   }
 
   WeatherForestViewModel(this._reader);
 
   // FUNCTION GET API FOREST WEATHER
-  Future<void> getDataForestWeather(WeatherModel w) async {
-    try {
-      final res = await _weatherReponsitory.getForestWeatherData(
-          w.coord!.lat.toString(), w.coord!.lon.toString(), w);
+  // Future<void> getDataForestWeather(WeatherModel w) async {
+  //   try {
+  //     final res = await _weatherReponsitory.getForestWeatherData(
+  //         w.coord!.lat.toString(), w.coord!.lon.toString(), w);
 
-      if (res != null) {
-        setForestWeatherModel(res);
-      }
-      notifyListeners();
-    } on Exception {
-      rethrow;
-    }
-  }
+  //     if (res != null) {
+  //       setForestWeatherModel(res);
+  //     }
+  //     notifyListeners();
+  //   } on Exception {
+  //     rethrow;
+  //   }
+  // }
 }

@@ -2,7 +2,7 @@ import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thoitiet_app/core/constants/constants.dart';
-import 'package:thoitiet_app/core/data/models/weather.dart';
+import 'package:thoitiet_app/core/data/models/weather/weather.dart';
 import 'package:thoitiet_app/ui/view/news/home_news_weather.dart';
 import 'package:thoitiet_app/ui/widget/card_big_weather.dart';
 import 'package:thoitiet_app/ui/widget/card_weather_3x4.dart';
