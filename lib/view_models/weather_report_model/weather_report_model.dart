@@ -80,6 +80,7 @@ class WeatherReportViewModel extends ChangeNotifier {
       // Xử lý lỗi nếu có
       print('Error fetching weather data: $e');
     }
+    notifyListeners();
   }
 
   ForestWeatherModel? _forestWeatherModel;
