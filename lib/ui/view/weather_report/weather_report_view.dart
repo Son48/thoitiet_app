@@ -16,15 +16,20 @@ import '../../widget/hourly_forecard_item.dart';
 import '../../widget/weather_forecast_item.dart';
 
 class WeatherReportView extends ConsumerWidget {
-  const WeatherReportView({super.key});
+  bool didRunDefaultData = false;
+  WeatherReportView({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final listFavorites = ref.watch(weatherProvider);
     final reportModel = ref.watch(weatherReportProvider);
+
+    // print(arguments['lon']);
+    // print(arguments['lat']);
+
     WeatherModel? weatherModel = reportModel.weatherModel;
     bool isFavovite = reportModel.isFavoritesWeather;
     final handleTimeToNotifi = ref.watch(weatherFavoritesProvider);
-    final listFavorites = ref.watch(weatherProvider);
     List<SettingNotificationModel> listSettingLocal =
         reportModel.listNotiOfWeather;
     ForestWeatherModel? forestWeatherModel = reportModel.forestWeatherModel;
@@ -47,14 +52,31 @@ class WeatherReportView extends ConsumerWidget {
       listFavorites.deleteFavoriteFromSQL(data);
     }
 
+    Map<String, dynamic>? arguments =
+        ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+    if (!didRunDefaultData) {
+      reportModel.setDefaultData(false);
+    }
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       if (reportModel.defaultData) {
         return;
       }
-      await reportModel.setForestWeatherModel(weatherModel!);
+      if (arguments != null) {
+        var p_lon = arguments?['lon'];
+        var p_lat = arguments?['lat'];
+        if (p_lon != null && p_lat != null) {
+          WeatherModel pram_weather =
+              await listFavorites.getDetailWeather(p_lon, p_lat);
+          await reportModel.setWeatherModel(pram_weather);
+          print('thành công');
+        }
+      } else {
+        await reportModel.setForestWeatherModel(weatherModel!);
+        await reportModel.setListNotiOfWeather(weatherModel);
+        await handleTimeToNotifi.getListSettingFromLocal(weatherModel);
+      }
+      didRunDefaultData = true;
       await reportModel.setFavoriteWeather();
-      await handleTimeToNotifi.getListSettingFromLocal(weatherModel);
-      await reportModel.setListNotiOfWeather(weatherModel);
       await reportModel.setDefaultData(true);
     });
     return SafeArea(
@@ -86,7 +108,11 @@ class WeatherReportView extends ConsumerWidget {
                               color: Colors.white,
                             ),
                             onPressed: () {
-                              Navigator.pop(context);
+                              if (arguments != null) {
+                                Navigator.pushNamed(context, 'main_tab');
+                              } else {
+                                Navigator.pop(context);
+                              }
                             },
                           ),
                           Padding(

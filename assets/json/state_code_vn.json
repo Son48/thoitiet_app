@@ -31,16 +31,7 @@
                 "lat": 11.75
             }
         },
-        {
-            "id": 1559972,
-            "name": "Tỉnh Sóc Trăng",
-            "state": "",
-            "country": "VN",
-            "coord": {
-                "lon": 105.833328,
-                "lat": 9.66667
-            }
-        },
+   
         {
             "id": 1559975,
             "name": "Tỉnh Trà Vinh",

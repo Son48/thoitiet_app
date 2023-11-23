@@ -36,7 +36,7 @@ mixin _$WeatherModel {
   @JsonKey(name: 'sun')
   SunModel? get sun => throw _privateConstructorUsedError;
   @JsonKey(name: 'rain')
-  String? get rain => throw _privateConstructorUsedError;
+  RainHourlyModel? get rain => throw _privateConstructorUsedError;
   @JsonKey(name: 'coord')
   CoordModel? get coord => throw _privateConstructorUsedError;
 
@@ -61,13 +61,14 @@ abstract class $WeatherModelCopyWith<$Res> {
       @JsonKey(name: 'clouds') CloundModel? clounds,
       @JsonKey(name: 'wind') WindModel? winds,
       @JsonKey(name: 'sun') SunModel? sun,
-      @JsonKey(name: 'rain') String? rain,
+      @JsonKey(name: 'rain') RainHourlyModel? rain,
       @JsonKey(name: 'coord') CoordModel? coord});
 
   $TemporaryModelCopyWith<$Res>? get temporary;
   $CloundModelCopyWith<$Res>? get clounds;
   $WindModelCopyWith<$Res>? get winds;
   $SunModelCopyWith<$Res>? get sun;
+  $RainHourlyModelCopyWith<$Res>? get rain;
   $CoordModelCopyWith<$Res>? get coord;
 }
 
@@ -131,7 +132,7 @@ class _$WeatherModelCopyWithImpl<$Res, $Val extends WeatherModel>
       rain: freezed == rain
           ? _value.rain
           : rain // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as RainHourlyModel?,
       coord: freezed == coord
           ? _value.coord
           : coord // ignore: cast_nullable_to_non_nullable
@@ -189,6 +190,18 @@ class _$WeatherModelCopyWithImpl<$Res, $Val extends WeatherModel>
 
   @override
   @pragma('vm:prefer-inline')
+  $RainHourlyModelCopyWith<$Res>? get rain {
+    if (_value.rain == null) {
+      return null;
+    }
+
+    return $RainHourlyModelCopyWith<$Res>(_value.rain!, (value) {
+      return _then(_value.copyWith(rain: value) as $Val);
+    });
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
   $CoordModelCopyWith<$Res>? get coord {
     if (_value.coord == null) {
       return null;
@@ -217,7 +230,7 @@ abstract class _$$WeatherModelImplCopyWith<$Res>
       @JsonKey(name: 'clouds') CloundModel? clounds,
       @JsonKey(name: 'wind') WindModel? winds,
       @JsonKey(name: 'sun') SunModel? sun,
-      @JsonKey(name: 'rain') String? rain,
+      @JsonKey(name: 'rain') RainHourlyModel? rain,
       @JsonKey(name: 'coord') CoordModel? coord});
 
   @override
@@ -228,6 +241,8 @@ abstract class _$$WeatherModelImplCopyWith<$Res>
   $WindModelCopyWith<$Res>? get winds;
   @override
   $SunModelCopyWith<$Res>? get sun;
+  @override
+  $RainHourlyModelCopyWith<$Res>? get rain;
   @override
   $CoordModelCopyWith<$Res>? get coord;
 }
@@ -290,7 +305,7 @@ class __$$WeatherModelImplCopyWithImpl<$Res>
       rain: freezed == rain
           ? _value.rain
           : rain // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as RainHourlyModel?,
       coord: freezed == coord
           ? _value.coord
           : coord // ignore: cast_nullable_to_non_nullable
@@ -352,7 +367,7 @@ class _$WeatherModelImpl with DiagnosticableTreeMixin implements _WeatherModel {
   final SunModel? sun;
   @override
   @JsonKey(name: 'rain')
-  final String? rain;
+  final RainHourlyModel? rain;
   @override
   @JsonKey(name: 'coord')
   final CoordModel? coord;
@@ -439,7 +454,7 @@ abstract class _WeatherModel implements WeatherModel {
       @JsonKey(name: 'clouds') final CloundModel? clounds,
       @JsonKey(name: 'wind') final WindModel? winds,
       @JsonKey(name: 'sun') final SunModel? sun,
-      @JsonKey(name: 'rain') final String? rain,
+      @JsonKey(name: 'rain') final RainHourlyModel? rain,
       @JsonKey(name: 'coord') final CoordModel? coord}) = _$WeatherModelImpl;
 
   factory _WeatherModel.fromJson(Map<String, dynamic> json) =
@@ -469,7 +484,7 @@ abstract class _WeatherModel implements WeatherModel {
   SunModel? get sun;
   @override
   @JsonKey(name: 'rain')
-  String? get rain;
+  RainHourlyModel? get rain;
   @override
   @JsonKey(name: 'coord')
   CoordModel? get coord;

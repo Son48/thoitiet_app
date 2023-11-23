@@ -29,7 +29,7 @@ class WeatherReportViewModel extends ChangeNotifier {
   bool get defaultDataFavorite => _defautDataFavorite;
   void setDefaultDataFavorite(bool df) {
     _defautDataFavorite = df;
-    notifyListeners();
+    // notifyListeners();
   }
 
 //list setting notification for each weather
@@ -39,14 +39,11 @@ class WeatherReportViewModel extends ChangeNotifier {
     List<SettingNotificationModel> listSettingLocal =
         await SettingNotification().getSetingFromLocal(w);
     _listNotiOfWeather = listSettingLocal;
-    notifyListeners();
   }
 
   Future<void> setWeatherModel(WeatherModel data) async {
     setForestWeatherModel(data);
     _weatherModel = data;
-    setDefaultData(false);
-    notifyListeners();
   }
 
   //check favorites weather in report
@@ -65,12 +62,11 @@ class WeatherReportViewModel extends ChangeNotifier {
       }
     }
     //end of set data in _isFavoritesWeather
-    notifyListeners();
   }
 
   void setStateFavoriteWeather(bool status) {
     _isFavoritesWeather = status;
-    notifyListeners();
+    // notifyListeners();
   }
 
   // Call API to get weather data for location
@@ -79,7 +75,7 @@ class WeatherReportViewModel extends ChangeNotifier {
       final weatherData = await _weatherReponsitory.getWeatherData(
           location.lat.toString(), location.lon.toString());
       _weatherModel = weatherData;
-      notifyListeners();
+      // notifyListeners();
     } catch (e) {
       // Xử lý lỗi nếu có
       print('Error fetching weather data: $e');
@@ -104,6 +100,9 @@ class WeatherReportViewModel extends ChangeNotifier {
 
   Future<void> setDefaultData(bool isDefault) async {
     _defaultData = isDefault;
+    if (isDefault) {
+      notifyListeners();
+    }
   }
 
   // FUNCTION GET API FOREST WEATHER

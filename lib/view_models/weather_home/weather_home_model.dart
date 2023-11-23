@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:thoitiet_app/core/constants/constants.dart';
 import 'package:thoitiet_app/core/data/geolocator/geolocator_setting.dart';
+import 'package:thoitiet_app/core/data/models/locationJSON/locationJSON.dart';
 import 'package:thoitiet_app/core/data/models/weather/weather.dart';
 import 'package:thoitiet_app/core/data/reponsitories/weather_reponsitory.dart';
 import 'package:thoitiet_app/core/data/sqflite/FavoritesData.dart';
@@ -63,7 +64,6 @@ class WeatherHomeViewModel extends ChangeNotifier {
       WeatherModel w;
       final res = await _weatherReponsitory.getWeatherData(
           lat.toString(), lon.toString());
-      notifyListeners();
       return res;
     } on Exception {
       rethrow;
@@ -76,13 +76,14 @@ class WeatherHomeViewModel extends ChangeNotifier {
       weathers.clear();
       weathersRecommend.clear();
       final listLocation = await Constants.convert();
-      for (var location in listLocation!) {
+      for (LocationJSONModel location in listLocation!) {
         final res = await _weatherReponsitory.getWeatherData(
             location.coord!.lat.toString(), location.coord!.lon.toString());
         if (res != null) {
           weathers.add(res);
         }
       }
+      print('noi chung${weathers.length}');
       notifyListeners();
     } on Exception {
       rethrow;
@@ -105,7 +106,7 @@ class WeatherHomeViewModel extends ChangeNotifier {
       final listLocation = await Constants.convert();
       for (var location in listLocation!) {
         final res = await _weatherReponsitory.getWeatherData(
-            location.coord!.lat.toString(), location.coord!.lat.toString());
+            location.coord!.lat.toString(), location.coord!.lon.toString());
         if (res != null) {
           weathersRecommend.add(res);
         }
