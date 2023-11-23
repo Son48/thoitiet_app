@@ -10,6 +10,7 @@ import 'package:thoitiet_app/core/data/sqflite/SettingNotification.dart';
 import 'package:thoitiet_app/ui/view/splash/splash.dart';
 import 'package:thoitiet_app/ui/view/weather_home/weather_home_screen.dart';
 import 'package:workmanager/workmanager.dart';
+import 'package:thoitiet_app/core/constants/constants.dart';
 
 class NotificationService {
   final FlutterLocalNotificationsPlugin notificationsPlugin =
@@ -33,16 +34,19 @@ class NotificationService {
             (NotificationResponse notificationResponse) async {
       final String? payload = notificationResponse.payload;
       if (notificationResponse.payload != null) {
+        print('notification input ${notificationResponse.input}');
         print('notification payload: $payload');
-        await Workmanager().registerOneOffTask("$payload", "$payload");
+        Constants.navigatorKey.currentState
+            ?.pushNamed('detail-weather', arguments: {
+          'lon': payload.toString().split('|')[0],
+          'lat': payload.toString().split('|')[1],
+        });
+
+        // await Workmanager().registerOneOffTask("$payload", "$payload");
         // constraints: Constraints(
         //   networkType: NetworkType.connected,
         // )
       }
-      // await Navigator.push(
-      //   context,
-      //   MaterialPageRoute<void>(builder: (context) => WeatherHome()),
-      // );
     });
   }
 
@@ -75,7 +79,7 @@ class NotificationService {
           int.parse(item.hour.toString()), int.parse(item.minute.toString()));
       var initialDelay = specificTime.difference(now);
       print('time left to notifi: ${initialDelay}');
-      if (initialDelay.inMinutes > 0) {
+      if (initialDelay.inMinutes >= 0) {
         await Workmanager().registerPeriodicTask(
           (DateTime.now().second + Random().nextInt(999)).toString() +
               (item.lon.toString()) +
@@ -122,7 +126,7 @@ class NotificationService {
         title: 'Thông báo thời tiết định kì.',
         body:
             'Nhiệt độ tại ${w.nameLocation.toString()} ngay lúc này là: ${w.temporary?.temp.toString()}°C, ${w.listStatusWeather?[0].desWeatherAttribute}.',
-        payLoad: 'REDIRECT');
+        payLoad: '$lon|$lat');
     //save notification in db
     DateTime date = DateTime.now();
     await NotificationData().insertTable(

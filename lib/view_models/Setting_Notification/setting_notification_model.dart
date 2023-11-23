@@ -44,7 +44,6 @@ class WeatherReportViewModel extends ChangeNotifier {
   void setListSetting(List<SettingNotificationModel> list) {
     print('change setting detail');
     _listSettingOfWeather = list;
-    notifyListeners();
   }
 
 //all setting

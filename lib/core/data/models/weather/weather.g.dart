@@ -27,7 +27,9 @@ _$WeatherModelImpl _$$WeatherModelImplFromJson(Map<String, dynamic> json) =>
       sun: json['sun'] == null
           ? null
           : SunModel.fromJson(json['sun'] as Map<String, dynamic>),
-      rain: json['rain'] as String?,
+      rain: json['rain'] == null
+          ? null
+          : RainHourlyModel.fromJson(json['rain'] as Map<String, dynamic>),
       coord: json['coord'] == null
           ? null
           : CoordModel.fromJson(json['coord'] as Map<String, dynamic>),

@@ -16,7 +16,6 @@ class WeatherReponsitory {
       if (response.statusCode == 200) {
         return WeatherModel.fromJson(jsonDecode(response.toString()));
       }
-      return WeatherModel.fromJson(jsonDecode(response.toString()));
     } on Exception {
       rethrow;
     }

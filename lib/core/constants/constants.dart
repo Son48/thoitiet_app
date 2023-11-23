@@ -11,7 +11,6 @@ const colorBackgoundNavBar = Color.fromRGBO(129, 168, 207, 1);
 
 class Constants {
   const Constants._();
-
   static final navigatorKey = GlobalKey<NavigatorState>();
 
   //TODO Constants

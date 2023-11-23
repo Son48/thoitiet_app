@@ -12,12 +12,12 @@ import 'package:thoitiet_app/ui/view/setting/home_setting.dart';
 import 'package:thoitiet_app/ui/view/splash/splash.dart';
 import 'package:thoitiet_app/ui/view/weather_home/weather_home_screen.dart';
 import 'package:thoitiet_app/ui/widget/bottom_bar.dart';
+import 'package:thoitiet_app/core/constants/constants.dart';
 import 'package:thoitiet_app/ui/view/alert/alert.dart';
 
 import 'package:thoitiet_app/ui/view/weather_report/weather_report_view.dart';
 import 'package:workmanager/workmanager.dart';
 
-final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 @pragma(
     'vm:entry-point') // Mandatory if the App is obfuscated or using Flutter 3.1+
 void callbackDispatcher() {
@@ -31,13 +31,7 @@ void callbackDispatcher() {
               .doSendNotifi(inputData?['lon'], inputData?['lat']);
           break;
         }
-      case 'REDIRECT':
-        {
-          print('redirect');
-          navigatorKey.currentState?.push(
-            MaterialPageRoute(builder: (_) => WeatherHome()),
-          );
-        }
+
       default:
         print("Default ");
     }
@@ -53,7 +47,7 @@ void main() async {
   // await FirebaseAPI().initNotification();
   //local send notification
   WidgetsFlutterBinding.ensureInitialized();
-  NotificationService().initNotification();
+  await NotificationService().initNotification();
   // AwesomeNotifications().isNotificationAllowed().then((isAllowed) => {
   //       if (!isAllowed)
   //         {AwesomeNotifications().requestPermissionToSendNotifications()}
@@ -70,15 +64,16 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Flutter Weather App',
         debugShowCheckedModeBanner: false,
-        navigatorKey: navigatorKey,
+        navigatorKey: Constants.navigatorKey,
         routes: {
           "home": (context) => WeatherHome(),
           "detail-news": (context) => NewsWeather(),
           "news": (context) => NewsHome(),
           "detail-weather": (context) => WeatherReportView(),
           "search": (context) => WeatherSearch(),
+          "main_tab": (context) => Splash(),
         },
-        home: const Splash(),
+        home: Splash(),
       ),
     );
   }

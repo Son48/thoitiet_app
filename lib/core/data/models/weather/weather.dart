@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:intl/intl.dart';
 import 'package:thoitiet_app/core/data/models/clounds_attribute/clounds_attribute.dart';
 import 'package:thoitiet_app/core/data/models/coord_attribute/coord_attribute.dart';
+import 'package:thoitiet_app/core/data/models/rain_hourly/rain_hourly.dart';
 import 'package:thoitiet_app/core/data/models/sun_status_attribute/sun_status_attribute.dart';
 import 'package:thoitiet_app/core/data/models/temporary/temporary.dart';
 import 'package:thoitiet_app/core/data/models/weather_attribute/weather_attribute.dart';
@@ -21,7 +22,7 @@ class WeatherModel with _$WeatherModel {
     @JsonKey(name: 'clouds') CloundModel? clounds,
     @JsonKey(name: 'wind') WindModel? winds,
     @JsonKey(name: 'sun') SunModel? sun,
-    @JsonKey(name: 'rain') String? rain,
+    @JsonKey(name: 'rain') RainHourlyModel? rain,
     @JsonKey(name: 'coord') CoordModel? coord,
   }) = _WeatherModel;
   factory WeatherModel.fromJson(Map<String, Object?> json) =>
