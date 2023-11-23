@@ -1,8 +1,7 @@
 import 'dart:ffi';
 
 import 'package:sqflite/sqflite.dart';
-import 'package:thoitiet_app/core/data/models/location.dart';
-import 'package:thoitiet_app/core/data/models/setting_notifi.dart';
+import 'package:thoitiet_app/core/data/models/location/location.dart';
 import 'package:thoitiet_app/core/data/reponsitories/weather_reponsitory.dart';
 import 'package:thoitiet_app/core/data/sqflite/db.dart';
 
@@ -29,12 +28,12 @@ class SearchData {
   }
 
   //function to get all search
-  Future<List<Location>> fetchAllSearchFromLocal() async {
+  Future<List<LocationModel>> fetchAllSearchFromLocal() async {
     final database = await DatabaseService().database;
     if (database != null) {
       final searchLocal = await database.rawQuery("SELECT * FROM $tableName");
-      List<Location> listSearch =
-          searchLocal.map((search) => Location.mapSQLtoModel(search)).toList();
+      List<LocationModel> listSearch =
+          searchLocal.map((search) => LocationModel.fromJson(search)).toList();
       return listSearch;
     } else {
       print('chua tao duoc db');

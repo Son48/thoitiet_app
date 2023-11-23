@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thoitiet_app/core/constants/constants.dart';
+import 'package:thoitiet_app/core/data/models/location/location.dart';
 import 'package:thoitiet_app/ui/widget/card_big_weather.dart';
 import 'package:thoitiet_app/view_models/weather_home/weather_home_model.dart';
 
-import '../../../core/data/models/location.dart';
 import '../../../view_models/weather_search/weather_search_model.dart';
 import '../../widget/card_history.dart';
 import '../../widget/card_search.dart';
@@ -13,8 +13,8 @@ class WeatherSearch extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final weatherSearchModel = ref.watch(weatherSearchProvider);
-    List<Location> rs_search = weatherSearchModel.weatherSearch;
-    List<Location> h_search = weatherSearchModel.weatherHistory;
+    List<LocationModel> rs_search = weatherSearchModel.weatherSearch;
+    List<LocationModel> h_search = weatherSearchModel.weatherHistory;
     final weatherModel = ref.watch(weatherProvider);
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
@@ -130,7 +130,6 @@ class WeatherSearch extends ConsumerWidget {
                                           child: Container(
                                             child: Text(
                                               "Không tìm thấy kết quả: '${weatherSearchModel.searchQuery}'",
-
                                               style: const TextStyle(
                                                 fontSize: 14,
                                                 color: Colors.yellow,
@@ -150,7 +149,8 @@ class WeatherSearch extends ConsumerWidget {
                                                     data: h_search[index]);
                                           },
                                           scrollDirection: Axis.vertical,
-                                    physics: NeverScrollableScrollPhysics(),
+                                          physics:
+                                              NeverScrollableScrollPhysics(),
                                           shrinkWrap: true,
                                         ),
                                   //recommend
@@ -188,7 +188,8 @@ class WeatherSearch extends ConsumerWidget {
                                           itemBuilder: (context, index) =>
                                               CardBigWeather(
                                                   data: weatherModel
-                                                      .weathersRecommend[index]),
+                                                          .weathersRecommend[
+                                                      index]),
                                           scrollDirection: Axis.horizontal,
                                         ),
                                       ),

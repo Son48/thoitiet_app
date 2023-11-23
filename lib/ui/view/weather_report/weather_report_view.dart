@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thoitiet_app/core/data/models/forest_weather/forest_weather.dart';
-import 'package:thoitiet_app/core/data/models/setting_notifi.dart';
+import 'package:thoitiet_app/core/data/models/setting_notifi/setting_notifi.dart';
 import 'package:thoitiet_app/core/data/models/weather/weather.dart';
 import 'package:thoitiet_app/ui/widget/card_report.dart';
 import 'package:thoitiet_app/ui/widget/pre_loading.dart';
@@ -41,10 +41,10 @@ class WeatherReportView extends ConsumerWidget {
         if (item.coord!.lat.toString() == data.coord!.lat.toString() &&
             item.coord!.lon.toString() == data.coord!.lon.toString()) {
           listFavorites.weatherFavories.remove(item);
-          listFavorites.deleteFavoriteFromSQL(item);
           break;
         }
       }
+      listFavorites.deleteFavoriteFromSQL(data);
     }
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
@@ -654,7 +654,10 @@ class WeatherReportView extends ConsumerWidget {
                                                 height: 10,
                                               ),
                                               Text(
-                                                  forestWeatherModel!.daily![0]?.rain?.toString() ?? '0',
+                                                forestWeatherModel!
+                                                        .daily![0]?.rain
+                                                        ?.toString() ??
+                                                    '0',
                                                 style: TextStyle(
                                                     color: Colors.white70,
                                                     fontWeight:
@@ -783,9 +786,11 @@ class WeatherReportView extends ConsumerWidget {
                             padding: const EdgeInsets.only(bottom: 20),
                             child: ColumnChart(
                               chartData1: reportModel
-                                  .getChartData1(forestWeatherModel)??[],
+                                      .getChartData1(forestWeatherModel) ??
+                                  [],
                               chartData2: reportModel
-                                  .getChartData2(forestWeatherModel)??[],
+                                      .getChartData2(forestWeatherModel) ??
+                                  [],
                             ),
                           ),
                         ],

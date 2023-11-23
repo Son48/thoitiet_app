@@ -11,6 +11,8 @@ class WeatherDailyModel with _$WeatherDailyModel {
   factory WeatherDailyModel({
     String? day,
     String? hour,
+    String? hourSunrise,
+    String? hourSunset,
     @JsonKey(name: 'weather') List<WeatherAttributeModel>? listStatusWeather,
     @JsonKey(name: 'temp') TemperatureDailyModel? temp,
     @JsonKey(name: 'dt') double? dt,
@@ -23,8 +25,13 @@ class WeatherDailyModel with _$WeatherDailyModel {
   }) = _WeatherDailyModel;
   factory WeatherDailyModel.fromJson(Map<String, Object?> json) =>
       _$WeatherDailyModelFromJson(json).copyWith(
-          day: convertDaysToDateTime(int.parse(json['dt'].toString()), 0),
-          hour: convertDaysToDateTime(int.parse(json['dt'].toString()), 1));
+        day: convertDaysToDateTime(int.parse(json['dt'].toString()), 0),
+        hour: convertDaysToDateTime(int.parse(json['dt'].toString()), 1),
+        hourSunrise:
+            convertDaysToDateTime(int.parse(json['sunrise'].toString()), 1),
+        hourSunset:
+            convertDaysToDateTime(int.parse(json['sunset'].toString()), 1),
+      );
 
   static String convertDaysToDateTime(int days, int choose) {
     final dt = DateTime.fromMillisecondsSinceEpoch(days * 1000);

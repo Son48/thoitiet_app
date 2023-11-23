@@ -22,6 +22,8 @@ WeatherDailyModel _$WeatherDailyModelFromJson(Map<String, dynamic> json) {
 mixin _$WeatherDailyModel {
   String? get day => throw _privateConstructorUsedError;
   String? get hour => throw _privateConstructorUsedError;
+  String? get hourSunrise => throw _privateConstructorUsedError;
+  String? get hourSunset => throw _privateConstructorUsedError;
   @JsonKey(name: 'weather')
   List<WeatherAttributeModel>? get listStatusWeather =>
       throw _privateConstructorUsedError;
@@ -57,6 +59,8 @@ abstract class $WeatherDailyModelCopyWith<$Res> {
   $Res call(
       {String? day,
       String? hour,
+      String? hourSunrise,
+      String? hourSunset,
       @JsonKey(name: 'weather') List<WeatherAttributeModel>? listStatusWeather,
       @JsonKey(name: 'temp') TemperatureDailyModel? temp,
       @JsonKey(name: 'dt') double? dt,
@@ -85,6 +89,8 @@ class _$WeatherDailyModelCopyWithImpl<$Res, $Val extends WeatherDailyModel>
   $Res call({
     Object? day = freezed,
     Object? hour = freezed,
+    Object? hourSunrise = freezed,
+    Object? hourSunset = freezed,
     Object? listStatusWeather = freezed,
     Object? temp = freezed,
     Object? dt = freezed,
@@ -103,6 +109,14 @@ class _$WeatherDailyModelCopyWithImpl<$Res, $Val extends WeatherDailyModel>
       hour: freezed == hour
           ? _value.hour
           : hour // ignore: cast_nullable_to_non_nullable
+              as String?,
+      hourSunrise: freezed == hourSunrise
+          ? _value.hourSunrise
+          : hourSunrise // ignore: cast_nullable_to_non_nullable
+              as String?,
+      hourSunset: freezed == hourSunset
+          ? _value.hourSunset
+          : hourSunset // ignore: cast_nullable_to_non_nullable
               as String?,
       listStatusWeather: freezed == listStatusWeather
           ? _value.listStatusWeather
@@ -167,6 +181,8 @@ abstract class _$$WeatherDailyModelImplCopyWith<$Res>
   $Res call(
       {String? day,
       String? hour,
+      String? hourSunrise,
+      String? hourSunset,
       @JsonKey(name: 'weather') List<WeatherAttributeModel>? listStatusWeather,
       @JsonKey(name: 'temp') TemperatureDailyModel? temp,
       @JsonKey(name: 'dt') double? dt,
@@ -194,6 +210,8 @@ class __$$WeatherDailyModelImplCopyWithImpl<$Res>
   $Res call({
     Object? day = freezed,
     Object? hour = freezed,
+    Object? hourSunrise = freezed,
+    Object? hourSunset = freezed,
     Object? listStatusWeather = freezed,
     Object? temp = freezed,
     Object? dt = freezed,
@@ -212,6 +230,14 @@ class __$$WeatherDailyModelImplCopyWithImpl<$Res>
       hour: freezed == hour
           ? _value.hour
           : hour // ignore: cast_nullable_to_non_nullable
+              as String?,
+      hourSunrise: freezed == hourSunrise
+          ? _value.hourSunrise
+          : hourSunrise // ignore: cast_nullable_to_non_nullable
+              as String?,
+      hourSunset: freezed == hourSunset
+          ? _value.hourSunset
+          : hourSunset // ignore: cast_nullable_to_non_nullable
               as String?,
       listStatusWeather: freezed == listStatusWeather
           ? _value._listStatusWeather
@@ -261,6 +287,8 @@ class _$WeatherDailyModelImpl
   _$WeatherDailyModelImpl(
       {this.day,
       this.hour,
+      this.hourSunrise,
+      this.hourSunset,
       @JsonKey(name: 'weather')
       final List<WeatherAttributeModel>? listStatusWeather,
       @JsonKey(name: 'temp') this.temp,
@@ -280,6 +308,10 @@ class _$WeatherDailyModelImpl
   final String? day;
   @override
   final String? hour;
+  @override
+  final String? hourSunrise;
+  @override
+  final String? hourSunset;
   final List<WeatherAttributeModel>? _listStatusWeather;
   @override
   @JsonKey(name: 'weather')
@@ -319,7 +351,7 @@ class _$WeatherDailyModelImpl
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'WeatherDailyModel(day: $day, hour: $hour, listStatusWeather: $listStatusWeather, temp: $temp, dt: $dt, windSpeed: $windSpeed, clounds: $clounds, rain: $rain, uvi: $uvi, sunrise: $sunrise, sunset: $sunset)';
+    return 'WeatherDailyModel(day: $day, hour: $hour, hourSunrise: $hourSunrise, hourSunset: $hourSunset, listStatusWeather: $listStatusWeather, temp: $temp, dt: $dt, windSpeed: $windSpeed, clounds: $clounds, rain: $rain, uvi: $uvi, sunrise: $sunrise, sunset: $sunset)';
   }
 
   @override
@@ -329,6 +361,8 @@ class _$WeatherDailyModelImpl
       ..add(DiagnosticsProperty('type', 'WeatherDailyModel'))
       ..add(DiagnosticsProperty('day', day))
       ..add(DiagnosticsProperty('hour', hour))
+      ..add(DiagnosticsProperty('hourSunrise', hourSunrise))
+      ..add(DiagnosticsProperty('hourSunset', hourSunset))
       ..add(DiagnosticsProperty('listStatusWeather', listStatusWeather))
       ..add(DiagnosticsProperty('temp', temp))
       ..add(DiagnosticsProperty('dt', dt))
@@ -347,6 +381,10 @@ class _$WeatherDailyModelImpl
             other is _$WeatherDailyModelImpl &&
             (identical(other.day, day) || other.day == day) &&
             (identical(other.hour, hour) || other.hour == hour) &&
+            (identical(other.hourSunrise, hourSunrise) ||
+                other.hourSunrise == hourSunrise) &&
+            (identical(other.hourSunset, hourSunset) ||
+                other.hourSunset == hourSunset) &&
             const DeepCollectionEquality()
                 .equals(other._listStatusWeather, _listStatusWeather) &&
             (identical(other.temp, temp) || other.temp == temp) &&
@@ -366,6 +404,8 @@ class _$WeatherDailyModelImpl
       runtimeType,
       day,
       hour,
+      hourSunrise,
+      hourSunset,
       const DeepCollectionEquality().hash(_listStatusWeather),
       temp,
       dt,
@@ -395,6 +435,8 @@ abstract class _WeatherDailyModel implements WeatherDailyModel {
   factory _WeatherDailyModel(
       {final String? day,
       final String? hour,
+      final String? hourSunrise,
+      final String? hourSunset,
       @JsonKey(name: 'weather')
       final List<WeatherAttributeModel>? listStatusWeather,
       @JsonKey(name: 'temp') final TemperatureDailyModel? temp,
@@ -413,6 +455,10 @@ abstract class _WeatherDailyModel implements WeatherDailyModel {
   String? get day;
   @override
   String? get hour;
+  @override
+  String? get hourSunrise;
+  @override
+  String? get hourSunset;
   @override
   @JsonKey(name: 'weather')
   List<WeatherAttributeModel>? get listStatusWeather;

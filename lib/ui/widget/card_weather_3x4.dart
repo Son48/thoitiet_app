@@ -24,10 +24,10 @@ class CardWeather extends ConsumerWidget {
         if (item.coord?.lat.toString() == data.coord?.lat.toString() &&
             item.coord?.lon.toString() == data.coord?.lon.toString()) {
           listFavorites.remove(item);
-          weatherModel.deleteFavoriteFromSQL(item);
           break;
         }
       }
+      weatherModel.deleteFavoriteFromSQL(data);
     }
 
     for (WeatherModel item in listFavorites) {

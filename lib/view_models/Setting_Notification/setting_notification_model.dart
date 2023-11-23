@@ -2,7 +2,7 @@ import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thoitiet_app/core/data/models/setting_notifi.dart';
+import 'package:thoitiet_app/core/data/models/setting_notifi/setting_notifi.dart';
 import 'package:thoitiet_app/core/data/models/weather/weather.dart';
 import 'package:thoitiet_app/core/data/notificatons/notification_services.dart';
 import 'package:thoitiet_app/core/data/reponsitories/weather_reponsitory.dart';
@@ -121,10 +121,10 @@ class WeatherReportViewModel extends ChangeNotifier {
     //   scheduledTimeMinute: 01,
     // );
     SettingNotificationModel setting = SettingNotificationModel(
-        lon: favorite.coord!.lon.toString(),
-        lat: favorite.coord!.lat.toString(),
-        hour: hour,
-        minute: minute,
+        lon: favorite.coord!.lon,
+        lat: favorite.coord!.lat,
+        hour: int.parse(hour),
+        minute: int.parse(minute),
         nameLocation: favorite.nameLocation.toString());
     setListAllSetting(setting);
     // setLoadSetting(false);

@@ -1,5 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:flutter/foundation.dart';
+import 'package:intl/intl.dart';
 import 'package:thoitiet_app/core/data/models/clounds_attribute/clounds_attribute.dart';
 import 'package:thoitiet_app/core/data/models/coord_attribute/coord_attribute.dart';
 import 'package:thoitiet_app/core/data/models/sun_status_attribute/sun_status_attribute.dart';
@@ -24,10 +25,25 @@ class WeatherModel with _$WeatherModel {
     @JsonKey(name: 'coord') CoordModel? coord,
   }) = _WeatherModel;
   factory WeatherModel.fromJson(Map<String, Object?> json) =>
-      _$WeatherModelFromJson(json);
+      _$WeatherModelFromJson(json).copyWith(
+          day: convertDaysToDateTime(int.parse(json['dt'].toString()), 0),
+          hour: convertDaysToDateTime(int.parse(json['dt'].toString()), 1));
   factory WeatherModel.mapSQLtoModel(Map<String, dynamic> map) =>
       WeatherModel(coord: CoordModel(lat: map['lat'], lon: map['lon']));
 
+  static String convertDaysToDateTime(int days, int choose) {
+    final dt = DateTime.fromMillisecondsSinceEpoch(days * 1000);
+    DateFormat timeFormat = DateFormat('HH:mm');
+    String formattedTime = timeFormat.format(dt);
+
+    DateFormat dateFormat = DateFormat('dd/MM');
+    String formattedDate = dateFormat.format(dt);
+    if (choose == 0) {
+      return formattedDate.toString();
+    } else {
+      return formattedTime.toString();
+    }
+  }
   // static Future<String> convertDaysToDateTime(int days, int choose) async {
   //   final dt = DateTime.fromMillisecondsSinceEpoch(days * 1000);
   //   DateForma timeFormat = DateFormat('HH:mm');

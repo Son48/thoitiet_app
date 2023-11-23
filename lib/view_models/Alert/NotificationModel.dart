@@ -2,8 +2,7 @@ import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thoitiet_app/core/data/models/Notification.dart';
-import 'package:thoitiet_app/core/data/models/setting_notifi.dart';
+import 'package:thoitiet_app/core/data/models/notification/Notification.dart';
 import 'package:thoitiet_app/core/data/notificatons/notification_services.dart';
 import 'package:thoitiet_app/core/data/reponsitories/weather_reponsitory.dart';
 import 'package:thoitiet_app/core/data/sqflite/NotificationData.dart';

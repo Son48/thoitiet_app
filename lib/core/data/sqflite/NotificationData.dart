@@ -1,7 +1,6 @@
 import 'package:intl/intl.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:thoitiet_app/core/data/models/Notification.dart';
-import 'package:thoitiet_app/core/data/models/setting_notifi.dart';
+import 'package:thoitiet_app/core/data/models/notification/Notification.dart';
 import 'package:thoitiet_app/core/data/reponsitories/weather_reponsitory.dart';
 import 'package:thoitiet_app/core/data/sqflite/db.dart';
 
@@ -57,7 +56,7 @@ class NotificationData {
       final notificationData =
           await database.rawQuery("SELECT * FROM $tableName");
       List<NotificationModel> listNotification = notificationData
-          .map((notification) => NotificationModel.mapSQLtoModel(notification))
+          .map((notification) => NotificationModel.fromJson(notification))
           .toList();
       return listNotification;
     } else {

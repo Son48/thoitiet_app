@@ -76,9 +76,9 @@ class WeatherHomeViewModel extends ChangeNotifier {
       weathers.clear();
       weathersRecommend.clear();
       final listLocation = await Constants.convert();
-      for (var location in listLocation) {
+      for (var location in listLocation!) {
         final res = await _weatherReponsitory.getWeatherData(
-            location.lat.toString(), location.lon.toString());
+            location.coord!.lat.toString(), location.coord!.lon.toString());
         if (res != null) {
           weathers.add(res);
         }
@@ -103,9 +103,9 @@ class WeatherHomeViewModel extends ChangeNotifier {
     try {
       weathersRecommend.clear();
       final listLocation = await Constants.convert();
-      for (var location in listLocation) {
+      for (var location in listLocation!) {
         final res = await _weatherReponsitory.getWeatherData(
-            location.lat.toString(), location.lon.toString());
+            location.coord!.lat.toString(), location.coord!.lat.toString());
         if (res != null) {
           weathersRecommend.add(res);
         }

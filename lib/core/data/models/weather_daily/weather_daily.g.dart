@@ -11,6 +11,8 @@ _$WeatherDailyModelImpl _$$WeatherDailyModelImplFromJson(
     _$WeatherDailyModelImpl(
       day: json['day'] as String?,
       hour: json['hour'] as String?,
+      hourSunrise: json['hourSunrise'] as String?,
+      hourSunset: json['hourSunset'] as String?,
       listStatusWeather: (json['weather'] as List<dynamic>?)
           ?.map(
               (e) => WeatherAttributeModel.fromJson(e as Map<String, dynamic>))
@@ -33,6 +35,8 @@ Map<String, dynamic> _$$WeatherDailyModelImplToJson(
     <String, dynamic>{
       'day': instance.day,
       'hour': instance.hour,
+      'hourSunrise': instance.hourSunrise,
+      'hourSunset': instance.hourSunset,
       'weather': instance.listStatusWeather,
       'temp': instance.temp,
       'dt': instance.dt,

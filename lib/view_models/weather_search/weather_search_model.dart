@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thoitiet_app/core/constants/constants.dart';
-import 'package:thoitiet_app/core/data/models/location.dart';
+import 'package:thoitiet_app/core/data/models/location/location.dart';
+import 'package:thoitiet_app/core/data/models/locationJSON/locationJSON.dart';
 import 'package:thoitiet_app/core/data/sqflite/SearchData.dart';
 
 import '../../core/data/reponsitories/weather_reponsitory.dart';
@@ -17,23 +18,19 @@ class WeatherSearchViewModel extends ChangeNotifier {
   final Ref _reader;
 
   // List to store search results
-  List<Location> _weatherSearch = [];
-
-  List<Location> get weatherSearch => _weatherSearch;
+  List<LocationModel> _weatherSearch = [];
+  List<LocationModel> get weatherSearch => _weatherSearch;
 
   // List to store unique history items
-  List<Location> _weatherHistory = [];
-
-  List<Location> get weatherHistory => _weatherHistory;
+  List<LocationModel> _weatherHistory = [];
+  List<LocationModel> get weatherHistory => _weatherHistory;
 
   // Boolean to track whether default data should be used
   bool _defaultData = false;
-
   bool get defaultData => _defaultData;
 
   String _announceResults = '';
   String get announceResults => _announceResults;
-
   Future<void> setAnnounceResults(String announceResults) async {
     _announceResults = announceResults;
     notifyListeners();
@@ -68,8 +65,16 @@ class WeatherSearchViewModel extends ChangeNotifier {
   Future<void> setSearchQuery(String query) async {
     _searchQuery = query;
     try {
-      List<Location> searchResult = await getListTest();
-      setSearchWeather(searchResult);
+      List<LocationJSONModel> searchResult = await getListTest();
+      List<LocationModel> covertList = [];
+      for (LocationJSONModel element in searchResult) {
+        LocationModel lm = LocationModel(
+            lat: element.coord!.lat,
+            lon: element.coord!.lon,
+            nameLocation: element.nameLocation);
+        covertList.add(lm);
+      }
+      setSearchWeather(covertList);
     } catch (e) {
       print("Error searching weather: $e");
     }
@@ -77,18 +82,18 @@ class WeatherSearchViewModel extends ChangeNotifier {
   }
 
   // Method to set the search results
-  void setSearchWeather(List<Location> list) {
+  void setSearchWeather(List<LocationModel> list) {
     _weatherSearch = list;
     notifyListeners();
   }
 
   // Method to filter and set unique history items
-  void setHistoryWeather(List<Location> list) {
+  void setHistoryWeather(List<LocationModel> list) {
     Set<String> uniqueLocations = {};
-    List<Location> filteredList = [];
+    List<LocationModel> filteredList = [];
 
     for (int i = list.length - 1; i >= 0; i--) {
-      Location location = list[i];
+      LocationModel location = list[i];
       if (!uniqueLocations.contains(location.nameLocation)) {
         uniqueLocations.add(location.nameLocation.toString());
         filteredList.add(location);
@@ -100,13 +105,13 @@ class WeatherSearchViewModel extends ChangeNotifier {
   }
 
   // Method to fetch test data based on the search query
-  Future<List<Location>> getListTest() async {
+  Future<List<LocationJSONModel>> getListTest() async {
     if (_searchQuery.isEmpty) {
       return [];
     }
-    List<Location> searchResult = [];
+    List<LocationJSONModel> searchResult = [];
     final listLocation = await Constants.convert();
-    for (Location location in listLocation) {
+    for (LocationJSONModel location in listLocation!) {
       if (location.nameLocation!
           .toLowerCase()
           .contains(_searchQuery.toLowerCase())) {
@@ -117,9 +122,9 @@ class WeatherSearchViewModel extends ChangeNotifier {
   }
 
   // Method to fetch all search history from SQLite
-  Future<List<Location>> getAllSearchFromSQL() async {
+  Future<List<LocationModel>> getAllSearchFromSQL() async {
     try {
-      List<Location> historyWeather =
+      List<LocationModel> historyWeather =
           await SearchData().fetchAllSearchFromLocal();
       return historyWeather;
     } catch (e) {
@@ -130,7 +135,7 @@ class WeatherSearchViewModel extends ChangeNotifier {
   // Method to fetch all search history from SQLite and set the state
   Future<void> getAllSearchFromSQLAndSetState() async {
     try {
-      List<Location> historyWeather = await getAllSearchFromSQL();
+      List<LocationModel> historyWeather = await getAllSearchFromSQL();
       setHistoryWeather(historyWeather);
       notifyListeners();
     } catch (e) {
@@ -139,7 +144,7 @@ class WeatherSearchViewModel extends ChangeNotifier {
   }
 
   // Method to insert a favorite item into SQLite
-  Future<void> insertFavoriteFromSQL(Location history) async {
+  Future<void> insertFavoriteFromSQL(LocationModel history) async {
     try {
       int result = await SearchData().insertTable(
         history.lon.toString(),
@@ -156,7 +161,7 @@ class WeatherSearchViewModel extends ChangeNotifier {
   }
 
   // Method to delete a favorite item from SQLite and update the state
-  Future<void> deleteFavoriteFromSQL(Location history) async {
+  Future<void> deleteFavoriteFromSQL(LocationModel history) async {
     try {
       print('Xóa khỏi local');
       await SearchData()

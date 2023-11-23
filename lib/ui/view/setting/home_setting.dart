@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thoitiet_app/core/constants/constants.dart';
-import 'package:thoitiet_app/core/data/models/setting_notifi.dart';
+import 'package:thoitiet_app/core/data/models/setting_notifi/setting_notifi.dart';
 import 'package:thoitiet_app/core/data/notificatons/notification_services.dart';
 import 'package:thoitiet_app/ui/view/news/home_news_weather.dart';
 import 'package:thoitiet_app/view_models/Setting_Notification/setting_notification_model.dart';

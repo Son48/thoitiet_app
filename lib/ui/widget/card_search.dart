@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:provider/provider.dart';
-import 'package:thoitiet_app/core/data/models/location.dart';
+import 'package:thoitiet_app/core/data/models/location/location.dart';
 import 'package:thoitiet_app/view_models/weather_search/weather_search_model.dart';
 import '../../view_models/weather_report_model/weather_report_model.dart';
 
 class CardSearch extends ConsumerWidget {
-  final Location data;
+  final LocationModel data;
 
   CardSearch({super.key, required this.data});
 

@@ -3,13 +3,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thoitiet_app/core/constants/constants.dart';
 import 'package:thoitiet_app/core/data/geolocator/geolocator_setting.dart';
 import 'package:thoitiet_app/core/data/models/forest_weather/forest_weather.dart';
-import 'package:thoitiet_app/core/data/models/setting_notifi.dart';
+import 'package:thoitiet_app/core/data/models/location/location.dart';
+import 'package:thoitiet_app/core/data/models/setting_notifi/setting_notifi.dart';
 import 'package:thoitiet_app/core/data/models/weather/weather.dart';
 import 'package:thoitiet_app/core/data/reponsitories/weather_reponsitory.dart';
 import 'package:thoitiet_app/core/data/sqflite/FavoritesData.dart';
 import 'package:thoitiet_app/core/data/sqflite/SettingNotification.dart';
 
-import '../../core/data/models/location.dart';
 import '../../ui/widget/column_chart.dart';
 
 final weatherReportProvider = ChangeNotifierProvider<WeatherReportViewModel>(
@@ -32,6 +32,7 @@ class WeatherReportViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+//list setting notification for each weather
   List<SettingNotificationModel> _listNotiOfWeather = [];
   List<SettingNotificationModel> get listNotiOfWeather => _listNotiOfWeather;
   Future<void> setListNotiOfWeather(WeatherModel w) async {
@@ -73,7 +74,7 @@ class WeatherReportViewModel extends ChangeNotifier {
   }
 
   // Call API to get weather data for location
-  Future<void> setLocation(Location location) async {
+  Future<void> setLocation(LocationModel location) async {
     try {
       final weatherData = await _weatherReponsitory.getWeatherData(
           location.lat.toString(), location.lon.toString());
@@ -137,7 +138,7 @@ class WeatherReportViewModel extends ChangeNotifier {
       return model.daily?.map((daily) {
         return ForeCastData(
           day: daily.day.toString(),
-          forecast:daily.rain.toString(),
+          forecast: daily.rain.toString(),
         );
       }).toList();
     } else {

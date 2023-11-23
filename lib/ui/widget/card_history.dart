@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thoitiet_app/core/data/models/location/location.dart';
 
-import '../../core/data/models/location.dart';
 import '../../view_models/weather_report_model/weather_report_model.dart';
 import '../../view_models/weather_search/weather_search_model.dart';
 
 class CardHistory extends ConsumerWidget {
-  final Location data;
+  final LocationModel data;
 
   CardHistory({super.key, required this.data});
 

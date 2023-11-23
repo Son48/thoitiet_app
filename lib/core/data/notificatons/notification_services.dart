@@ -1,14 +1,14 @@
 import 'dart:math';
 
+import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:thoitiet_app/core/data/models/setting_notifi.dart';
+import 'package:thoitiet_app/core/data/models/setting_notifi/setting_notifi.dart';
 import 'package:thoitiet_app/core/data/models/weather/weather.dart';
 import 'package:thoitiet_app/core/data/reponsitories/weather_reponsitory.dart';
 import 'package:thoitiet_app/core/data/sqflite/NotificationData.dart';
 import 'package:thoitiet_app/core/data/sqflite/SettingNotification.dart';
-
-import 'package:timezone/data/latest.dart' as tz;
-import 'package:timezone/timezone.dart' as tz;
+import 'package:thoitiet_app/ui/view/splash/splash.dart';
+import 'package:thoitiet_app/ui/view/weather_home/weather_home_screen.dart';
 import 'package:workmanager/workmanager.dart';
 
 class NotificationService {
@@ -30,7 +30,20 @@ class NotificationService {
         android: initializationSettingsAndroid, iOS: initializationSettingsIOS);
     await notificationsPlugin.initialize(initializationSettings,
         onDidReceiveNotificationResponse:
-            (NotificationResponse notificationResponse) async {});
+            (NotificationResponse notificationResponse) async {
+      final String? payload = notificationResponse.payload;
+      if (notificationResponse.payload != null) {
+        print('notification payload: $payload');
+        await Workmanager().registerOneOffTask("$payload", "$payload");
+        // constraints: Constraints(
+        //   networkType: NetworkType.connected,
+        // )
+      }
+      // await Navigator.push(
+      //   context,
+      //   MaterialPageRoute<void>(builder: (context) => WeatherHome()),
+      // );
+    });
   }
 
   notificationDetails() {
@@ -42,8 +55,8 @@ class NotificationService {
 
   Future showNotification(
       {required int id, String? title, String? body, String? payLoad}) async {
-    return notificationsPlugin.show(
-        id, title, body, await notificationDetails());
+    return notificationsPlugin
+        .show(id, title, body, await notificationDetails(), payload: payLoad);
   }
 
   //work manager do all 24/7
@@ -105,11 +118,11 @@ class NotificationService {
     print(w.nameLocation.toString());
     print('send noti');
     await showNotification(
-      id: DateTime.now().second + Random().nextInt(100),
-      title: 'Thông báo thời tiết định kì.',
-      body:
-          'Nhiệt độ tại ${w.nameLocation.toString()} ngay lúc này là: ${w.temporary.toString()}°C, ${w.listStatusWeather?[0].desWeatherAttribute}.',
-    );
+        id: DateTime.now().second + Random().nextInt(100),
+        title: 'Thông báo thời tiết định kì.',
+        body:
+            'Nhiệt độ tại ${w.nameLocation.toString()} ngay lúc này là: ${w.temporary?.temp.toString()}°C, ${w.listStatusWeather?[0].desWeatherAttribute}.',
+        payLoad: 'REDIRECT');
     //save notification in db
     DateTime date = DateTime.now();
     await NotificationData().insertTable(

@@ -1,5 +1,5 @@
 import 'package:sqflite/sqflite.dart';
-import 'package:thoitiet_app/core/data/models/setting_notifi.dart';
+import 'package:thoitiet_app/core/data/models/setting_notifi/setting_notifi.dart';
 import 'package:thoitiet_app/core/data/models/weather/weather.dart';
 import 'package:thoitiet_app/core/data/reponsitories/weather_reponsitory.dart';
 import 'package:thoitiet_app/core/data/sqflite/db.dart';
@@ -43,7 +43,7 @@ class SettingNotification {
     if (database != null) {
       final settingLocal = await database.rawQuery("SELECT * FROM $tableName");
       List<SettingNotificationModel> listSetting = settingLocal
-          .map((setting) => SettingNotificationModel.mapSQLtoModel(setting))
+          .map((setting) => SettingNotificationModel.fromJson(setting))
           .toList();
       return listSetting;
     } else {
@@ -61,7 +61,7 @@ class SettingNotification {
           "SELECT * FROM $tableName WHERE lon = ? AND lat = ?",
           [w.coord!.lon.toString(), w.coord!.lat.toString()]);
       List<SettingNotificationModel> listSetting = settingLocal
-          .map((setting) => SettingNotificationModel.mapSQLtoModel(setting))
+          .map((setting) => SettingNotificationModel.fromJson(setting))
           .toList();
       return listSetting;
     } else {

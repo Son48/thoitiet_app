@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thoitiet_app/core/constants/constants.dart';
-import 'package:thoitiet_app/core/data/models/Notification.dart';
 import 'dart:math';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:thoitiet_app/core/data/models/notification/Notification.dart';
 import 'package:thoitiet_app/core/data/models/weather/weather.dart';
 
 import 'package:thoitiet_app/view_models/Alert/NotificationModel.dart';

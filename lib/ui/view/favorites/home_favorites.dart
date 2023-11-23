@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thoitiet_app/core/constants/constants.dart';
 import 'package:thoitiet_app/core/data/models/forest_weather/forest_weather.dart';
-import 'package:thoitiet_app/core/data/models/setting_notifi.dart';
+import 'package:thoitiet_app/core/data/models/setting_notifi/setting_notifi.dart';
 import 'package:thoitiet_app/core/data/models/weather/weather.dart';
 import 'package:thoitiet_app/core/data/models/weather_daily/weather_daily.dart';
 import 'package:thoitiet_app/core/data/models/weather_hourly/weather_hourly.dart';
@@ -13,10 +13,9 @@ import 'package:thoitiet_app/ui/widget/card_weather_3x4.dart';
 import 'package:thoitiet_app/view_models/weather_home/weather_home_model.dart';
 import 'package:thoitiet_app/view_models/weather_home/weather_forest_model.dart';
 import 'package:thoitiet_app/view_models/Setting_Notification/setting_notification_model.dart';
+import 'package:thoitiet_app/view_models/weather_report_model/weather_report_model.dart';
 
 import '../../widget/column_chart.dart';
-
-bool isLoadingWeatherForest = true;
 
 class FavovitesHome extends ConsumerWidget {
   //
@@ -36,10 +35,13 @@ class FavovitesHome extends ConsumerWidget {
     ForestWeatherModel? forestWeatherModel =
         weatherForestModel.forestWeatherModel;
 
+    final reportModel = ref.watch(weatherReportProvider);
+    List<SettingNotificationModel> listSettingLocal =
+        reportModel.listNotiOfWeather;
+
     Future<void> refreshPage() async {
       print('reload');
       await weatherForestModel.setDefaultData(false);
-      isLoadingWeatherForest = true;
     }
 
     //set the first value
@@ -47,13 +49,14 @@ class FavovitesHome extends ConsumerWidget {
       print('render favorites');
       //get setting of thís weather
       if (weatherForestModel.defaultData) {
-        isLoadingWeatherForest = false;
         return;
       }
 
       if (listFavorites.isNotEmpty) {
         await weatherForestModel.setFavoriteChosse(listFavorites[0]);
         await handleTimeToNotifi.getListSettingFromLocal(listFavorites[0]);
+        await reportModel.setListNotiOfWeather(listFavorites[0]);
+
         await weatherForestModel.setDefaultData(true);
       }
     });
@@ -141,7 +144,7 @@ class FavovitesHome extends ConsumerWidget {
                           // detail show card weather
 
                           //check loading
-                          forestWeatherModel != null && !isLoadingWeatherForest
+                          forestWeatherModel != null
                               ? Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
@@ -203,8 +206,9 @@ class FavovitesHome extends ConsumerWidget {
                                                         weatherForestModel
                                                             .setFavoriteChosse(
                                                                 value!);
-                                                        isLoadingWeatherForest =
-                                                            true;
+                                                        reportModel
+                                                            .setListNotiOfWeather(
+                                                                value);
                                                       },
                                                     )
                                                   : const SizedBox(width: 0),
@@ -232,19 +236,112 @@ class FavovitesHome extends ConsumerWidget {
                                             mainAxisAlignment:
                                                 MainAxisAlignment.spaceBetween,
                                             children: [
-                                              const Icon(
-                                                Icons.timer_outlined,
-                                                color: Colors.white,
-                                                size: 20,
+                                              GestureDetector(
+                                                onTap: () => showDialog<String>(
+                                                  context: context,
+                                                  builder:
+                                                      (BuildContext context) =>
+                                                          AlertDialog(
+                                                    title: Text(
+                                                        'Các thiết lập thông báo tại ${weatherFavorite?.nameLocation}'),
+                                                    content: SizedBox(
+                                                      width:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .width -
+                                                              20,
+                                                      height: 200,
+                                                      child: ListView.builder(
+                                                        itemCount:
+                                                            listSettingLocal
+                                                                .length,
+                                                        itemBuilder:
+                                                            (context, index) =>
+                                                                Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .only(
+                                                                  bottom: 5,
+                                                                  left: 5),
+                                                          child: Row(
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .spaceBetween,
+                                                              children: [
+                                                                Text(
+                                                                    'Vào lúc:  ${listSettingLocal[index].hour} giờ, ${listSettingLocal[index].minute} phút'),
+                                                                IconButton(
+                                                                    onPressed:
+                                                                        () {
+                                                                      weatherForestModel
+                                                                          .setDefaultData(
+                                                                              false);
+                                                                      handleTimeToNotifi.deleteSettingFromSQL(
+                                                                          listSettingLocal[index]
+                                                                              .lon
+                                                                              .toString(),
+                                                                          listSettingLocal[index]
+                                                                              .lat
+                                                                              .toString(),
+                                                                          listSettingLocal[index]
+                                                                              .hour
+                                                                              .toString(),
+                                                                          listSettingLocal[index]
+                                                                              .minute
+                                                                              .toString());
+                                                                      Navigator.pop(
+                                                                          context,
+                                                                          'Cancel');
+                                                                    },
+                                                                    icon:
+                                                                        const Icon(
+                                                                      Icons
+                                                                          .delete_forever,
+                                                                      color: Colors
+                                                                          .red,
+                                                                    ))
+                                                              ]),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    actions: <Widget>[
+                                                      TextButton(
+                                                        onPressed: () =>
+                                                            Navigator.pop(
+                                                                context,
+                                                                'Cancel'),
+                                                        child:
+                                                            const Text('Đóng'),
+                                                      ),
+                                                      TextButton(
+                                                        onPressed: () =>
+                                                            Navigator.pop(
+                                                                context, 'OK'),
+                                                        child: const Text('OK'),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                                child: Row(
+                                                  children: [
+                                                    const Icon(
+                                                      Icons.timer_outlined,
+                                                      color: Colors.white,
+                                                      size: 20,
+                                                    ),
+                                                    SizedBox(
+                                                        width: 60,
+                                                        child: Text(
+                                                          handleTimeToNotifi
+                                                              .errorTime,
+                                                          style:
+                                                              const TextStyle(
+                                                                  color: Colors
+                                                                      .yellow),
+                                                        )),
+                                                  ],
+                                                ),
                                               ),
-                                              SizedBox(
-                                                  width: 60,
-                                                  child: Text(
-                                                    handleTimeToNotifi
-                                                        .errorTime,
-                                                    style: const TextStyle(
-                                                        color: Colors.yellow),
-                                                  )),
                                               Row(
                                                 children: [
                                                   Row(
@@ -376,10 +473,14 @@ class FavovitesHome extends ConsumerWidget {
                                                         const EdgeInsets.all(
                                                             8.0),
                                                     child: GestureDetector(
-                                                      onTap: () =>
-                                                          handleTimeToNotifi
-                                                              .handleTimeNoti(
-                                                                  weatherFavorite!),
+                                                      onTap: () => {
+                                                        handleTimeToNotifi
+                                                            .handleTimeNoti(
+                                                                weatherFavorite!),
+                                                        weatherForestModel
+                                                            .setDefaultData(
+                                                                false),
+                                                      },
                                                       child: const Row(
                                                         children: [
                                                           Text(
@@ -562,7 +663,7 @@ class FavovitesHome extends ConsumerWidget {
                                             padding: const EdgeInsets.only(
                                                 left: 4, top: 2),
                                             child: Text(
-                                              'Độ ẩm trong không khí đạt đến: ${weatherFavorite.clounds.toString()}%',
+                                              'Độ ẩm trong không khí đạt đến: ${weatherFavorite.clounds?.clounds}%',
                                               style: const TextStyle(
                                                   color: Colors.white70),
                                             ),
@@ -676,11 +777,13 @@ class FavovitesHome extends ConsumerWidget {
                                           ),
                                           ColumnChart(
                                             chartData1: weatherForestModel
-                                                .getChartData1(
-                                                    forestWeatherModel)??[],
+                                                    .getChartData1(
+                                                        forestWeatherModel) ??
+                                                [],
                                             chartData2: weatherForestModel
-                                                .getChartData2(
-                                                    forestWeatherModel)??[],
+                                                    .getChartData2(
+                                                        forestWeatherModel) ??
+                                                [],
                                           ),
                                         ],
                                       ),
@@ -747,11 +850,11 @@ class FavovitesHome extends ConsumerWidget {
               style: TextStyle(color: Colors.white),
             ),
             Text(
-              'Mặt trời mọc: ${daily.sunrise}',
+              'Mặt trời mọc: ${daily.hourSunrise}',
               style: TextStyle(color: Colors.white70, fontSize: 11),
             ),
             Text(
-              'mặt trời lặn: ${daily.sunset}',
+              'mặt trời lặn: ${daily.hourSunset}',
               style: TextStyle(color: Colors.white70, fontSize: 11),
             )
           ],
